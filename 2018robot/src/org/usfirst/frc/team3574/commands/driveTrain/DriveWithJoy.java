@@ -23,7 +23,7 @@ public class DriveWithJoy extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.driveTrain.driveByTank(Robot.m_oi.getLeftStickY(), -Robot.m_oi.getRightStickY());
+    	Robot.driveTrain.driveByTank(-Robot.m_oi.getLeftStickY(), Robot.m_oi.getRightStickY());
 //    	Robot.driveTrain.driveByTank(.5, .5);
     }
 

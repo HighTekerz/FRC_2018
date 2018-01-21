@@ -113,6 +113,9 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
+		
+		SmartDashboard.putNumber("EncoderRight", driveTrain.getEncoderRight());
+		SmartDashboard.putNumber("EncoderLeft", driveTrain.getEncoderLeft());
 		Scheduler.getInstance().run();
 	}
 

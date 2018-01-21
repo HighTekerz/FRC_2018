@@ -26,8 +26,18 @@ public class DriveTrain extends Subsystem {
 
 
 	}
-
-    // Put methods for controlling this subsystem
+ public int getEncoderLeft()
+ {
+	 return motorLeft1.getSensorCollection().getPulseWidthPosition();
+	 
+ }
+ 
+ public int getEncoderRight()
+ {
+	 return motorRight1.getSensorCollection().getPulseWidthPosition();
+ }
+ 
+ // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
     public void initDefaultCommand() {
