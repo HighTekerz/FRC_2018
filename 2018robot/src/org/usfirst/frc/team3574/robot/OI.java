@@ -44,16 +44,34 @@ public class OI {
 	// until it is finished as determined by it's isFinished method.
 	// button.whenReleased(new ExampleCommand());
 	XboxController xbox = new XboxController(0);
-	
-	
+
+
 	public double getLeftStickY ()
 	{
-		return xbox.getY(Hand.kLeft);
-		
+		return checkDeadzoneThreshhold(xbox.getY(Hand.kLeft));
 	}
-	
 	public double getRightStickY()
 	{
-		return xbox.getY(Hand.kRight);
+		return checkDeadzoneThreshhold(xbox.getY(Hand.kRight));
+	}
+
+	public double getLeftStickX()
+	{
+		return checkDeadzoneThreshhold(xbox.getX(Hand.kLeft));
+	}
+	public double getRightStickX()
+	{
+		return checkDeadzoneThreshhold(xbox.getX(Hand.kRight));
+	}
+
+	private double checkDeadzoneThreshhold(double valueToCheck) {
+		// THIS IS THE DEADZONE.
+		double deadzoneThreshhold = 0.2;
+		if (valueToCheck > -deadzoneThreshhold && valueToCheck < deadzoneThreshhold) {
+			return 0;
+		}
+		else {
+			return valueToCheck;
+		}
 	}
 }

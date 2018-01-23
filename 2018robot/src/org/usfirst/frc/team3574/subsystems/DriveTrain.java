@@ -45,13 +45,28 @@ public class DriveTrain extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     	setDefaultCommand(new DriveWithJoy());
     }
+    
+    //Drives the robot using seperate inputs for the left and right side motors.
+    //Inputs are percentages of maximum motor output.
     public void driveByTank (double leftSpeed, double rightSpeed)	
     {
     	motorLeft1.set(ControlMode.PercentOutput, leftSpeed);
     	motorLeft2.set(ControlMode.PercentOutput, leftSpeed);
+    	
     	motorRight1.set(ControlMode.PercentOutput, rightSpeed);
     	motorRight2.set(ControlMode.PercentOutput, rightSpeed);
     }    
+    
+    //Controls speed and direction of the robot.
+    // -1 = full reverse; 1 = full forward
+    public void driveByArcade (double percentPowerOutput, double percentRotationOutput)
+    {
+    	motorLeft1.set(ControlMode.PercentOutput,-percentPowerOutput - percentRotationOutput);
+    	motorLeft2.set(ControlMode.PercentOutput,-percentPowerOutput - percentRotationOutput);
+    	
+    	motorRight1.set(ControlMode.PercentOutput, percentPowerOutput - percentRotationOutput);
+    	motorRight2.set(ControlMode.PercentOutput, percentPowerOutput - percentRotationOutput);
+    }
     
      public void doNothing () 
      {
