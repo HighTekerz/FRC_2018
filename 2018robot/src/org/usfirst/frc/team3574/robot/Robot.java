@@ -29,8 +29,7 @@ public class Robot extends TimedRobot {
 	public static final ExampleSubsystem kExampleSubsystem
 			= new ExampleSubsystem();
 	public static final DriveTrain driveTrain = new DriveTrain();
-	public static OI myOperatorInput;
-
+	public static OI OperatorInput;
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -40,7 +39,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
-		myOperatorInput = new OI();
+		OperatorInput = new OI();
 		m_chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", m_chooser);
@@ -114,8 +113,13 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		
-		SmartDashboard.putNumber("EncoderRight", driveTrain.getEncoderRight());
-		SmartDashboard.putNumber("EncoderLeft", driveTrain.getEncoderLeft());
+		SmartDashboard.putNumber("Encoder Right", driveTrain.getEncoderRight());
+		SmartDashboard.putNumber("Encoder Left", driveTrain.getEncoderLeft());
+		
+		SmartDashboard.putNumber("Percent Throttle", OperatorInput.getRightStickY());
+		SmartDashboard.putNumber("Percent Rotation", OperatorInput.getLeftStickX());
+		
+		
 		Scheduler.getInstance().run();
 	}
 

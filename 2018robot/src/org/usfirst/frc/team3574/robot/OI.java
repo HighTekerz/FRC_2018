@@ -7,9 +7,12 @@
 
 package org.usfirst.frc.team3574.robot;
 
+import org.usfirst.frc.team3574.commands.DriveByInches;
+
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -44,34 +47,30 @@ public class OI {
 	// until it is finished as determined by it's isFinished method.
 	// button.whenReleased(new ExampleCommand());
 	XboxController xbox = new XboxController(0);
+	
+	Button xButton = new JoystickButton(xbox, 1);
 
-
+	public OI() {
+		xButton.whenPressed(new DriveByInches(6 * Math.PI, 0.75));
+	}
+	
+	
+	
 	public double getLeftStickY ()
 	{
-		return checkDeadzoneThreshhold(xbox.getY(Hand.kLeft));
+		return xbox.getY(Hand.kLeft);
 	}
 	public double getRightStickY()
 	{
-		return checkDeadzoneThreshhold(xbox.getY(Hand.kRight));
+		return xbox.getY(Hand.kRight);
 	}
 
 	public double getLeftStickX()
 	{
-		return checkDeadzoneThreshhold(xbox.getX(Hand.kLeft));
+		return xbox.getX(Hand.kLeft);
 	}
 	public double getRightStickX()
 	{
-		return checkDeadzoneThreshhold(xbox.getX(Hand.kRight));
-	}
-
-	private double checkDeadzoneThreshhold(double valueToCheck) {
-		// THIS IS THE DEADZONE.
-		double deadzoneThreshhold = 0.2;
-		if (valueToCheck > -deadzoneThreshhold && valueToCheck < deadzoneThreshhold) {
-			return 0;
-		}
-		else {
-			return valueToCheck;
-		}
+		return xbox.getX(Hand.kRight);
 	}
 }
