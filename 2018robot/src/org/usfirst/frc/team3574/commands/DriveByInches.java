@@ -4,6 +4,7 @@ import org.usfirst.frc.team3574.robot.Robot;
 import org.usfirst.frc.team3574.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -23,7 +24,6 @@ public class DriveByInches extends Command {
     	
 //    	4096 is the number of ticks per revolution
 //    	217.2995489 if our ticks per inch
-    	_ticksToTravel = inchesToTravel * 217.2995489;
     	if (inchesToTravel < 0)
     	{
     		_speed = -speed;
@@ -32,14 +32,30 @@ public class DriveByInches extends Command {
     	{
     		_speed = speed;
     	}
+    	inchesToTravel = Math.abs(inchesToTravel);
+    			
+    	_ticksToTravel = inchesToTravel * 217.2995489;
+    	
     	requires(Robot.driveTrain);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	_finalTickTargetLeft = _ticksToTravel + Robot.driveTrain.getEncoderLeft();
-    	_finalTickTargetRight = _ticksToTravel + Robot.driveTrain.getEncoderRight();
+//    	
+    	if (_speed > 0) {
+    		_finalTickTargetLeft = Robot.driveTrain.getEncoderLeft() + _ticksToTravel;
+    		_finalTickTargetRight = Robot.driveTrain.getEncoderRight() + _ticksToTravel;
+    	}
+    	else {
+    		_finalTickTargetLeft = Robot.driveTrain.getEncoderLeft() - _ticksToTravel;
+    		_finalTickTargetRight = Robot.driveTrain.getEncoderRight() - _ticksToTravel;
+    	}
     	
+    	System.out.printf("_finalTickTargetLeft: %f  \t Robot.driveTrain.getEncoderLeft() : %d\n", _finalTickTargetLeft,  Robot.driveTrain.getEncoderLeft());
+    	SmartDashboard.putNumber("Final Tick Target Right", _finalTickTargetRight);
+    	SmartDashboard.putNumber("Final Tick Target Left", _finalTickTargetLeft);
+    	System.out.println("DriveByInches initialize");
+
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -49,16 +65,29 @@ public class DriveByInches extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if (Math.abs(_finalTickTargetLeft - Robot.driveTrain.getEncoderLeft()) <= 0 &&
-    			Math.abs(_finalTickTargetRight - Robot.driveTrain.getEncoderRight()) <= 0)
+    	
+    	System.out.println("DriveByInches isFinished");
+    	
+    	if (_speed > 0 &&Robot.driveTrain.getEncoderLeft() >= _finalTickTargetLeft &&
+    			Robot.driveTrain.getEncoderRight() >= _finalTickTargetRight)
+    	
     	{
+    		System.out.println("DriveByInches Returns True");
     		return true;
     	}
-        return false;
+    	else if (_speed < 0 && Robot.driveTrain.getEncoderLeft() <= _finalTickTargetLeft 
+    			&& Robot.driveTrain.getEncoderRight() <= _finalTickTargetRight) {
+    		return true;
+    	}
+    	else {
+    		System.out.println("DriveByInches Returns False");
+    		return false;
+    	}
     }
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.driveTrain.driveByArcade(0, 0);
     }
 
     // Called when another command which requires one or more of the same

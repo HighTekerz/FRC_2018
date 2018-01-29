@@ -19,7 +19,5 @@ public final class RobotMap {
 	public static int DriveTrainRightTalon2 = 12;
 	public static int DriveTrainLeftTalon1 = 1;
 	public static int DriveTrainLeftTalon2 = 2;
-	
-	
-	
+	public static int DriveTrainPenguin1 = 3;
 }

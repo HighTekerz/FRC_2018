@@ -10,6 +10,7 @@ package org.usfirst.frc.team3574.robot;
 import org.usfirst.frc.team3574.commands.ExampleCommand;
 import org.usfirst.frc.team3574.subsystems.DriveTrain;
 import org.usfirst.frc.team3574.subsystems.ExampleSubsystem;
+import org.usfirst.frc.team3574.subsystems.TheHedgehog;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -30,6 +31,7 @@ public class Robot extends TimedRobot {
 			= new ExampleSubsystem();
 	public static final DriveTrain driveTrain = new DriveTrain();
 	public static OI OperatorInput;
+	public static final TheHedgehog theHedgehog = new TheHedgehog();
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -43,6 +45,7 @@ public class Robot extends TimedRobot {
 		m_chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", m_chooser);
+		
 	}
 
 	/**
@@ -52,12 +55,12 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void disabledInit() {
-
 	}
 
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+		this.log();
 	}
 
 	/**
@@ -86,6 +89,7 @@ public class Robot extends TimedRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.start();
 		}
+		this.log();
 	}
 
 	/**
@@ -94,6 +98,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		this.log();
 	}
 
 	@Override
@@ -105,6 +110,8 @@ public class Robot extends TimedRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
+		this.log();
+		
 	}
 
 	/**
@@ -113,11 +120,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		
-		SmartDashboard.putNumber("Encoder Right", driveTrain.getEncoderRight());
-		SmartDashboard.putNumber("Encoder Left", driveTrain.getEncoderLeft());
-		
-		SmartDashboard.putNumber("Percent Throttle", OperatorInput.getRightStickY());
-		SmartDashboard.putNumber("Percent Rotation", OperatorInput.getLeftStickX());
+		this.log();
 		
 		
 		Scheduler.getInstance().run();
@@ -128,5 +131,17 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void testPeriodic() {
+		
+		this.log();
+	}
+	public void log() {
+		
+		
+		SmartDashboard.putNumber("Percent Throttle", OperatorInput.getRightStickY());
+		SmartDashboard.putNumber("Percent Rotation", OperatorInput.getLeftStickX());
+				
+		
+		Robot.driveTrain.log();
+		
 	}
 }

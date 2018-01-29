@@ -4,6 +4,7 @@ import org.usfirst.frc.team3574.robot.RobotMap;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.sensors.PigeonIMU;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -18,6 +19,8 @@ public class DriveTrain extends Subsystem {
 	TalonSRX motorLeft2 = new TalonSRX(RobotMap.DriveTrainLeftTalon2);
 	TalonSRX motorRight1 = new TalonSRX(RobotMap.DriveTrainRightTalon1);
 	TalonSRX motorRight2 = new TalonSRX(RobotMap.DriveTrainRightTalon2);
+	TalonSRX imuTalon = new TalonSRX (RobotMap.DriveTrainPenguin1);
+	PigeonIMU penguin = new PigeonIMU (imuTalon);
 
 	public DriveTrain() {
 		// TODO Auto-generated constructor stub
@@ -25,8 +28,6 @@ public class DriveTrain extends Subsystem {
 		motorLeft2.set(ControlMode.PercentOutput,  0.0);
 		motorRight1.set(ControlMode.PercentOutput,  0.0);
 		motorRight2.set(ControlMode.PercentOutput,  0.0);
-
-
 	}
 	public int getEncoderLeft()
 	{
@@ -73,13 +74,21 @@ public class DriveTrain extends Subsystem {
 		SmartDashboard.putNumber("ACTUAL Percent Throttle", percentThrottle);
 		SmartDashboard.putNumber("ACTUAL Percent Rotation", percentRotationOutput);
 		
-		motorLeft1.set(ControlMode.PercentOutput,-percentThrottle - percentRotationOutput);
-		motorLeft2.set(ControlMode.PercentOutput,-percentThrottle - percentRotationOutput);
+		motorLeft1.set(ControlMode.PercentOutput, percentThrottle - percentRotationOutput);
+		motorLeft2.set(ControlMode.PercentOutput, percentThrottle - percentRotationOutput);
 
-		motorRight1.set(ControlMode.PercentOutput, percentThrottle - percentRotationOutput);
-		motorRight2.set(ControlMode.PercentOutput, percentThrottle - percentRotationOutput);
+		motorRight1.set(ControlMode.PercentOutput, -percentThrottle - percentRotationOutput);
+		motorRight2.set(ControlMode.PercentOutput, -percentThrottle - percentRotationOutput);
 	}
 	
+	public void driveByArcadeAuto (double percentThrottle, double percentRotationOutput) {
+		
+		motorLeft1.set(ControlMode.PercentOutput, percentThrottle - percentRotationOutput);
+		motorLeft2.set(ControlMode.PercentOutput, percentThrottle - percentRotationOutput);
+
+		motorRight1.set(ControlMode.PercentOutput, -percentThrottle - percentRotationOutput);
+		motorRight2.set(ControlMode.PercentOutput, -percentThrottle - percentRotationOutput);		
+	}
 	public double scalingSpeed (double joystickValue) {
 //		TODO: Find better scaling system
 //		Here's a simple algorithm to add sensitivity adjustment to your joystick:
@@ -106,7 +115,7 @@ public class DriveTrain extends Subsystem {
 //		below is "x^3"
 		double joystickValueToTheThird = Math.pow(joystickValue, 3);
 		
-//		x'   = a               x^3                     +  (1-a)               x
+//		x'   = a             * x^3                     +  (1-a)             * x
 		return scalingCutoff * joystickValueToTheThird + ((1-scalingCutoff) * joystickValue);
 	}
 
@@ -127,5 +136,20 @@ public class DriveTrain extends Subsystem {
 		{
 			return currentValue;
 		}
+	}
+	public void log() {
+		PigeonIMU.GeneralStatus genStatus = new PigeonIMU.GeneralStatus();
+		PigeonIMU.FusionStatus fusionStatus = new PigeonIMU.FusionStatus();
+		double [] xyz_dps = new double [3];
+		/* grab some input data from Pigeon and gamepad*/
+		penguin.getGeneralStatus(genStatus);
+		penguin.getRawGyro(xyz_dps);
+		penguin.getFusedHeading(fusionStatus);
+		double currentAngle = fusionStatus.heading;
+		boolean angleIsGood = (penguin.getState() == PigeonIMU.PigeonState.Ready) ? true : false;
+		double currentAngularRate = xyz_dps[2];
+		SmartDashboard.putNumber("angle", currentAngle);
+		SmartDashboard.putNumber("Encoder Right", this.getEncoderRight());
+		SmartDashboard.putNumber("Encoder Left", this.getEncoderLeft());
 	}
 }
