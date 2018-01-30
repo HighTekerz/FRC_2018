@@ -19,6 +19,12 @@ public class DriveTrain extends Subsystem {
 	TalonSRX motorLeft2 = new TalonSRX(RobotMap.DriveTrainLeftTalon2);
 	TalonSRX motorRight1 = new TalonSRX(RobotMap.DriveTrainRightTalon1);
 	TalonSRX motorRight2 = new TalonSRX(RobotMap.DriveTrainRightTalon2);
+	
+	
+	TalonSRX motorTest1 = new TalonSRX(RobotMap.LeftTalon3);
+	TalonSRX motorTest2 = new TalonSRX(RobotMap.LeftTalon4);
+
+	
 	TalonSRX imuTalon = new TalonSRX (RobotMap.DriveTrainPenguin1);
 	PigeonIMU penguin = new PigeonIMU (imuTalon);
 
@@ -62,7 +68,7 @@ public class DriveTrain extends Subsystem {
 
 	//Controls speed and direction of the robot.
 	// -1 = full reverse; 1 = full forward
-	public void driveByArcade (double percentThrottle, double percentRotationOutput)
+	public void driveByArcadeWithModifiers (double percentThrottle, double percentRotationOutput)
 	{
 		
 		percentThrottle = valueAfterDeadzoned(percentThrottle);
@@ -74,21 +80,24 @@ public class DriveTrain extends Subsystem {
 		SmartDashboard.putNumber("ACTUAL Percent Throttle", percentThrottle);
 		SmartDashboard.putNumber("ACTUAL Percent Rotation", percentRotationOutput);
 		
-		motorLeft1.set(ControlMode.PercentOutput, percentThrottle - percentRotationOutput);
-		motorLeft2.set(ControlMode.PercentOutput, percentThrottle - percentRotationOutput);
-
-		motorRight1.set(ControlMode.PercentOutput, -percentThrottle - percentRotationOutput);
-		motorRight2.set(ControlMode.PercentOutput, -percentThrottle - percentRotationOutput);
+		this.driveByArcade(percentThrottle, percentRotationOutput);
 	}
 	
-	public void driveByArcadeAuto (double percentThrottle, double percentRotationOutput) {
+	public void driveByArcade (double percentThrottle, double percentRotationOutput) {
 		
-		motorLeft1.set(ControlMode.PercentOutput, percentThrottle - percentRotationOutput);
-		motorLeft2.set(ControlMode.PercentOutput, percentThrottle - percentRotationOutput);
+		motorLeft1.set(ControlMode.PercentOutput, percentThrottle + percentRotationOutput);
+		motorLeft2.set(ControlMode.PercentOutput, percentThrottle + percentRotationOutput);
 
-		motorRight1.set(ControlMode.PercentOutput, -percentThrottle - percentRotationOutput);
-		motorRight2.set(ControlMode.PercentOutput, -percentThrottle - percentRotationOutput);		
+		motorRight1.set(ControlMode.PercentOutput, (percentThrottle - percentRotationOutput) * -1.0);
+		motorRight2.set(ControlMode.PercentOutput, (percentThrottle - percentRotationOutput) * -1.0);		
 	}
+	
+	public void testSomeFriedChicken() {
+		double power = 0.2;
+		motorTest1.set(ControlMode.PercentOutput, power);
+		motorTest2.set(ControlMode.PercentOutput, power);
+	}
+	
 	public double scalingSpeed (double joystickValue) {
 //		TODO: Find better scaling system
 //		Here's a simple algorithm to add sensitivity adjustment to your joystick:

@@ -8,6 +8,7 @@
 package org.usfirst.frc.team3574.robot;
 
 import org.usfirst.frc.team3574.commands.DriveByInches;
+import org.usfirst.frc.team3574.commands.PowerSomeMotors;
 import org.usfirst.frc.team3574.commands.TurnToDegree;
 
 import edu.wpi.first.wpilibj.GenericHID.Hand;
@@ -47,8 +48,11 @@ public class OI {
 	// Start the command when the button is released and let it run the command
 	// until it is finished as determined by it's isFinished method.
 	// button.whenReleased(new ExampleCommand());
+	
 	XboxController xbox = new XboxController(0);
-
+	XboxController testBox = new XboxController(1);
+	
+			
 //	Joystick xbox = new Joystick(0);
 	static final int A_BUTTON = 1;
 	static final int B_BUTTON = 2;
@@ -69,6 +73,10 @@ public class OI {
 			driveOneRotationBackward.whenPressed(new DriveByInches(3 * Math.PI, 0.5));
 		Button turnNinetyDegreesRight = new JoystickButton(xbox, B_BUTTON);
 			turnNinetyDegreesRight.whenPressed(new TurnToDegree(90, 0.5));
+			
+			
+		Button literallyJustAddPowerToTheMotors = new JoystickButton(testBox, A_BUTTON);
+			literallyJustAddPowerToTheMotors.whenPressed(new PowerSomeMotors());
 	}
 	
 	

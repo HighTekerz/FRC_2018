@@ -60,7 +60,7 @@ public class DriveByInches extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.driveTrain.driveByArcade(_speed, 0);
+    	Robot.driveTrain.driveByArcadeWithModifiers(_speed, 0);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -87,7 +87,7 @@ public class DriveByInches extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.driveTrain.driveByArcade(0, 0);
+    	Robot.driveTrain.driveByArcadeWithModifiers(0, 0);
     }
 
     // Called when another command which requires one or more of the same
