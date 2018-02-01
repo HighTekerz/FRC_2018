@@ -23,7 +23,6 @@ public class DriveByInches extends Command {
         // eg. requires(chassis);
     	
 //    	4096 is the number of ticks per revolution
-//    	217.2995489 if our ticks per inch
     	if (inchesToTravel < 0)
     	{
     		_speed = -speed;
@@ -33,7 +32,8 @@ public class DriveByInches extends Command {
     		_speed = speed;
     	}
     	inchesToTravel = Math.abs(inchesToTravel);
-    			
+//    	217.2995489 if our ticks per inch
+	
     	_ticksToTravel = inchesToTravel * 217.2995489;
     	
     	requires(Robot.driveTrain);
@@ -60,7 +60,7 @@ public class DriveByInches extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.driveTrain.driveByArcadeWithModifiers(_speed, 0);
+    	Robot.driveTrain.driveByArcade(_speed, 0);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -87,7 +87,7 @@ public class DriveByInches extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.driveTrain.driveByArcadeWithModifiers(0, 0);
+    	Robot.driveTrain.driveByArcade(0, 0);
     }
 
     // Called when another command which requires one or more of the same

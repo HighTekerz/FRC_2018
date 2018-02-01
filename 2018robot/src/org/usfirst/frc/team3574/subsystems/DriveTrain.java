@@ -28,6 +28,9 @@ public class DriveTrain extends Subsystem {
 	TalonSRX imuTalon = new TalonSRX (RobotMap.DriveTrainPenguin1);
 	PigeonIMU penguin = new PigeonIMU (imuTalon);
 
+	
+	public double _currentAngleToPass;
+
 	public DriveTrain() {
 		// TODO Auto-generated constructor stub
 		motorLeft1.set(ControlMode.PercentOutput, 0.0);
@@ -85,11 +88,11 @@ public class DriveTrain extends Subsystem {
 	
 	public void driveByArcade (double percentThrottle, double percentRotationOutput) {
 		
-		motorLeft1.set(ControlMode.PercentOutput, percentThrottle + percentRotationOutput);
-		motorLeft2.set(ControlMode.PercentOutput, percentThrottle + percentRotationOutput);
-
-		motorRight1.set(ControlMode.PercentOutput, (percentThrottle - percentRotationOutput) * -1.0);
-		motorRight2.set(ControlMode.PercentOutput, (percentThrottle - percentRotationOutput) * -1.0);		
+		motorLeft1.set(ControlMode.PercentOutput, percentThrottle - percentRotationOutput);
+		motorLeft2.set(ControlMode.PercentOutput, percentThrottle - percentRotationOutput);
+				
+		motorRight1.set(ControlMode.PercentOutput, (percentThrottle + percentRotationOutput) * -1.0);
+		motorRight2.set(ControlMode.PercentOutput, (percentThrottle + percentRotationOutput) * -1.0);		
 	}
 	
 	public void testSomeFriedChicken() {
@@ -155,6 +158,7 @@ public class DriveTrain extends Subsystem {
 		penguin.getRawGyro(xyz_dps);
 		penguin.getFusedHeading(fusionStatus);
 		double currentAngle = fusionStatus.heading;
+		_currentAngleToPass = currentAngle;
 		boolean angleIsGood = (penguin.getState() == PigeonIMU.PigeonState.Ready) ? true : false;
 		double currentAngularRate = xyz_dps[2];
 		SmartDashboard.putNumber("angle", currentAngle);

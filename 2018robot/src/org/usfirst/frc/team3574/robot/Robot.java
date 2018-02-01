@@ -7,6 +7,7 @@
 
 package org.usfirst.frc.team3574.robot;
 
+import org.usfirst.frc.team3574.autonomous.DriveForwardAutonomous;
 import org.usfirst.frc.team3574.commands.ExampleCommand;
 import org.usfirst.frc.team3574.subsystems.DriveTrain;
 import org.usfirst.frc.team3574.subsystems.ExampleSubsystem;
@@ -84,6 +85,8 @@ public class Robot extends TimedRobot {
 		 * = new MyAutoCommand(); break; case "Default Auto": default:
 		 * autonomousCommand = new ExampleCommand(); break; }
 		 */
+		// TODO: make it able to change through shuffle board
+		m_autonomousCommand= new DriveForwardAutonomous();
 
 		// schedule the autonomous command (example)
 		if (m_autonomousCommand != null) {

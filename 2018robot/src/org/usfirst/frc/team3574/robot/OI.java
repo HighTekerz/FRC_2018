@@ -48,12 +48,12 @@ public class OI {
 	// Start the command when the button is released and let it run the command
 	// until it is finished as determined by it's isFinished method.
 	// button.whenReleased(new ExampleCommand());
-	
+
 	XboxController xbox = new XboxController(0);
 	XboxController testBox = new XboxController(1);
-	
-			
-//	Joystick xbox = new Joystick(0);
+
+
+	//	Joystick xbox = new Joystick(0);
 	static final int A_BUTTON = 1;
 	static final int B_BUTTON = 2;
 	static final int X_BUTTON = 3;
@@ -64,23 +64,21 @@ public class OI {
 	static final int START = 8;
 	static final int RIGHT_THUMBSTICK_BUTTON = 9;
 	static final int LEFT_THUMBSTICK_BUTTON = 10;
-	
-	
+
+
 	public OI() {
 		Button driveOneRotationForeward = new JoystickButton(xbox, A_BUTTON);
 			driveOneRotationForeward.whenPressed(new DriveByInches(3 * Math.PI, -0.5));
 		Button driveOneRotationBackward = new JoystickButton(xbox, Y_BUTTON);
 			driveOneRotationBackward.whenPressed(new DriveByInches(3 * Math.PI, 0.5));
-		Button turnNinetyDegreesRight = new JoystickButton(xbox, B_BUTTON);
-			turnNinetyDegreesRight.whenPressed(new TurnToDegree(90, 0.5));
-			
-			
-		Button literallyJustAddPowerToTheMotors = new JoystickButton(testBox, A_BUTTON);
-			literallyJustAddPowerToTheMotors.whenPressed(new PowerSomeMotors());
+		Button turnNinetyDegreesRight = new JoystickButton(xbox, X_BUTTON);
+			turnNinetyDegreesRight.whenPressed(new TurnToDegree(90, 0.4));
+		Button turnNinetyDegreesLeft = new JoystickButton(xbox, B_BUTTON);
+			turnNinetyDegreesLeft.whenPressed(new TurnToDegree(-90, 0.4));
 	}
-	
-	
-	
+
+
+
 	public double getLeftStickY ()
 	{
 		return xbox.getY(Hand.kLeft);
