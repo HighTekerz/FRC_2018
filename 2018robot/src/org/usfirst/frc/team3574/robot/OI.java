@@ -7,9 +7,9 @@
 
 package org.usfirst.frc.team3574.robot;
 
-import org.usfirst.frc.team3574.commands.DriveByInches;
 import org.usfirst.frc.team3574.commands.PowerSomeMotors;
 import org.usfirst.frc.team3574.commands.TurnToDegree;
+import org.usfirst.frc.team3574.commands.driveTrain.DriveByInches;
 
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.XboxController;
