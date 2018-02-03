@@ -135,6 +135,8 @@ public class Robot extends TimedRobot {
 		
 		this.log();
 	}
+	
+	 
 	public void log() {
 		
 		SmartDashboard.putNumber("Percent Throttle", OperatorInput.getRightStickY());
