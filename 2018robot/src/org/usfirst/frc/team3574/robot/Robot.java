@@ -8,9 +8,7 @@
 package org.usfirst.frc.team3574.robot;
 
 import org.usfirst.frc.team3574.autonomous.DriveForwardAutonomous;
-import org.usfirst.frc.team3574.commands.ExampleCommand;
 import org.usfirst.frc.team3574.subsystems.DriveTrain;
-import org.usfirst.frc.team3574.subsystems.ExampleSubsystem;
 import org.usfirst.frc.team3574.subsystems.TheHedgehog;
 
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -28,8 +26,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends TimedRobot {
 	
-	public static final ExampleSubsystem kExampleSubsystem
-			= new ExampleSubsystem();
 	public static final DriveTrain driveTrain = new DriveTrain();
 	public static OI OperatorInput;
 	public static final TheHedgehog theHedgehog = new TheHedgehog();
@@ -43,7 +39,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		OperatorInput = new OI();
-		m_chooser.addDefault("Default Auto", new ExampleCommand());
+		m_chooser.addDefault("Default Auto", new DriveForwardAutonomous());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", m_chooser);
 		
