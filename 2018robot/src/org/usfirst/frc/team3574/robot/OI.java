@@ -75,6 +75,12 @@ public class OI {
 			turnNinetyDegreesRight.whenPressed(new TurnToDegree(90, 0.4));
 		Button turnNinetyDegreesLeft = new JoystickButton(xbox, B_BUTTON);
 			turnNinetyDegreesLeft.whenPressed(new TurnToDegree(-90, 0.4));
+		Button turnFifteenRight = new JoystickButton(xbox, RIGHT_BUMPER);
+			turnFifteenRight.whenPressed(new TurnToDegree(-10, 0.4));
+		Button turnFifteenLeft = new JoystickButton(xbox, LEFT_BUMPER);
+			turnFifteenLeft.whenPressed(new TurnToDegree(10, 0.4));
+			
+			
 	}
 
 
