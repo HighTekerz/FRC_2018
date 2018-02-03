@@ -1,6 +1,6 @@
 package org.usfirst.frc.team3574.autonomous;
 
-import org.usfirst.frc.team3574.commands.driveTrain.DoNothing;
+import org.usfirst.frc.team3574.commands.FindOurSide;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveByInches;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -8,9 +8,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class DriveForwardAutonomous extends CommandGroup {
+public class PlaceCubeInSwitchFromMiddle extends CommandGroup {
 
-    public DriveForwardAutonomous() {
+    public PlaceCubeInSwitchFromMiddle() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -27,9 +27,11 @@ public class DriveForwardAutonomous extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addSequential(new DriveByInches(90, .4)); /* 120in from alliance wall to auto line
-    												 - 40in long robot
-    												 + 10in to make sure we get over the line */
-    	addSequential(new DoNothing());
+    	
+//    	TODO: build these commands
+    	addSequential(new FindOurSide());
+//    	addSequential(new TurnToFaceOurSide());
+    	addSequential(new DriveByInches(12, 0.4));
+//    	addSequential(new DropACubeOntoSwitch());
     }
 }

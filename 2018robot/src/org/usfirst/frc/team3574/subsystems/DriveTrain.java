@@ -98,10 +98,16 @@ public class DriveTrain extends Subsystem {
 		motorRight2.set(ControlMode.PercentOutput, (percentThrottle + percentRotationOutput) * -1.0);		
 	}
 
-	public void testSomeFriedChicken() {
-		double power = 0.2;
-		motorTest1.set(ControlMode.PercentOutput, power);
-		motorTest2.set(ControlMode.PercentOutput, power);
+	
+	public void driveStraightByArcade (double percentThrottle, double percentRotationOutput) {
+		
+		percentRotationOutput += driveStraight(percentThrottle, 0);
+		
+		motorLeft1.set(ControlMode.PercentOutput, percentThrottle - percentRotationOutput);
+		motorLeft2.set(ControlMode.PercentOutput, percentThrottle - percentRotationOutput);
+
+		motorRight1.set(ControlMode.PercentOutput, (percentThrottle + percentRotationOutput) * -1.0);
+		motorRight2.set(ControlMode.PercentOutput, (percentThrottle + percentRotationOutput) * -1.0);		
 	}
 
 	public double scalingSpeed (double joystickValue) {
@@ -170,14 +176,14 @@ public class DriveTrain extends Subsystem {
 		/* the max correction is the forward throttle times a scaler,
 		 * This can be done a number of ways but basically only apply small turning correction when we are moving slow
 		 * and larger correction the faster we move.  Otherwise you may need stiffer pgain at higher velocities. */
-		double maxThrot = MaxCorrection(forwardThrottle, kMaxCorrectionRatio);
-		//System.out.println("Before Cap " + turnThrottle);
-		turnThrottle = Cap(turnThrottle, maxThrot);
-		//System.out.println("After Cap " + turnThrottle);
+		double maxThrot = getMaxCorrection(forwardThrottle, kMaxCorrectionRatio);
+		System.out.println("Before Cap " + turnThrottle);
+		turnThrottle = cap(turnThrottle, maxThrot);
+		System.out.println("After Cap " + turnThrottle);
 		return turnThrottle;
 	}
 
-	private double Cap(double value, double peak) {
+	private double cap(double value, double peak) {
 		if (value < -peak)
 			return -peak;
 		if (value > +peak)
@@ -185,7 +191,7 @@ public class DriveTrain extends Subsystem {
 		return value;
 	}
 
-	private double MaxCorrection(double forwardThrot, double scalor) {
+	private double getMaxCorrection(double forwardThrot, double scalor) {
 		/* make it positive */
 		if(forwardThrot < 0) {forwardThrot = -forwardThrot;}
 		/* max correction is the current forward throttle scaled down */

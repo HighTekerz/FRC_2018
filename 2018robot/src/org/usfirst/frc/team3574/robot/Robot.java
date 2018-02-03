@@ -8,6 +8,7 @@
 package org.usfirst.frc.team3574.robot;
 
 import org.usfirst.frc.team3574.autonomous.DriveForwardAutonomous;
+import org.usfirst.frc.team3574.commands.FindOurSide;
 import org.usfirst.frc.team3574.subsystems.DriveTrain;
 import org.usfirst.frc.team3574.subsystems.TheHedgehog;
 
@@ -120,6 +121,8 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		
 		this.log();
+//		Robot.driveTrain.driveStraight(0.5, 0);
+		new FindOurSide().start();
 		
 		Scheduler.getInstance().run();
 	}
