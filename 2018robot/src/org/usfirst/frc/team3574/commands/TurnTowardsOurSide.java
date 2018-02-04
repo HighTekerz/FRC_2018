@@ -1,24 +1,31 @@
 package org.usfirst.frc.team3574.commands;
 
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.command.Command;
 
+import org.usfirst.frc.team3574.robot.Field;
+import org.usfirst.frc.team3574.robot.Field.FieldElementToCheck;
+
+import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class FindOurSide extends Command {
+public class TurnTowardsOurSide extends Command {
 
-	String _colorSides;
 	
-    public FindOurSide() {
+    public TurnTowardsOurSide() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	_colorSides = DriverStation.getInstance().getGameSpecificMessage();
-    	
+   Field myNewField = new Field();
+   
+   if (myNewField.getOurSide(Field.FieldElementToCheck.OURSWITCH) == "Left") {
+	   
+	   
+   }
+
+   
     } 
 
     // Called repeatedly when this Command is scheduled to run

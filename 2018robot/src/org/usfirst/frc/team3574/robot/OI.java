@@ -8,12 +8,13 @@
 package org.usfirst.frc.team3574.robot;
 
 
+import org.usfirst.frc.team3574.commands.driveTrain.DriveByHedgehog2Distance;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveByInches;
 import org.usfirst.frc.team3574.commands.driveTrain.TurnToDegree;
 
 import org.usfirst.frc.team3574.commands.driveTrain.DriveByInches;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
-import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.XboxController; 
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
@@ -80,7 +81,11 @@ public class OI {
 			turnFifteenRight.whenPressed(new TurnToDegree(-10, 0.4));
 		Button turnFifteenLeft = new JoystickButton(xbox, LEFT_BUMPER);
 			turnFifteenLeft.whenPressed(new TurnToDegree(10, 0.4));
-			
+		Button driveToDistance = new JoystickButton(xbox, START);
+				driveToDistance.whenPressed(new DriveByHedgehog2Distance(24, - 0.25));
+	    Button driveToNewDistance = new JoystickButton(xbox, BACK);
+				driveToNewDistance.whenPressed(new DriveByHedgehog2Distance(24,  0.25));
+	
 			
 	}
 

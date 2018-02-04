@@ -3,6 +3,7 @@ package org.usfirst.frc.team3574.subsystems;
 import org.usfirst.frc.team3574.robot.RobotMap;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.sensors.PigeonIMU;
 
@@ -40,6 +41,10 @@ public class DriveTrain extends Subsystem {
 		motorLeft2.set(ControlMode.PercentOutput,  0.0);
 		motorRight1.set(ControlMode.PercentOutput,  0.0);
 		motorRight2.set(ControlMode.PercentOutput,  0.0);
+		motorLeft1.setNeutralMode(NeutralMode.Brake);
+		motorRight1.setNeutralMode(NeutralMode.Brake);
+		motorRight2.setNeutralMode(NeutralMode.Brake);
+		motorLeft2.setNeutralMode(NeutralMode.Brake);
 	}
 	public int getEncoderLeft()
 	{

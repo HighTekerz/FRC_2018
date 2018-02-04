@@ -8,7 +8,7 @@
 package org.usfirst.frc.team3574.robot;
 
 import org.usfirst.frc.team3574.autonomous.DriveForwardAutonomous;
-import org.usfirst.frc.team3574.commands.FindOurSide;
+import org.usfirst.frc.team3574.commands.TurnTowardsOurSide;
 import org.usfirst.frc.team3574.subsystems.DriveTrain;
 import org.usfirst.frc.team3574.subsystems.TheHedgehog;
 
@@ -122,7 +122,7 @@ public class Robot extends TimedRobot {
 		
 		this.log();
 //		Robot.driveTrain.driveStraight(0.5, 0);
-		new FindOurSide().start();
+		new TurnTowardsOurSide().start();
 		
 		Scheduler.getInstance().run();
 	}

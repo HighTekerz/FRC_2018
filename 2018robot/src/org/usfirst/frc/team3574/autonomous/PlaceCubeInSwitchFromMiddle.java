@@ -1,6 +1,6 @@
 package org.usfirst.frc.team3574.autonomous;
 
-import org.usfirst.frc.team3574.commands.FindOurSide;
+import org.usfirst.frc.team3574.commands.TurnTowardsOurSide;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveByInches;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -29,7 +29,7 @@ public class PlaceCubeInSwitchFromMiddle extends CommandGroup {
         // arm.
     	
 //    	TODO: build these commands
-    	addSequential(new FindOurSide());
+    	addSequential(new TurnTowardsOurSide());
 //    	addSequential(new TurnToFaceOurSide());
     	addSequential(new DriveByInches(12, 0.4));
 //    	addSequential(new DropACubeOntoSwitch());
