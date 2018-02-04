@@ -73,13 +73,11 @@ public class OI {
 	
 	
 	public OI() {
-		Button driveOneRotationForeward = new JoystickButton(xbox, Y_BUTTON);
-			driveOneRotationForeward.whenPressed(new DriveByInches(3 * Math.PI, -0.5));
-			//Hey, you guys had the A and Y buttons the wrong way around. We fixed it. You're welcome.
-		Button driveOneRotationBackward = new JoystickButton(xbox, A_BUTTON);
-			driveOneRotationBackward.whenPressed(new DriveByInches(3 * Math.PI, 0.5));
+		Button drive5FeetForeward = new JoystickButton(xbox, Y_BUTTON);
+			drive5FeetForeward.whenPressed(new DriveByInches(120, 0.5));
+		Button drive5FeetBackward = new JoystickButton(xbox, A_BUTTON);
+			drive5FeetBackward.whenPressed(new DriveByInches(120, -0.5));
 		Button turnNinetyDegreesRight = new JoystickButton(xbox, X_BUTTON);
-		//these are actually the right buttons doing the right thing but with the wrong names. :/
 			turnNinetyDegreesRight.whenPressed(new TurnToDegree(90, 0.4));
 		Button turnNinetyDegreesLeft = new JoystickButton(xbox, B_BUTTON);
 			turnNinetyDegreesLeft.whenPressed(new TurnToDegree(-90, 0.4));

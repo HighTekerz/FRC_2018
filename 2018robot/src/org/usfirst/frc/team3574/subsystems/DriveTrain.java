@@ -105,10 +105,14 @@ public class DriveTrain extends Subsystem {
 	}
 
 	
-	public void driveStraightByArcade (double percentThrottle, double percentRotationOutput) {
-		
-		percentRotationOutput += driveStraight(percentThrottle, 0);
-		
+	public void driveStraightByArcade (double percentThrottle, double percentRotationOutput, double targetAngle) {
+
+		percentThrottle = valueAfterDeadzoned(percentThrottle);
+		percentRotationOutput = valueAfterDeadzoned(percentRotationOutput);
+
+		if (percentRotationOutput == 0) {
+			percentRotationOutput += driveStraight(percentThrottle, targetAngle);
+		}
 		motorLeft1.set(ControlMode.PercentOutput, percentThrottle - percentRotationOutput);
 		motorLeft2.set(ControlMode.PercentOutput, percentThrottle - percentRotationOutput);
 
