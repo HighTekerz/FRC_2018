@@ -1,0 +1,16 @@
+# Binary files that aren't needed
+
+*.jar
+
+
+*.class
+
+
+*.bak
+
+
+*.o
+FRCUserProgram
+
+
+

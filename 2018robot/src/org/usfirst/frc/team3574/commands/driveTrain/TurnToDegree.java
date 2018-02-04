@@ -1,8 +1,6 @@
 package org.usfirst.frc.team3574.commands.driveTrain;
 
 import org.usfirst.frc.team3574.robot.Robot;
-import org.usfirst.frc.team3574.robot.RobotMap;
-import org.usfirst.frc.team3574.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;

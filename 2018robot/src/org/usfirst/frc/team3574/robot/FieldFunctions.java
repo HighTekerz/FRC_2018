@@ -4,12 +4,12 @@ package org.usfirst.frc.team3574.robot;
 import edu.wpi.first.wpilibj.DriverStation;
 
 
-public class Field {
+public class FieldFunctions {
 
 	public enum FieldElementToCheck {
 		OURSWITCH, SCALE, THEIRSWITCH
 	}
-	public Field() {
+	public FieldFunctions() {
 		
 	}
 

@@ -1,7 +1,8 @@
 package org.usfirst.frc.team3574.autonomous;
 
-import org.usfirst.frc.team3574.commands.TurnTowardsOurSide;
+import org.usfirst.frc.team3574.commands.driveTrain.TurnToDegree;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveByInches;
+import org.usfirst.frc.team3574.robot.FieldFunctions;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -28,10 +29,12 @@ public class PlaceCubeInSwitchFromMiddle extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
-//    	TODO: build these commands
-    	addSequential(new TurnTowardsOurSide());
-//    	addSequential(new TurnToFaceOurSide());
-    	addSequential(new DriveByInches(12, 0.4));
+    	   
+    	   
+//    	   if (new FieldFunctions.getOurSide(FieldFunctions.FieldElementToCheck.OURSWITCH) == "Left") {
+//    		   addSequential(new TurnToDegree(90, 0.5));
+//    	   }
+//    	addSequential(new DriveByInches(12, 0.4));
 //    	addSequential(new DropACubeOntoSwitch());
     }
 }
