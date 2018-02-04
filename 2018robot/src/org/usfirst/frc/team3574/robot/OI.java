@@ -48,7 +48,7 @@ public class OI {
 	// button.whileHeld(new ExampleCommand());
 
 	// Start the command when the button is released and let it run the command
-	// until it is finished as determined by it's isFinished method.
+	// until it is finished as determined by its isFinished method.
 	// button.whenReleased(new ExampleCommand());
 
 	XboxController xbox = new XboxController(0);
@@ -67,13 +67,19 @@ public class OI {
 	static final int RIGHT_THUMBSTICK_BUTTON = 9;
 	static final int LEFT_THUMBSTICK_BUTTON = 10;
 
-
+    static final int LEFT_STICK_X = 0;
+    static final int LEFT_STICK_Y = 1;
+    // these last two are not terribly important. ask emma.
+	
+	
 	public OI() {
-		Button driveOneRotationForeward = new JoystickButton(xbox, A_BUTTON);
+		Button driveOneRotationForeward = new JoystickButton(xbox, Y_BUTTON);
 			driveOneRotationForeward.whenPressed(new DriveByInches(3 * Math.PI, -0.5));
-		Button driveOneRotationBackward = new JoystickButton(xbox, Y_BUTTON);
+			//Hey, you guys had the A and Y buttons the wrong way around. We fixed it. You're welcome.
+		Button driveOneRotationBackward = new JoystickButton(xbox, A_BUTTON);
 			driveOneRotationBackward.whenPressed(new DriveByInches(3 * Math.PI, 0.5));
 		Button turnNinetyDegreesRight = new JoystickButton(xbox, X_BUTTON);
+		//these are actually the right buttons doing the right thing but with the wrong names. :/
 			turnNinetyDegreesRight.whenPressed(new TurnToDegree(90, 0.4));
 		Button turnNinetyDegreesLeft = new JoystickButton(xbox, B_BUTTON);
 			turnNinetyDegreesLeft.whenPressed(new TurnToDegree(-90, 0.4));
@@ -81,6 +87,7 @@ public class OI {
 			turnFifteenRight.whenPressed(new TurnToDegree(-10, 0.4));
 		Button turnFifteenLeft = new JoystickButton(xbox, LEFT_BUMPER);
 			turnFifteenLeft.whenPressed(new TurnToDegree(10, 0.4));
+			//These last two are for testing autonomous stuff mostly.
 		Button driveToDistance = new JoystickButton(xbox, START);
 				driveToDistance.whenPressed(new DriveByHedgehog2Distance(24, - 0.25));
 	    Button driveToNewDistance = new JoystickButton(xbox, BACK);
@@ -93,11 +100,11 @@ public class OI {
 
 	public double getLeftStickY ()
 	{
-		return xbox.getY(Hand.kLeft);
+		return xbox.getY(Hand.kLeft); 
 	}
 	public double getRightStickY()
 	{
-		return -xbox.getY(Hand.kRight);
+		return -xbox.getY(Hand.kRight); 
 	}
 
 	public double getLeftStickX()

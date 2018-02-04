@@ -32,9 +32,13 @@ public class DriveByHedgehog2Distance extends Command {
 		if (inchesFromObject < 12) {
 
 			//throw new Exception("NO, NOTHING LESS THAN 12 INCHES");
+			//System.out.println("whoa, too close. put in a bigger number.");
+			
 		}   else if (inchesFromObject > 200) {
 
 			//throw new Exception("NO, NOTHING PAST 16' and 8\"");
+			//System.out.println("that is really far away. try something smaller.");)
+
 		} else {
 
 			//0.023 = calculated slope of line
@@ -61,7 +65,7 @@ public class DriveByHedgehog2Distance extends Command {
 	protected void execute() {
 		//System.out.println("drivebyhedgehog EXECUTE");
 		System.out.println(((Robot.theHedgehog.getActualDistance() - 0.31)/0.023) + 12);
-		System.out.println();
+		//System.out.println();
 		
 	}
 
@@ -81,13 +85,18 @@ public class DriveByHedgehog2Distance extends Command {
 			return true;
 
 		}
-		else {return false;}
+		else {
+			return false;
+			
+		}
 
 
 	}
 
 	// Called once after isFinished returns true
 	protected void end() {
+		//maybe we should put a quick movement back or a braking attempt here, since this is called after the robot is done moving?
+		//it might help with the problems stopping we had before
 	}
 
 	// Called when another command which requires one or more of the same

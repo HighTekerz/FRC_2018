@@ -1,8 +1,8 @@
 package org.usfirst.frc.team3574.commands;
 
 
-import org.usfirst.frc.team3574.robot.Field;
-import org.usfirst.frc.team3574.robot.Field.FieldElementToCheck;
+import org.usfirst.frc.team3574.robot.FieldFunctions;
+import org.usfirst.frc.team3574.robot.FieldFunctions.FieldElementToCheck;
 
 import edu.wpi.first.wpilibj.command.Command;
 /**
@@ -18,9 +18,9 @@ public class TurnTowardsOurSide extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-   Field myNewField = new Field();
+   FieldFunctions myNewField = new FieldFunctions();
    
-   if (myNewField.getOurSide(Field.FieldElementToCheck.OURSWITCH) == "Left") {
+   if (myNewField.getOurSide(FieldFunctions.FieldElementToCheck.OURSWITCH) == "Left") {
 	   
 	   
    }
