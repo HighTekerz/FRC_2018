@@ -31,10 +31,10 @@ public class PlaceCubeInSwitchFromMiddle extends CommandGroup {
     	
     	   
     	   
-    	   if (new FieldFunctions.getOurSide(FieldFunctions.FieldElementToCheck.OURSWITCH) == "Left") {
-    		   addSequential(new TurnToDegree(90, 0.5));
-    	   }
-    	addSequential(new DriveByInches(12, 0.4));
+//    	   if (new FieldFunctions.getOurSide(FieldFunctions.FieldElementToCheck.OURSWITCH) == "Left") {
+//    		   addSequential(new TurnToDegree(90, 0.5));
+//    	   }
+//    	addSequential(new DriveByInches(12, 0.4));
 //    	addSequential(new DropACubeOntoSwitch());
     }
 }
