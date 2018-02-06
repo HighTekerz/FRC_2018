@@ -18,7 +18,7 @@ public class TurnTowardsOurSide extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-   FieldFunctions myNewField = new FieldFunctions();
+   FieldFunctions myNewField = new FieldFunctions(2);
    
    if (myNewField.getOurSide(FieldFunctions.FieldElementToCheck.OURSWITCH) == "Left") {
 	   

@@ -69,7 +69,7 @@ public class OI {
 
     static final int LEFT_STICK_X = 0;
     static final int LEFT_STICK_Y = 1;
-    // these last two are not terribly important. ask emma.
+    
 	
 	
 	public OI() {

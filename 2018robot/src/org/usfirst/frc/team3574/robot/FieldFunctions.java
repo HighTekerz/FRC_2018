@@ -9,7 +9,7 @@ public class FieldFunctions {
 	public enum FieldElementToCheck {
 		OURSWITCH, SCALE, THEIRSWITCH
 	}
-	public FieldFunctions() {
+	public FieldFunctions(double aMeaninglessNumber) {
 		
 	}
 
