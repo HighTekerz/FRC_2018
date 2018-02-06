@@ -140,7 +140,7 @@ public class Robot extends TimedRobot {
 		
 		SmartDashboard.putNumber("Percent Throttle", OperatorInput.getRightStickY());
 		SmartDashboard.putNumber("Percent Rotation", OperatorInput.getLeftStickX());
-				
+		SmartDashboard.putNumber("a", (OperatorInput.getDialAxis()+1)/2);
 		
 		Robot.driveTrain.log();
 		Robot.sensorTest.log();

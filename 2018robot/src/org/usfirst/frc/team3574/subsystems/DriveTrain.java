@@ -2,6 +2,7 @@ package org.usfirst.frc.team3574.subsystems;
 
 
 import org.usfirst.frc.team3574.commands.driveTrain.DriveWithJoy;
+import org.usfirst.frc.team3574.robot.Robot;
 import org.usfirst.frc.team3574.robot.RobotMap;
 
 //import org.usfirst.frc.team3574.robot.RobotMap;
@@ -10,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.sensors.PigeonIMU;
 
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -21,7 +23,7 @@ public class DriveTrain extends Subsystem {
 	TalonSRX motorLeft2 = new TalonSRX(RobotMap.DriveTrainLeftTalon2);
 	TalonSRX motorRight1 = new TalonSRX(RobotMap.DriveTrainRightTalon1);
 	TalonSRX motorRight2 = new TalonSRX(RobotMap.DriveTrainRightTalon2);
-
+	Solenoid shifter = new Solenoid(RobotMap.ShifterSolenoid);
 
 	TalonSRX motorTest1 = new TalonSRX(RobotMap.LeftTalon3);
 	TalonSRX motorTest2 = new TalonSRX(RobotMap.LeftTalon4);
@@ -80,14 +82,14 @@ public class DriveTrain extends Subsystem {
 
 	//Controls speed and direction of the robot.
 	// -1 = full reverse; 1 = full forward
-	public void driveByArcadeWithModifiers (double percentThrottle, double percentRotationOutput)
+	public void driveByArcadeWithModifiers (double percentThrottle, double percentRotationOutput, double scalingValue )
 	{
 
 		percentThrottle = valueAfterDeadzoned(percentThrottle);
 		percentRotationOutput = valueAfterDeadzoned(percentRotationOutput);
 
-		percentThrottle = scalingSpeed(percentThrottle);
-		percentRotationOutput = scalingSpeed(percentRotationOutput);
+		percentThrottle = scalingSpeed(percentThrottle, scalingValue);
+		percentRotationOutput = scalingSpeed(percentRotationOutput, scalingValue);
 
 		SmartDashboard.putNumber("ACTUAL Percent Throttle", percentThrottle);
 		SmartDashboard.putNumber("ACTUAL Percent Rotation", percentRotationOutput);
@@ -116,7 +118,7 @@ public class DriveTrain extends Subsystem {
 		motorRight2.set(ControlMode.PercentOutput, (percentThrottle + percentRotationOutput) * -1.0);		
 	}
 
-	public double scalingSpeed (double joystickValue) {
+	public double scalingSpeed (double joystickValue,double scalingCutoff) {
 		//		TODO: Find better scaling system
 		//		Here's a simple algorithm to add sensitivity adjustment to your joystick:
 		//
@@ -136,8 +138,7 @@ public class DriveTrain extends Subsystem {
 
 		//		joystickValue is "x"
 
-		//		below is "a"
-		double scalingCutoff = .75;
+		//		below is "a", wait, no.
 
 		//		below is "x^3"
 		double joystickValueToTheThird = Math.pow(joystickValue, 3);
@@ -224,5 +225,6 @@ public class DriveTrain extends Subsystem {
 		SmartDashboard.putNumber("angle", currentAngle);
 		SmartDashboard.putNumber("Encoder Right", this.getEncoderRight());
 		SmartDashboard.putNumber("Encoder Left", this.getEncoderLeft());
+		
 	}
 }

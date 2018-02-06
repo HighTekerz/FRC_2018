@@ -10,10 +10,10 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class DriveWithJoy extends Command
 {
-//	double rightStickYValue = Robot.OperatorInput.getRightStickY();
-//	double leftStickXValue = Robot.OperatorInput.getLeftStickX();
+	//	double rightStickYValue = Robot.OperatorInput.getRightStickY();
+	//	double leftStickXValue = Robot.OperatorInput.getLeftStickX();
 
-//	double leftStickYValue = Robot.OperatorInput.getLeftStickY();
+	//	double leftStickYValue = Robot.OperatorInput.getLeftStickY();
 
 	public DriveWithJoy() 
 	{
@@ -33,13 +33,14 @@ public class DriveWithJoy extends Command
 	protected void execute()
 	{
 
-//		leftStickXValue = Robot.OperatorInput.getLeftStickX();
-//		rightStickYValue = Robot.OperatorInput.getRightStickY();
+		//		leftStickXValue = Robot.OperatorInput.getLeftStickX();
+		//		rightStickYValue = Robot.OperatorInput.getRightStickY();
 
-//		Robot.driveTrain.driveByTank(-Robot.m_oi.getLeftStickY(), Robot.m_oi.getRightStickY());
-//		Robot.driveTrain.driveByTank(-leftStickYValue, rightStickYValue);
-		Robot.driveTrain.driveByArcadeWithModifiers(Robot.OperatorInput.getRightStickY(), -Robot.OperatorInput.getLeftStickX());	
-//		Robot.driveTrain.driveByArcade(rightStickYValue, -leftStickXValue);
+		//		Robot.driveTrain.driveByTank(-Robot.m_oi.getLeftStickY(), Robot.m_oi.getRightStickY());
+		//		Robot.driveTrain.driveByTank(-leftStickYValue, rightStickYValue);
+		//		Robot.driveTrain.driveByArcadeWithModifiers(Robot.OperatorInput.getRightStickY(), -Robot.OperatorInput.getLeftStickX(), .75);	
+		//		Robot.driveTrain.driveByArcade(rightStickYValue, -leftStickXValue);
+		Robot.driveTrain.driveByArcadeWithModifiers(Robot.OperatorInput.getRightTrigger()-Robot.OperatorInput.getLeftTrigger(), Robot.OperatorInput.getRightStickX(), (Robot.OperatorInput.getDialAxis()+1)/2);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

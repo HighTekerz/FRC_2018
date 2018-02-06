@@ -14,6 +14,8 @@ import org.usfirst.frc.team3574.commands.driveTrain.TurnToDegree;
 
 import org.usfirst.frc.team3574.commands.driveTrain.DriveByInches;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Joystick.AxisType;
 import edu.wpi.first.wpilibj.XboxController; 
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -53,7 +55,7 @@ public class OI {
 
 	XboxController xbox = new XboxController(0);
 	XboxController testBox = new XboxController(1);
-
+	Joystick logitechAttack = new Joystick(3);
 
 	//	Joystick xbox = new Joystick(0);
 	static final int A_BUTTON = 1;
@@ -67,9 +69,6 @@ public class OI {
 	static final int RIGHT_THUMBSTICK_BUTTON = 9;
 	static final int LEFT_THUMBSTICK_BUTTON = 10;
 
-    static final int LEFT_STICK_X = 0;
-    static final int LEFT_STICK_Y = 1;
-    
 	
 	
 	public OI() {
@@ -113,6 +112,18 @@ public class OI {
 	}
 	public double getRightStickX()
 	{
-		return xbox.getX(Hand.kRight);
+		return -xbox.getX(Hand.kRight);
+	}
+	public double getRightTrigger()
+	{
+		return xbox.getTriggerAxis(Hand.kRight);
+	}
+	public double getLeftTrigger()
+	{
+		return xbox.getTriggerAxis(Hand.kLeft);
+	}
+	public double getDialAxis()
+	{
+		return -logitechAttack.getAxis(AxisType.kZ);
 	}
 }

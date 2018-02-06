@@ -1,6 +1,6 @@
 package org.usfirst.frc.team3574.subsystems;
 
-import java.nio.ByteBuffer;
+//import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
 import edu.wpi.first.wpilibj.I2C;
@@ -15,8 +15,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class SensorTest extends Subsystem {
 
-	byte[] dataBuffer = new byte[6];
-	ByteBuffer compBuffer = ByteBuffer.wrap(dataBuffer);
+	//byte[] dataBuffer = new byte[6];
+	//ByteBuffer compBuffer = ByteBuffer.wrap(dataBuffer);
+	// can anyone explain what this does? ^ (emma and sarah)
 	Ultrasonic ultraHedgehog = new Ultrasonic(0, 1, Unit.kInches);
 	I2C iTooCanSee = new I2C(Port.kOnboard, 0x13);
 
@@ -27,13 +28,13 @@ public class SensorTest extends Subsystem {
 	public void log () {
 		SmartDashboard.putNumber("UltraHedgehog thing", ultraHedgehog.getRangeInches());
 
-	  	iTooCanSee.read(0x03, 6, dataBuffer);
+	  	//iTooCanSee.read(0x03, 6, dataBuffer);
       	
-    	compBuffer.order(ByteOrder.BIG_ENDIAN);
+    	//compBuffer.order(ByteOrder.BIG_ENDIAN);
     	
-    	SmartDashboard.putNumber("cX", compBuffer.getShort());
-    	SmartDashboard.putNumber("cY", compBuffer.getShort());
-    	SmartDashboard.putNumber("cZ", compBuffer.getShort());
+    	//SmartDashboard.putNumber("cX", compBuffer.getShort());
+    	//SmartDashboard.putNumber("cY", compBuffer.getShort());
+    	//SmartDashboard.putNumber("cZ", compBuffer.getShort());
 
 	}
 	// Put methods for controlling this subsystem
