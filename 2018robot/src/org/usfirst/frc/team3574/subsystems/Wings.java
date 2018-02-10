@@ -1,5 +1,9 @@
 package org.usfirst.frc.team3574.subsystems;
 
+import org.usfirst.frc.team3574.robot.RobotMap;
+
+import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -7,12 +11,35 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Wings extends Subsystem {
 
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
-
+	Solenoid leftSolenoid = new Solenoid(RobotMap.LeftWingSolenoid);
+	Solenoid rightSolenoid = new Solenoid(RobotMap.RightWingSolenoid);
+	Spark leftSpark = new Spark(RobotMap.LeftWingReleaseSpark);
+	Spark rightSpark = new Spark(RobotMap.RightWingReleaseSpark);
+	
+	private final double setPosition= 5;
+	
     public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
+      
+    	
+    	
+    	
+    }
+    public void setLeftSolenoid() {
+    
+    	leftSolenoid.set(true);
+    }
+    public void setRightSolenoid() {
+    	
+    	rightSolenoid.set(true);
+    }
+    public void setLeftSparkOpen() {
+    	
+    	leftSpark.setPosition(setPosition);
+    }
+    public void setRightSparkOpen() {
+    	
+    	rightSpark.setPosition(setPosition);
     }
 }
+
 
