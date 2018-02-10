@@ -16,10 +16,13 @@ import org.usfirst.frc.team3574.commands.driveTrain.TurnToDegree;
 
 import org.usfirst.frc.team3574.commands.driveTrain.DriveByInches;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+<<<<<<< HEAD
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Joystick.AxisType;
+=======
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.DriverStation;
+>>>>>>> 96bbf10f9911ac80fd6bf6c220e02eee93726645
 import edu.wpi.first.wpilibj.XboxController; 
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -74,11 +77,16 @@ public class OI {
 	static final int RIGHT_THUMBSTICK_BUTTON = 9;
 	static final int LEFT_THUMBSTICK_BUTTON = 10;
 
+<<<<<<< HEAD
+	
+	
+=======
 	static final int LEFT_STICK_X = 0;
 	static final int LEFT_STICK_Y = 1;
 
 
 
+>>>>>>> 96bbf10f9911ac80fd6bf6c220e02eee93726645
 	public OI() {
 		Button drive5FeetForeward = new JoystickButton(xbox, Y_BUTTON);
 		drive5FeetForeward.whenPressed(new DriveByInches(120, 0.5));
@@ -126,15 +134,11 @@ public class OI {
 	}
 	public double getRightStickX()
 	{
-		return xbox.getX(Hand.kRight);
+		return -xbox.getX(Hand.kRight);
 	}
 	public double getRightTrigger()
 	{
 		return xbox.getTriggerAxis(Hand.kRight);
-	}
-	
-	public double GetPOV(XboxController stickToCheck) {
-		return stickToCheck.getPOV();
 	}
 	public double getLeftTrigger()
 	{
@@ -143,5 +147,9 @@ public class OI {
 	public double getDialAxis()
 	{
 		return -logitechAttack.getAxis(AxisType.kZ);
+	}
+	
+	public double GetPOV(XboxController stickToCheck) {
+		return stickToCheck.getPOV();
 	}
 }
