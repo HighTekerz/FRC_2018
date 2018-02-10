@@ -9,6 +9,7 @@ package org.usfirst.frc.team3574.robot;
 
 import org.usfirst.frc.team3574.autonomous.DriveForwardAutonomous;
 import org.usfirst.frc.team3574.commands.RumbleASide;
+import org.usfirst.frc.team3574.subsystems.Arm;
 import org.usfirst.frc.team3574.subsystems.DriveTrain;
 import org.usfirst.frc.team3574.subsystems.Lift;
 import org.usfirst.frc.team3574.subsystems.SensorTest;
@@ -41,7 +42,9 @@ public class Robot extends TimedRobot {
 	public static OI OperatorInput;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
 	
-
+	public static final Arm arm = new Arm();
+	
+	
 	public double _matchTime;
 
 	/**
