@@ -2,6 +2,7 @@ package org.usfirst.frc.team3574.subsystems;
 
 
 import org.usfirst.frc.team3574.commands.driveTrain.DriveWithJoy;
+import org.usfirst.frc.team3574.commands.driveTrain.RunTestOnMotors;
 import org.usfirst.frc.team3574.robot.Robot;
 import org.usfirst.frc.team3574.robot.RobotMap;
 
@@ -25,12 +26,7 @@ public class DriveTrain extends Subsystem {
 	TalonSRX motorRight2 = new TalonSRX(RobotMap.DriveTrainRightTalon2);
 	Solenoid shifter = new Solenoid(RobotMap.ShifterSolenoid);
 
-	TalonSRX motorTest1 = new TalonSRX(RobotMap.LeftTalon3);
-	TalonSRX motorTest2 = new TalonSRX(RobotMap.LeftTalon4);
-
-
-	TalonSRX imuTalon = new TalonSRX (RobotMap.DriveTrainPenguin1);
-	PigeonIMU penguin = new PigeonIMU (imuTalon);
+	PigeonIMU penguin = new PigeonIMU (motorLeft2);
 
 	double kPgain = 0.04; /* percent throttle per degree of error */
 	double kDgain = 0.0004; /* percent throttle per angular velocity dps */
@@ -66,7 +62,8 @@ public class DriveTrain extends Subsystem {
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
 		//setDefaultCommand(new MySpecialCommand());
-		setDefaultCommand(new DriveWithJoy());
+//		setDefaultCommand(new DriveWithJoy());
+		setDefaultCommand(new RunTestOnMotors());
 	}
 
 	//Drives the robot using s inputs for the left and right side motors.
@@ -107,10 +104,14 @@ public class DriveTrain extends Subsystem {
 	}
 
 	
-	public void driveStraightByArcade (double percentThrottle, double percentRotationOutput) {
-		
-		percentRotationOutput += driveStraight(percentThrottle, 0);
-		
+	public void driveStraightByArcade (double percentThrottle, double percentRotationOutput, double targetAngle) {
+
+		percentThrottle = valueAfterDeadzoned(percentThrottle);
+		percentRotationOutput = valueAfterDeadzoned(percentRotationOutput);
+
+		if (percentRotationOutput == 0) {
+			percentRotationOutput += driveStraight(percentThrottle, targetAngle);
+		}
 		motorLeft1.set(ControlMode.PercentOutput, percentThrottle - percentRotationOutput);
 		motorLeft2.set(ControlMode.PercentOutput, percentThrottle - percentRotationOutput);
 
@@ -145,6 +146,14 @@ public class DriveTrain extends Subsystem {
 
 		//		x'   = a             * x^3                     +  (1-a)             * x
 		return scalingCutoff * joystickValueToTheThird + ((1-scalingCutoff) * joystickValue);
+	}
+	
+	public void testOneMotorAtATime (double speed) {
+		motorLeft1.set(ControlMode.PercentOutput, speed);
+		motorLeft2.set(ControlMode.PercentOutput, speed);
+		motorRight1.set(ControlMode.PercentOutput, speed);
+		motorRight2.set(ControlMode.PercentOutput, speed);
+		
 	}
 
 	public void doNothing () 
@@ -226,5 +235,9 @@ public class DriveTrain extends Subsystem {
 		SmartDashboard.putNumber("Encoder Right", this.getEncoderRight());
 		SmartDashboard.putNumber("Encoder Left", this.getEncoderLeft());
 		
+		SmartDashboard.putNumber("Motor Left 1 Voltage", motorLeft1.getMotorOutputVoltage());
+		SmartDashboard.putNumber("Motor Left 2 Voltage", motorLeft2.getMotorOutputVoltage());
+		SmartDashboard.putNumber("Motor Right 1 Voltage", motorRight1.getMotorOutputVoltage());
+		SmartDashboard.putNumber("Motor Right 2 Voltage", motorRight2.getMotorOutputVoltage());
 	}
 }

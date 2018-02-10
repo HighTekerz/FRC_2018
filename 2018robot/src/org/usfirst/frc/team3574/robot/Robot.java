@@ -8,10 +8,13 @@
 package org.usfirst.frc.team3574.robot;
 
 import org.usfirst.frc.team3574.autonomous.DriveForwardAutonomous;
+import org.usfirst.frc.team3574.commands.RumbleASide;
 import org.usfirst.frc.team3574.subsystems.DriveTrain;
 import org.usfirst.frc.team3574.subsystems.SensorTest;
 import org.usfirst.frc.team3574.subsystems.TheHedgehog;
 
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -26,13 +29,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * project.
  */
 public class Robot extends TimedRobot {
-	
+
 	public static final DriveTrain driveTrain = new DriveTrain();
 	public static OI OperatorInput;
 	public static final TheHedgehog theHedgehog = new TheHedgehog();
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
-    public static final SensorTest sensorTest = new SensorTest();
+	public static final SensorTest sensorTest = new SensorTest();
+
+	public double _matchTime;
+
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -43,7 +49,7 @@ public class Robot extends TimedRobot {
 		m_chooser.addDefault("Default Auto", new DriveForwardAutonomous());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", m_chooser);
-		
+		SmartDashboard.putData(Scheduler.getInstance());
 	}
 
 	/**
@@ -111,7 +117,7 @@ public class Robot extends TimedRobot {
 			m_autonomousCommand.cancel();
 		}
 		this.log();
-		
+
 	}
 
 	/**
@@ -119,10 +125,10 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		
+		_matchTime = DriverStation.getInstance().getMatchTime();
 		this.log();
 //		Robot.driveTrain.driveStraight(0.5, 0);
-		
+
 		Scheduler.getInstance().run();
 	}
 
@@ -131,18 +137,21 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void testPeriodic() {
-		
+
 		this.log();
 	}
-	
-	 
+
+
 	public void log() {
-		
 		SmartDashboard.putNumber("Percent Throttle", OperatorInput.getRightStickY());
 		SmartDashboard.putNumber("Percent Rotation", OperatorInput.getLeftStickX());
+		SmartDashboard.putNumber("Match Time", _matchTime);
 		SmartDashboard.putNumber("a", (OperatorInput.getDialAxis()+1)/2);
+		SmartDashboard.putString("Switch & Scale Colors", DriverStation.getInstance().getGameSpecificMessage());
+		SmartDashboard.putNumber("POV of xbox", OperatorInput.GetPOV(Robot.OperatorInput.xbox));
 		
 		Robot.driveTrain.log();
 		Robot.sensorTest.log();
+
 	}
 }

@@ -8,17 +8,22 @@
 package org.usfirst.frc.team3574.robot;
 
 
+import org.usfirst.frc.team3574.commands.RumbleASide;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveByHedgehog2Distance;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveByInches;
+import org.usfirst.frc.team3574.commands.driveTrain.RunTestOnMotors;
 import org.usfirst.frc.team3574.commands.driveTrain.TurnToDegree;
 
 import org.usfirst.frc.team3574.commands.driveTrain.DriveByInches;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Joystick.AxisType;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.XboxController; 
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -69,30 +74,39 @@ public class OI {
 	static final int RIGHT_THUMBSTICK_BUTTON = 9;
 	static final int LEFT_THUMBSTICK_BUTTON = 10;
 
-	
-	
+	static final int LEFT_STICK_X = 0;
+	static final int LEFT_STICK_Y = 1;
+
+
+
 	public OI() {
-		Button driveOneRotationForeward = new JoystickButton(xbox, Y_BUTTON);
-			driveOneRotationForeward.whenPressed(new DriveByInches(3 * Math.PI, -0.5));
-			//Hey, you guys had the A and Y buttons the wrong way around. We fixed it. You're welcome.
-		Button driveOneRotationBackward = new JoystickButton(xbox, A_BUTTON);
-			driveOneRotationBackward.whenPressed(new DriveByInches(3 * Math.PI, 0.5));
+		Button drive5FeetForeward = new JoystickButton(xbox, Y_BUTTON);
+		drive5FeetForeward.whenPressed(new DriveByInches(120, 0.5));
+		
+		Button drive5FeetBackward = new JoystickButton(xbox, A_BUTTON);
+		drive5FeetBackward.whenPressed(new DriveByInches(120, -0.5));
+		
 		Button turnNinetyDegreesRight = new JoystickButton(xbox, X_BUTTON);
-		//these are actually the right buttons doing the right thing but with the wrong names. :/
-			turnNinetyDegreesRight.whenPressed(new TurnToDegree(90, 0.4));
+		turnNinetyDegreesRight.whenPressed(new TurnToDegree(90, 0.4));
+		
 		Button turnNinetyDegreesLeft = new JoystickButton(xbox, B_BUTTON);
-			turnNinetyDegreesLeft.whenPressed(new TurnToDegree(-90, 0.4));
+		turnNinetyDegreesLeft.whenPressed(new TurnToDegree(-90, 0.4));
+		
 		Button turnFifteenRight = new JoystickButton(xbox, RIGHT_BUMPER);
-			turnFifteenRight.whenPressed(new TurnToDegree(-10, 0.4));
+		turnFifteenRight.whenPressed(new TurnToDegree(-10, 0.4));
+		
 		Button turnFifteenLeft = new JoystickButton(xbox, LEFT_BUMPER);
-			turnFifteenLeft.whenPressed(new TurnToDegree(10, 0.4));
-			//These last two are for testing autonomous stuff mostly.
+		turnFifteenLeft.whenPressed(new TurnToDegree(10, 0.4));
+		
+		//These last two are for testing autonomous stuff mostly.
 		Button driveToDistance = new JoystickButton(xbox, START);
-				driveToDistance.whenPressed(new DriveByHedgehog2Distance(24, - 0.25));
-	    Button driveToNewDistance = new JoystickButton(xbox, BACK);
-				driveToNewDistance.whenPressed(new DriveByHedgehog2Distance(24,  0.25));
-	
-			
+		driveToDistance.whenPressed(new DriveByHedgehog2Distance(24, - 0.25));
+		
+		Button driveToNewDistance = new JoystickButton(xbox, BACK);
+		driveToNewDistance.whenPressed(new DriveByHedgehog2Distance(24,  0.25));
+
+		Button rumbleNow = new JoystickButton(testBox, START);
+		rumbleNow.whenPressed(new RumbleASide(testBox, 0.75, "Left"));
 	}
 
 
@@ -112,11 +126,14 @@ public class OI {
 	}
 	public double getRightStickX()
 	{
-		return -xbox.getX(Hand.kRight);
+		return xbox.getX(Hand.kRight);
 	}
 	public double getRightTrigger()
 	{
 		return xbox.getTriggerAxis(Hand.kRight);
+	
+	public double GetPOV(XboxController stickToCheck) {
+		return stickToCheck.getPOV();
 	}
 	public double getLeftTrigger()
 	{

@@ -1,6 +1,5 @@
 package org.usfirst.frc.team3574.autonomous;
 
-import org.usfirst.frc.team3574.commands.driveTrain.TurnToDegree;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveByInches;
 import org.usfirst.frc.team3574.robot.FieldFunctions;
 
