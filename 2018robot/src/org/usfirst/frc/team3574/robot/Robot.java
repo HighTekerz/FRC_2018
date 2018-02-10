@@ -10,6 +10,7 @@ package org.usfirst.frc.team3574.robot;
 import org.usfirst.frc.team3574.autonomous.DriveForwardAutonomous;
 import org.usfirst.frc.team3574.commands.RumbleASide;
 import org.usfirst.frc.team3574.subsystems.DriveTrain;
+import org.usfirst.frc.team3574.subsystems.Lift;
 import org.usfirst.frc.team3574.subsystems.SensorTest;
 import org.usfirst.frc.team3574.subsystems.TheHedgehog;
 
@@ -30,12 +31,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends TimedRobot {
 
+	//subsystems
 	public static final DriveTrain driveTrain = new DriveTrain();
-	public static OI OperatorInput;
 	public static final TheHedgehog theHedgehog = new TheHedgehog();
-	Command m_autonomousCommand;
-	SendableChooser<Command> m_chooser = new SendableChooser<>();
 	public static final SensorTest sensorTest = new SensorTest();
+	public static final Lift lift = new Lift();
+	
+	Command m_autonomousCommand;
+	public static OI OperatorInput;
+	SendableChooser<Command> m_chooser = new SendableChooser<>();
+	
 
 	public double _matchTime;
 
