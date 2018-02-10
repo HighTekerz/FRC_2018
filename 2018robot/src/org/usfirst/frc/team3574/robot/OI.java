@@ -9,11 +9,12 @@ package org.usfirst.frc.team3574.robot;
 
 
 import org.usfirst.frc.team3574.commands.RumbleASide;
+import org.usfirst.frc.team3574.commands.arm.SetCobraPosition;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveByHedgehog2Distance;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveByInches;
 import org.usfirst.frc.team3574.commands.driveTrain.RunTestOnMotors;
 import org.usfirst.frc.team3574.commands.driveTrain.TurnToDegree;
-
+import org.usfirst.frc.team3574.subsystems.Arm;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveByInches;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.Joystick;
@@ -60,6 +61,7 @@ public class OI {
 
 	XboxController xbox = new XboxController(0);
 	XboxController testBox = new XboxController(1);
+	XboxController questBox = new XboxController(2);
 	Joystick logitechAttack = new Joystick(3);
 
 	//	Joystick xbox = new Joystick(0);
@@ -107,6 +109,18 @@ public class OI {
 
 		Button rumbleNow = new JoystickButton(testBox, START);
 		rumbleNow.whenPressed(new RumbleASide(testBox, 0.75, "Left"));
+		
+		Button cobraAttentive = new JoystickButton(questBox, Y_BUTTON);
+		cobraAttentive.whenPressed(new SetCobraPosition(Arm.AggressiveCobra));
+
+		Button cobraAggressive = new JoystickButton(questBox, X_BUTTON);
+		cobraAggressive.whenPressed(new SetCobraPosition(Arm.AggressiveCobra));
+		
+		Button cobraDepressed = new JoystickButton(questBox, B_BUTTON);
+		cobraDepressed.whenPressed(new SetCobraPosition(Arm.DepressedCobra));
+		
+		Button cobraDead = new JoystickButton(questBox, A_BUTTON);
+		cobraDead.whenPressed(new SetCobraPosition(Arm.DeadCobra));
 	}
 
 
