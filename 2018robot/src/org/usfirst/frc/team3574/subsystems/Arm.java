@@ -1,6 +1,5 @@
 package org.usfirst.frc.team3574.subsystems;
 
-import org.usfirst.frc.team3574.commands.arm.AssumeThePosition;
 import org.usfirst.frc.team3574.robot.Robot;
 import org.usfirst.frc.team3574.robot.RobotMap;
 
@@ -66,7 +65,6 @@ public class Arm extends Subsystem {
 	}
 	
 	public void assumeThePosition(){
-		
 	}
 }
 
