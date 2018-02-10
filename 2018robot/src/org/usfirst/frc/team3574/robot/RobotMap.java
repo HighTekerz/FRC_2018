@@ -16,11 +16,15 @@ package org.usfirst.frc.team3574.robot;
 public final class RobotMap {
 	public static int ShifterSolenoid = 9991;
 	public static int ClawSolenoid = 9996;
+	public static int WristSolenoid = 9997;
+	public static int BreakSolenoid = 9998;
+	public static int LeftWingSolenoid = 9999;
+	public static int RightWingSolenoid = 10000;
 	
 	public static int ArmMotor = 9992;
 	public static int LiftMotor = 9993;
-	public static int LeftWingReleaseMotor = 9994;
-	public static int RightWingReleaseMotor = 9995;
+	public static int LeftWingReleaseSpike = 9994;
+	public static int RightWingReleaseSpike = 9995;
 	public static int DriveTrainRightTalon1 = 13;
 	public static int DriveTrainRightTalon2 = 12;
 	public static int DriveTrainLeftTalon1 = 1;
