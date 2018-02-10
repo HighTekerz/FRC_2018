@@ -15,7 +15,21 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Lifter extends Subsystem {
 
 	TalonSRX liftSim = new TalonSRX(RobotMap.LiftMotor); 
-
+	final int slotIdx = RobotMap.LiftMotor;
+	final int timeoutMs = 50;
+	final double kP = 1.0;
+	final double kI = 1.0;
+	final double kD = 1.0;
+	
+	public Lifter() {
+		//guessing that the "slotIdx" number is the same as the Id/Device number
+		liftSim.config_kP(slotIdx, kP, timeoutMs);
+		liftSim.config_kI(slotIdx, kI, timeoutMs);
+		liftSim.config_kD(slotIdx, kD, timeoutMs);
+		
+		
+			
+	}
 
 	public enum LifterHeights {
 		//not the actual values
