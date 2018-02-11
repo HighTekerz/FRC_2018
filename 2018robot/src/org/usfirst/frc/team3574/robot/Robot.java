@@ -37,6 +37,7 @@ public class Robot extends TimedRobot {
 	public static final TheHedgehog theHedgehog = new TheHedgehog();
 	public static final SensorTest sensorTest = new SensorTest();
 	public static final Lifter lifter = new Lifter();
+	
 	public static final Arm arm = new Arm();
 	
 	Command m_autonomousCommand;

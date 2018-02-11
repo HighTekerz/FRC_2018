@@ -15,6 +15,7 @@ public class SetWristParallel extends Command {
     public SetWristParallel(boolean setWristParallel) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	requires(Robot.arm);
     	_setWristParallel = setWristParallel;
     }
 
@@ -37,11 +38,13 @@ public class SetWristParallel extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	System.out.println("SetWristParallel Is Finished");
     	Robot.arm.setWristParallelToTheRestOfTheArmDeviceItIsAttachedTo(_setWristParallel);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	System.out.println("uh oh! wrist has been interrupted.");
     }
 }

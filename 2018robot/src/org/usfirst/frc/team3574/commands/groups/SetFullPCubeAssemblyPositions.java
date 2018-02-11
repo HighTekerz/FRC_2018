@@ -27,9 +27,11 @@ public class SetFullPCubeAssemblyPositions extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addParallel(new SetCobraPosition(cobraPosition));
+    	addSequential(new SetCobraPosition(cobraPosition));
     	//addParallel(new SetLifterPosition(Lifter.LifterHeights.SCALE_MED)); (original version in case this screws up)
-    	addParallel(new SetLifterPosition(liftPosition));
+    	addSequential(new SetLifterPosition(liftPosition));
     	addSequential(new SetWristParallel(wristPosition));
+    	//for some mysterious reason this command group occasionally will get stuck in the initialize part of SetCobraPosition and does not continue to the next command
+    	//System.out.println("Did all three things the bot was supposed to do in sequence.");
     }
 }

@@ -35,8 +35,9 @@ public class Arm extends Subsystem {
 	public final int timeoutMs = 50;
 	public boolean armDoneMoving = false;
 
-	DigitalInput leftCubeSensor = new DigitalInput(0);	
-	DigitalInput rightCubeSensor = new DigitalInput(1);
+	
+//	DigitalInput leftCubeSensor = new DigitalInput(1);	
+//	DigitalInput rightCubeSensor = new DigitalInput(2);
 
 	public Arm() {
 		ArmMotor.config_kP(slotIdx, kP, timeoutMs);
@@ -59,6 +60,7 @@ public class Arm extends Subsystem {
 	}
 
 	public void putTheArmSomewhere(int cobraForm) {
+		System.out.println("Reached putTheArmSomeWhere");
 		switch (cobraForm) {
 
 		case (AttentiveCobra):
@@ -88,7 +90,8 @@ public class Arm extends Subsystem {
 	}
 
 	public boolean areBothSensorsTripped() {
-		return leftCubeSensor.get() && rightCubeSensor.get();
+//		return leftCubeSensor.get() && rightCubeSensor.get();
+		return false;
 	}
 
 	/*

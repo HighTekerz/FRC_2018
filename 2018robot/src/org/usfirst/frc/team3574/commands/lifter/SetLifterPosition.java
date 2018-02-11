@@ -20,18 +20,19 @@ public class SetLifterPosition extends Command {
 
     protected void initialize() {
     	System.out.println("SetLifterPosition Initialized");
+    	Robot.lifter.setLifterPosition(_setPosition);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	
-    	Robot.lifter.setLifterPosition(_setPosition);
-    
+
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+    	System.out.println("SetLifterPosition Is Finished");
+        return true;
     }
 
     // Called once after isFinished returns true

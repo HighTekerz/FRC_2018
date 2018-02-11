@@ -64,7 +64,7 @@ public class OI {
 
 	XboxController driverXbox360Controller = new XboxController(0);
 	XboxController testBox = new XboxController(1);
-	XboxController coPilotxbox360Contoller = new XboxController(2);
+	XboxController coPilotxbox360Controller = new XboxController(2);
 	Joystick logitechAttack = new Joystick(3);
 
 	//	Joystick driverXbox360Controller = new Joystick(0);
@@ -110,17 +110,17 @@ public class OI {
 		Button driveToNewDistance = new JoystickButton(driverXbox360Controller, BACK);
 		driveToNewDistance.whenPressed(new DriveByHedgehog2Distance(24,  0.25));
 		
-		Button cobraAttentive = new JoystickButton(coPilotxbox360Contoller, Y_BUTTON);
+		Button cobraAttentive = new JoystickButton(coPilotxbox360Controller, Y_BUTTON);
 		cobraAttentive.whenPressed(new SetCobraPosition(Arm.AttentiveCobra));
 
-		Button cobraAggressive = new JoystickButton(coPilotxbox360Contoller, X_BUTTON);
+		Button cobraAggressive = new JoystickButton(coPilotxbox360Controller, X_BUTTON);
 		cobraAggressive.whenPressed(new SetCobraPosition(Arm.AggressiveCobra));
 		
-		Button cobraDepressed = new JoystickButton(coPilotxbox360Contoller, B_BUTTON);
-		cobraDepressed.whenPressed(new SetCobraPosition(Arm.DepressedCobra));
+        Button cobraDepressed = new JoystickButton(coPilotxbox360Controller, B_BUTTON);
+        cobraDepressed.whenPressed(new SetCobraPosition(Arm.DepressedCobra));
 		
-		Button cobraDead = new JoystickButton(coPilotxbox360Contoller, A_BUTTON);
-		cobraDead.whenPressed(new SetCobraPosition(Arm.DeadCobra));
+        Button cobraDead = new JoystickButton(coPilotxbox360Controller, A_BUTTON);
+        cobraDead.whenPressed(new SetCobraPosition(Arm.DeadCobra));
 		
 		Button testOurNewThingy = new JoystickButton(testBox, A_BUTTON);
 		testOurNewThingy.whenPressed(new SetFullPCubeAssemblyPositions(Arm.AggressiveCobra, Lifter.scaleMed, false));
