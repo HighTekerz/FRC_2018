@@ -1,7 +1,5 @@
 package org.usfirst.frc.team3574.subsystems;
 
-import java.lang.invoke.SwitchPoint;
-
 import org.usfirst.frc.team3574.robot.RobotMap;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -21,6 +19,13 @@ public class Lifter extends Subsystem {
 	final double kI = 1.0;
 	final double kD = 1.0;
 	
+	//not the actual values
+	public static int scaleLow = 3574;
+	public static int scaleMed = 5743;
+	public static int scaleHigh = 7535;
+	public static int switchLow = 4357;
+	public static int switchHigh = 5347;
+	
 	public Lifter() {
 		//guessing that the "slotIdx" number is the same as the Id/Device number
 		liftSim.config_kP(slotIdx, kP, timeoutMs);
@@ -30,10 +35,10 @@ public class Lifter extends Subsystem {
 		
 			
 	}
-
+/***
 	public enum LifterHeights {
-		//not the actual values
-		SCALE_LOW (3574), SCALE_MED (5743), SCALE_HIGH (7435), SWITCH_LOW (4357), SWITCH_HIGH (5347);
+
+		SCALE_LOW (scaleLow), SCALE_MED (scaleMed), SCALE_HIGH (scaleHigh), SWITCH_LOW (switchLow), SWITCH_HIGH (switchHigh);
 		private int numVal;
 
 		LifterHeights(int numVal) {
@@ -56,49 +61,48 @@ public class Lifter extends Subsystem {
 		return liftSim.getSensorCollection().getPulseWidthPosition();
 	}
 
-	public void setToSETMotorValues(LifterHeights setPosition) {
+	public void setToSETMotorValues(int setPosition) {
+		 setLifterPosition(setPosition);
 		switch (setPosition) {
-		case SCALE_LOW:
+		   
+		    
+		case (scaleLow):
 			
-			setLifterPosition(LifterHeights.SCALE_LOW.numVal);			
+			setLifterPosition(scaleLow);			
 			break;
 
-		case SCALE_MED:
+		case scaleMed:
 			
-			setLifterPosition(LifterHeights.SCALE_MED.numVal);
+			setLifterPosition(scaleMed);
 			break;
 			
-		case SCALE_HIGH:
+		case scaleHigh:
 			
-			setLifterPosition(LifterHeights.SCALE_HIGH.numVal);
-			break;
-
-		case SWITCH_LOW:
-			setLifterPosition(LifterHeights.SWITCH_LOW.numVal);			
+			setLifterPosition(scaleHigh);
 			break;
 
-		case SWITCH_HIGH:
+		case switchLow:
+			setLifterPosition(switchLow);			
+			break;
+
+		case switchHigh:
 			
-			setLifterPosition(LifterHeights.SWITCH_HIGH.numVal);			
+			setLifterPosition(switchHigh);			
 			break;
 
 
 		default:
 			break;
 
-		}
-	
-	}
+		}***/
 
-	private void setLifterPosition(int setPoint) {
-		liftSim.set(ControlMode.Position, setPoint );
+	public void setLifterPosition(int setPoint) {
+		liftSim.set(ControlMode.Position, setPoint);
 	}
-	
-	
-	
-	
-	
-	
-	
+	@Override
+	protected void initDefaultCommand() {
+		// TODO Auto-generated method stub
+		
+	}
 }
 

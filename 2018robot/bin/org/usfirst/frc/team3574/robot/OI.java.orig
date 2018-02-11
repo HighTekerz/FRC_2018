@@ -8,22 +8,21 @@
 package org.usfirst.frc.team3574.robot;
 
 
-import org.usfirst.frc.team3574.commands.arm.SetCobraPosition;
+import org.usfirst.frc.team3574.commands.RumbleASide;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveByHedgehog2Distance;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveByInches;
 import org.usfirst.frc.team3574.commands.driveTrain.RunTestOnMotors;
 import org.usfirst.frc.team3574.commands.driveTrain.TurnToDegree;
-import org.usfirst.frc.team3574.commands.groups.SetFullPCubeAssemblyPositions;
-import org.usfirst.frc.team3574.commands.lifter.SetLifterPosition;
-import org.usfirst.frc.team3574.commands.util.RumbleASide;
-import org.usfirst.frc.team3574.subsystems.Arm;
-import org.usfirst.frc.team3574.subsystems.Lifter;
+
 import org.usfirst.frc.team3574.commands.driveTrain.DriveByInches;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+<<<<<<< HEAD
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Joystick.AxisType;
+=======
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.DriverStation;
+>>>>>>> 96bbf10f9911ac80fd6bf6c220e02eee93726645
 import edu.wpi.first.wpilibj.XboxController; 
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -62,12 +61,11 @@ public class OI {
 	// until it is finished as determined by its isFinished method.
 	// button.whenReleased(new ExampleCommand());
 
-	XboxController driverXbox360Controller = new XboxController(0);
+	XboxController xbox = new XboxController(0);
 	XboxController testBox = new XboxController(1);
-	XboxController coPilotxbox360Contoller = new XboxController(2);
 	Joystick logitechAttack = new Joystick(3);
 
-	//	Joystick driverXbox360Controller = new Joystick(0);
+	//	Joystick xbox = new Joystick(0);
 	static final int A_BUTTON = 1;
 	static final int B_BUTTON = 2;
 	static final int X_BUTTON = 3;
@@ -79,86 +77,79 @@ public class OI {
 	static final int RIGHT_THUMBSTICK_BUTTON = 9;
 	static final int LEFT_THUMBSTICK_BUTTON = 10;
 
+<<<<<<< HEAD
+	
+	
+=======
 	static final int LEFT_STICK_X = 0;
 	static final int LEFT_STICK_Y = 1;
 
 
 
+>>>>>>> 96bbf10f9911ac80fd6bf6c220e02eee93726645
 	public OI() {
-		Button drive5FeetForeward = new JoystickButton(driverXbox360Controller, Y_BUTTON);
+		Button drive5FeetForeward = new JoystickButton(xbox, Y_BUTTON);
 		drive5FeetForeward.whenPressed(new DriveByInches(120, 0.5));
 		
-		Button drive5FeetBackward = new JoystickButton(driverXbox360Controller, A_BUTTON);
+		Button drive5FeetBackward = new JoystickButton(xbox, A_BUTTON);
 		drive5FeetBackward.whenPressed(new DriveByInches(120, -0.5));
 		
-		Button turnNinetyDegreesRight = new JoystickButton(driverXbox360Controller, X_BUTTON);
+		Button turnNinetyDegreesRight = new JoystickButton(xbox, X_BUTTON);
 		turnNinetyDegreesRight.whenPressed(new TurnToDegree(90, 0.4));
 		
-		Button turnNinetyDegreesLeft = new JoystickButton(driverXbox360Controller, B_BUTTON);
+		Button turnNinetyDegreesLeft = new JoystickButton(xbox, B_BUTTON);
 		turnNinetyDegreesLeft.whenPressed(new TurnToDegree(-90, 0.4));
 		
-		Button turnFifteenRight = new JoystickButton(driverXbox360Controller, RIGHT_BUMPER);
+		Button turnFifteenRight = new JoystickButton(xbox, RIGHT_BUMPER);
 		turnFifteenRight.whenPressed(new TurnToDegree(-10, 0.4));
 		
-		Button turnFifteenLeft = new JoystickButton(driverXbox360Controller, LEFT_BUMPER);
+		Button turnFifteenLeft = new JoystickButton(xbox, LEFT_BUMPER);
 		turnFifteenLeft.whenPressed(new TurnToDegree(10, 0.4));
 		
 		//These last two are for testing autonomous stuff mostly.
-		Button driveToDistance = new JoystickButton(driverXbox360Controller, START);
+		Button driveToDistance = new JoystickButton(xbox, START);
 		driveToDistance.whenPressed(new DriveByHedgehog2Distance(24, - 0.25));
 		
-		Button driveToNewDistance = new JoystickButton(driverXbox360Controller, BACK);
+		Button driveToNewDistance = new JoystickButton(xbox, BACK);
 		driveToNewDistance.whenPressed(new DriveByHedgehog2Distance(24,  0.25));
-		
-		Button cobraAttentive = new JoystickButton(coPilotxbox360Contoller, Y_BUTTON);
-		cobraAttentive.whenPressed(new SetCobraPosition(Arm.AttentiveCobra));
 
-		Button cobraAggressive = new JoystickButton(coPilotxbox360Contoller, X_BUTTON);
-		cobraAggressive.whenPressed(new SetCobraPosition(Arm.AggressiveCobra));
-		
-		Button cobraDepressed = new JoystickButton(coPilotxbox360Contoller, B_BUTTON);
-		cobraDepressed.whenPressed(new SetCobraPosition(Arm.DepressedCobra));
-		
-		Button cobraDead = new JoystickButton(coPilotxbox360Contoller, A_BUTTON);
-		cobraDead.whenPressed(new SetCobraPosition(Arm.DeadCobra));
-		
-		Button testOurNewThingy = new JoystickButton(testBox, A_BUTTON);
-		testOurNewThingy.whenPressed(new SetFullPCubeAssemblyPositions(Arm.AggressiveCobra, Lifter.scaleMed, false));
-		}
+		Button rumbleNow = new JoystickButton(testBox, START);
+		rumbleNow.whenPressed(new RumbleASide(testBox, 0.75, "Left"));
+	}
 
 
 
 	public double getLeftStickY ()
 	{
-		return driverXbox360Controller.getY(Hand.kLeft); 
+		return xbox.getY(Hand.kLeft); 
 	}
 	public double getRightStickY()
 	{
-		return -driverXbox360Controller.getY(Hand.kRight); 
+		return -xbox.getY(Hand.kRight); 
 	}
 
 	public double getLeftStickX()
 	{
-		return driverXbox360Controller.getX(Hand.kLeft);
+		return xbox.getX(Hand.kLeft);
 	}
 	public double getRightStickX()
 	{
-		return driverXbox360Controller.getX(Hand.kRight);
+		return -xbox.getX(Hand.kRight);
 	}
 	public double getRightTrigger()
 	{
-		return driverXbox360Controller.getTriggerAxis(Hand.kRight);
-	}
-	
-	public double GetPOV(XboxController stickToCheck) {
-		return stickToCheck.getPOV();
+		return xbox.getTriggerAxis(Hand.kRight);
 	}
 	public double getLeftTrigger()
 	{
-		return driverXbox360Controller.getTriggerAxis(Hand.kLeft);
+		return xbox.getTriggerAxis(Hand.kLeft);
 	}
 	public double getDialAxis()
 	{
 		return -logitechAttack.getAxis(AxisType.kZ);
+	}
+	
+	public double GetPOV(XboxController stickToCheck) {
+		return stickToCheck.getPOV();
 	}
 }

@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3574.commands;
+package org.usfirst.frc.team3574.commands.util;
 
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.XboxController;

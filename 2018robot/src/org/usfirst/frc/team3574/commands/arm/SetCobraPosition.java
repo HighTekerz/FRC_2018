@@ -20,6 +20,7 @@ public class SetCobraPosition extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	System.out.println("SetCobraPosition Initialized");
     	Robot.arm.putTheArmSomewhere(_cobraPosition);
     }
 

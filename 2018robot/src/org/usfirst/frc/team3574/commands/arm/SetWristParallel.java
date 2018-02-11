@@ -20,6 +20,7 @@ public class SetWristParallel extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	System.out.println("SetWristParallel Initialized");
     	Robot.arm.setWristParallelToTheRestOfTheArmDeviceItIsAttachedTo(_setWristParallel);
     }
 

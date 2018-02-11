@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3574.commands.lifter;
 
 import org.usfirst.frc.team3574.robot.Robot;
-import org.usfirst.frc.team3574.subsystems.Lifter.LifterHeights;
+//import org.usfirst.frc.team3574.subsystems.Lifter.LifterHeights;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -9,21 +9,23 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class SetLifterPosition extends Command {
+	private int _setPosition;
 
-	private LifterHeights setPosition; 
-    public void SetLifterPosition(LifterHeights setPosition) {
+//	private LifterHeights setPosition; 
+    public SetLifterPosition(int setPosition) {
     	
-    	this.setPosition = setPosition;
+    	_setPosition = setPosition;
      requires(Robot.lifter);
     }
 
     protected void initialize() {
+    	System.out.println("SetLifterPosition Initialized");
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	
-    	Robot.lifter.setToSETMotorValues(setPosition);
+    	Robot.lifter.setLifterPosition(_setPosition);
     
     }
 
