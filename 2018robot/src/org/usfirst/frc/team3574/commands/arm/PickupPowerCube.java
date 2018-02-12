@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3574.commands.arm;
 
+import org.usfirst.frc.team3574.commands.claw.SetClawOpen;
 import org.usfirst.frc.team3574.commands.util.UntilBothSensorsAreTripped;
 import org.usfirst.frc.team3574.robot.Robot;
 import org.usfirst.frc.team3574.subsystems.Arm;
@@ -29,11 +30,11 @@ public class PickupPowerCube extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	addSequential(new UntilBothSensorsAreTripped());
-    	addSequential(new SetClawPosition(true));
-    	addSequential(new SetWristParallel(true));
-    	addSequential(new SetCobraPosition(Arm.DeadCobra));
-    	addSequential(new SetClawPosition(false));
-    	addParallel(new SetCobraPosition(Arm.AggressiveCobra));
+    	addParallel(new SetClawOpen(true));
     	addSequential(new SetWristParallel(false));
+    	addSequential(new SetCobraPosition(Arm.DeadCobra));
+    	addSequential(new SetClawOpen(false));
+    	addParallel(new SetCobraPosition(Arm.AttentiveCobra));
+    	addSequential(new SetWristParallel(true));
     }
 }

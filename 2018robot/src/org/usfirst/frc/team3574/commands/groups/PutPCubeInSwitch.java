@@ -1,16 +1,19 @@
 package org.usfirst.frc.team3574.commands.groups;
 
 import org.usfirst.frc.team3574.commands.arm.SetCobraPosition;
-import org.usfirst.frc.team3574.commands.arm.SetWristParallel;
+import org.usfirst.frc.team3574.commands.claw.SetClawOpen;
 import org.usfirst.frc.team3574.commands.lifter.SetLifterPosition;
+import org.usfirst.frc.team3574.subsystems.Arm;
+import org.usfirst.frc.team3574.subsystems.Lifter;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
-public class SetFullPCubeAssemblyPositions extends CommandGroup {
+public class PutPCubeInSwitch extends CommandGroup {
 
-    public SetFullPCubeAssemblyPositions(int cobraPosition, int liftPosition, boolean wristPosition) {
+    public PutPCubeInSwitch() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -27,10 +30,10 @@ public class SetFullPCubeAssemblyPositions extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addSequential(new SetCobraPosition(cobraPosition));
-    	//addParallel(new SetLifterPosition(Lifter.LifterHeights.SCALE_MED)); original version in case this screws up
-    	addSequential(new SetLifterPosition(liftPosition));
-    	addSequential(new SetWristParallel(wristPosition));
-    	//for some mysterious reason this command group occasionally will get stuck in the initialize part of SetCobraPosition and does not continue to the next command
+    	addParallel(new SetCobraPosition(Arm.DepressedCobra));
+    	addSequential(new SetLifterPosition(Lifter.switchHeight));
+    	addSequential(new SetClawOpen(false));
+    	addSequential(new SetCobraPosition(Arm.AttentiveCobra));
+    	addSequential(new SetClawOpen(true));
     }
 }

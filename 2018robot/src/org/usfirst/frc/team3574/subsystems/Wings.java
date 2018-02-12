@@ -16,7 +16,8 @@ public class Wings extends Subsystem {
 	Spark leftSpark = new Spark(RobotMap.LeftWingReleaseSpark);
 	Spark rightSpark = new Spark(RobotMap.RightWingReleaseSpark);
 	
-	private final double setPosition= 5;
+	//probably just a placeholder value
+	private final double sparkOpenPosition= 5;
 	
     public void initDefaultCommand() {
       
@@ -24,21 +25,21 @@ public class Wings extends Subsystem {
     	
     	
     }
-    public void setLeftSolenoid() {
+    public void setLeftSolenoid(boolean pistonIsOpen) {
     
-    	leftSolenoid.set(true);
+    	leftSolenoid.set(pistonIsOpen);
     }
-    public void setRightSolenoid() {
+    public void setRightSolenoid(boolean pistonIsOpen) {
     	
-    	rightSolenoid.set(true);
+    	rightSolenoid.set(pistonIsOpen);
     }
     public void setLeftSparkOpen() {
     	
-    	leftSpark.setPosition(setPosition);
+    	leftSpark.setPosition(sparkOpenPosition);
     }
     public void setRightSparkOpen() {
     	
-    	rightSpark.setPosition(setPosition);
+    	rightSpark.setPosition(sparkOpenPosition);
     }
 }
 

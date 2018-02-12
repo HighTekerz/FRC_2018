@@ -13,7 +13,7 @@ import org.usfirst.frc.team3574.commands.driveTrain.DriveByHedgehog2Distance;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveByInches;
 import org.usfirst.frc.team3574.commands.driveTrain.RunTestOnMotors;
 import org.usfirst.frc.team3574.commands.driveTrain.TurnToDegree;
-import org.usfirst.frc.team3574.commands.groups.SetFullPCubeAssemblyPositions;
+import org.usfirst.frc.team3574.commands.groups.PutPCubeInSwitch;
 import org.usfirst.frc.team3574.commands.lifter.SetLifterPosition;
 import org.usfirst.frc.team3574.commands.util.RumbleASide;
 import org.usfirst.frc.team3574.subsystems.Arm;
@@ -63,9 +63,8 @@ public class OI {
 	// button.whenReleased(new ExampleCommand());
 
 	XboxController driverXbox360Controller = new XboxController(0);
-	XboxController testBox = new XboxController(1);
-	XboxController coPilotxbox360Controller = new XboxController(2);
-	Joystick logitechAttack = new Joystick(3);
+	XboxController coPilotxbox360Controller = new XboxController(1);
+	//	Joystick logitechAttack = new Joystick(3);
 
 	//	Joystick driverXbox360Controller = new Joystick(0);
 	static final int A_BUTTON = 1;
@@ -87,44 +86,46 @@ public class OI {
 	public OI() {
 		Button drive5FeetForeward = new JoystickButton(driverXbox360Controller, Y_BUTTON);
 		drive5FeetForeward.whenPressed(new DriveByInches(120, 0.5));
-		
+
 		Button drive5FeetBackward = new JoystickButton(driverXbox360Controller, A_BUTTON);
 		drive5FeetBackward.whenPressed(new DriveByInches(120, -0.5));
-		
+
 		Button turnNinetyDegreesRight = new JoystickButton(driverXbox360Controller, X_BUTTON);
 		turnNinetyDegreesRight.whenPressed(new TurnToDegree(90, 0.4));
-		
+
 		Button turnNinetyDegreesLeft = new JoystickButton(driverXbox360Controller, B_BUTTON);
 		turnNinetyDegreesLeft.whenPressed(new TurnToDegree(-90, 0.4));
-		
+
 		Button turnFifteenRight = new JoystickButton(driverXbox360Controller, RIGHT_BUMPER);
 		turnFifteenRight.whenPressed(new TurnToDegree(-10, 0.4));
-		
+
 		Button turnFifteenLeft = new JoystickButton(driverXbox360Controller, LEFT_BUMPER);
 		turnFifteenLeft.whenPressed(new TurnToDegree(10, 0.4));
-		
+
 		//These last two are for testing autonomous stuff mostly.
 		Button driveToDistance = new JoystickButton(driverXbox360Controller, START);
 		driveToDistance.whenPressed(new DriveByHedgehog2Distance(24, - 0.25));
-		
+
 		Button driveToNewDistance = new JoystickButton(driverXbox360Controller, BACK);
 		driveToNewDistance.whenPressed(new DriveByHedgehog2Distance(24,  0.25));
-		
+
 		Button cobraAttentive = new JoystickButton(coPilotxbox360Controller, Y_BUTTON);
 		cobraAttentive.whenPressed(new SetCobraPosition(Arm.AttentiveCobra));
 
 		Button cobraAggressive = new JoystickButton(coPilotxbox360Controller, X_BUTTON);
 		cobraAggressive.whenPressed(new SetCobraPosition(Arm.AggressiveCobra));
-		
-        Button cobraDepressed = new JoystickButton(coPilotxbox360Controller, B_BUTTON);
-        cobraDepressed.whenPressed(new SetCobraPosition(Arm.DepressedCobra));
-		
-        Button cobraDead = new JoystickButton(coPilotxbox360Controller, A_BUTTON);
-        cobraDead.whenPressed(new SetCobraPosition(Arm.DeadCobra));
-		
-		Button testOurNewThingy = new JoystickButton(testBox, A_BUTTON);
-		testOurNewThingy.whenPressed(new SetFullPCubeAssemblyPositions(Arm.AggressiveCobra, Lifter.scaleMed, false));
-		}
+
+		Button cobraDepressed = new JoystickButton(coPilotxbox360Controller, B_BUTTON);
+		cobraDepressed.whenPressed(new SetCobraPosition(Arm.DepressedCobra));
+
+		Button cobraDead = new JoystickButton(coPilotxbox360Controller, A_BUTTON);
+		cobraDead.whenPressed(new SetCobraPosition(Arm.DeadCobra));
+
+		SmartDashboard.putData(new PutPCubeInSwitch());
+
+		//		Button testOurNewThingy = new JoystickButton(testBox, A_BUTTON);
+		//		testOurNewThingy.whenPressed(new SetFullPCubeAssemblyPositions(Arm.AggressiveCobra, Lifter.scaleMed, false));
+	}
 
 
 
@@ -149,7 +150,7 @@ public class OI {
 	{
 		return driverXbox360Controller.getTriggerAxis(Hand.kRight);
 	}
-	
+
 	public double GetPOV(XboxController stickToCheck) {
 		return stickToCheck.getPOV();
 	}
@@ -159,6 +160,7 @@ public class OI {
 	}
 	public double getDialAxis()
 	{
-		return -logitechAttack.getAxis(AxisType.kZ);
+		return 0;
+		//		return -logitechAttack.getAxis(AxisType.kZ);
 	}
 }

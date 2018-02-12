@@ -2,8 +2,6 @@ package org.usfirst.frc.team3574.subsystems;
 
 
 import org.usfirst.frc.team3574.commands.driveTrain.DriveWithJoy;
-import org.usfirst.frc.team3574.commands.driveTrain.RunTestOnMotors;
-import org.usfirst.frc.team3574.robot.Robot;
 import org.usfirst.frc.team3574.robot.RobotMap;
 
 //import org.usfirst.frc.team3574.robot.RobotMap;
@@ -44,6 +42,7 @@ public class DriveTrain extends Subsystem {
 		motorRight1.setNeutralMode(NeutralMode.Brake);
 		motorRight2.setNeutralMode(NeutralMode.Brake);
 		motorLeft2.setNeutralMode(NeutralMode.Brake);
+//		motorLeft2.set
 	}
 	public int getEncoderLeft()
 	{
@@ -62,8 +61,7 @@ public class DriveTrain extends Subsystem {
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
 		//setDefaultCommand(new MySpecialCommand());
-//		setDefaultCommand(new DriveWithJoy());
-		setDefaultCommand(new RunTestOnMotors());
+		setDefaultCommand(new DriveWithJoy());
 	}
 
 	//Drives the robot using s inputs for the left and right side motors.

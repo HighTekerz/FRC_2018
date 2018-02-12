@@ -3,9 +3,9 @@ package org.usfirst.frc.team3574.subsystems;
 import org.usfirst.frc.team3574.robot.RobotMap;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -17,14 +17,13 @@ public class Arm extends Subsystem {
 
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
-	Solenoid Claw = new Solenoid(RobotMap.ClawSolenoid);
 	Solenoid Wrist = new Solenoid(RobotMap.WristSolenoid);
 	TalonSRX ArmMotor = new TalonSRX(RobotMap.ArmMotor);
 
-	public static final int AttentiveCobra = 1;
-	public static final int AggressiveCobra = 2;
-	public static final int DepressedCobra = 3;
-	public static final int DeadCobra = 4;
+	public static final int AttentiveCobra = 1000;
+	public static final int AggressiveCobra = 2000;
+	public static final int DepressedCobra = 3000;
+	public static final int DeadCobra = 4000;
 	public static final int armMotor = RobotMap.ArmMotor; 
 	//remember, this one is lowercaseUppercase. UppercaseUppercase is the object.
 	public static final int slotIdx = RobotMap.ArmMotor;
@@ -38,24 +37,61 @@ public class Arm extends Subsystem {
 	
 //	DigitalInput leftCubeSensor = new DigitalInput(1);	
 //	DigitalInput rightCubeSensor = new DigitalInput(2);
+	
+	
+		public static final int kSlotIdx = 0;
+		public static final int kPIDLoopIdx = 0;
+		public static final int kTimeoutMs = 10;
+		public static boolean kSensorPhase = false;
+		public static boolean kMotorInvert = false;
+
 
 	public Arm() {
-		ArmMotor.config_kP(slotIdx, kP, timeoutMs);
-		ArmMotor.config_kI(slotIdx, kI, timeoutMs);
-		ArmMotor.config_kD(slotIdx, kD, timeoutMs);
+		
+		ArmMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, kPIDLoopIdx, kTimeoutMs);
 
+		ArmMotor.setSensorPhase(kSensorPhase);
+
+		ArmMotor.setInverted(kMotorInvert);
+
+		/* set the peak and nominal outputs, 12V means full */
+		ArmMotor.configNominalOutputForward(0, kTimeoutMs);
+		ArmMotor.configNominalOutputReverse(0, kTimeoutMs);
+		ArmMotor.configPeakOutputForward(1, kTimeoutMs);
+		ArmMotor.configPeakOutputReverse(-1, kTimeoutMs);
+		ArmMotor.configAllowableClosedloopError(0, kPIDLoopIdx, kTimeoutMs);
+
+		
+		ArmMotor.config_kF(kPIDLoopIdx, 0.0, kTimeoutMs);
+		ArmMotor.config_kP(kPIDLoopIdx, 0.7, kTimeoutMs);
+		ArmMotor.config_kI(kPIDLoopIdx, 0.0, kTimeoutMs);
+		ArmMotor.config_kD(kPIDLoopIdx, 0., kTimeoutMs);
+
+		/*
+		 * lets grab the 360 degree position of the MagEncoder's absolute
+		 * position, and intitally set the relative sensor to match.
+		 */
+		int absolutePosition = ArmMotor.getSensorCollection().getPulseWidthPosition();
+		/* mask out overflows, keep bottom 12 bits */
+		absolutePosition &= 0xFFF;
+		if (kSensorPhase)
+			absolutePosition *= -1;
+		if (kMotorInvert)
+			absolutePosition *= -1;
+		/* set the quadrature (relative) sensor to match absolute */
+		ArmMotor.setSelectedSensorPosition(absolutePosition, kPIDLoopIdx, kTimeoutMs);
+		
 	}
+
+	
 
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
 		//setDefaultCommand( MySpecialCommand());
 	}
 
-	public void setClawOpen(boolean Value) {
-		Claw.set(Value);
-	}
 
-	public void setWristParallelToTheRestOfTheArmDeviceItIsAttachedTo(boolean Value) {
+	public void setWristParallel(boolean Value) {
 		Wrist.set(Value);
 	}
 
@@ -80,7 +116,7 @@ public class Arm extends Subsystem {
 		break;
 
 		default:
-			System.out.println("Invalid arm position. Please fix your code.");
+			System.out.println("Invalid arm position. Please fix your code. correct code looks like Arm.[The cobra position you want]");
 			break;
 		} 
 	}

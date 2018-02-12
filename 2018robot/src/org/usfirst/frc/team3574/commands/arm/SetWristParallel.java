@@ -22,24 +22,26 @@ public class SetWristParallel extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	System.out.println("SetWristParallel Initialized");
-    	Robot.arm.setWristParallelToTheRestOfTheArmDeviceItIsAttachedTo(_setWristParallel);
+    	Robot.arm.setWristParallel(_setWristParallel);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.arm.setWristParallelToTheRestOfTheArmDeviceItIsAttachedTo(_setWristParallel);
+    	Robot.arm.setWristParallel(_setWristParallel);
+    	System.out.println("Wrist parallel: " + _setWristParallel);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	Robot.arm.setWristParallelToTheRestOfTheArmDeviceItIsAttachedTo(_setWristParallel);
+    	Robot.arm.setWristParallel(_setWristParallel);
+    	System.out.println("Wrist things returns true,");
         return true;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	System.out.println("SetWristParallel Is Finished");
-    	Robot.arm.setWristParallelToTheRestOfTheArmDeviceItIsAttachedTo(_setWristParallel);
+    	System.out.println("SetWristParallel Is Finished. time since initialized: " + timeSinceInitialized());
+    	Robot.arm.setWristParallel(_setWristParallel);
     }
 
     // Called when another command which requires one or more of the same
