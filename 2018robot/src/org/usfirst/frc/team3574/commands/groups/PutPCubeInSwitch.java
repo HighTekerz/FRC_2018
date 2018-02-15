@@ -1,16 +1,11 @@
 package org.usfirst.frc.team3574.commands.groups;
 
-import org.usfirst.frc.team3574.commands.Slide.SetSlidePosition;
 import org.usfirst.frc.team3574.commands.arm.SetCobraPosition;
 import org.usfirst.frc.team3574.commands.claw.SetClawOpen;
-<<<<<<< HEAD
-import org.usfirst.frc.team3574.commands.slider.SetSliderPosition;
-import org.usfirst.frc.team3574.subsystems.Arm;
-import org.usfirst.frc.team3574.subsystems.Slider;
-=======
+import org.usfirst.frc.team3574.commands.Slide.SetSlidePosition;
 import org.usfirst.frc.team3574.subsystems.Arm;
 import org.usfirst.frc.team3574.subsystems.Slide;
->>>>>>> 55a3835ddc7e39b7caaacb24239e027851756a39
+
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
