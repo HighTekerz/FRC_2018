@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class Slider extends Subsystem {
+public class Slide extends Subsystem {
 
 	TalonSRX slideSim = new TalonSRX(RobotMap.SlideMotor); 
 	final int slotIdx = 0;
@@ -53,7 +53,7 @@ public class Slider extends Subsystem {
 	public static int scaleHighWithCube = 85;
 	public static int switchHeight = 5347;
 
-	public Slider() {
+	public Slide() {
 		slideSim.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, kPIDLoopIdx, kTimeoutMs);
 
 		slideSim.setSensorPhase(kSensorPhase);
@@ -81,7 +81,7 @@ public class Slider extends Subsystem {
 
 		/*
 		 * lets grab the 360 degree position of the MagEncoder's absolute
-		 * position, and intitally set the relative sensor to match.
+		 * position, and initially set the relative sensor to match.
 		 */
 		int absolutePosition = slideSim.getSensorCollection().getPulseWidthPosition();
 		/* mask out overflows, keep bottom 12 bits */
@@ -95,7 +95,7 @@ public class Slider extends Subsystem {
 		
 	}
 
-	public void setLifterPosition(int setPoint) {
+	public void setSlidePosition(int setPoint) {
 		slideSim.set(ControlMode.Position, setPoint);
 	}
 

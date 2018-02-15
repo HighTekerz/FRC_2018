@@ -17,13 +17,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class SensorTest extends Subsystem {
 
-	//byte[] dataBuffer = new byte[6];
-	//ByteBuffer compBuffer = ByteBuffer.wrap(dataBuffer);
-	// can anyone explain what this does? ^ (emma and sarah)
 	Ultrasonic ultraHedgehog = new Ultrasonic(0, 1, Unit.kInches);
 	I2C iTooCanSee = new I2C(Port.kOnboard, 0x13);
 	DigitalInput proximitySensor = new DigitalInput(9);
 	DigitalInput anotherProximitySensor = new DigitalInput(8);
+	
+	public boolean IsWithinRange(){
+		return proximitySensor.get() && anotherProximitySensor.get();	
+	}
 	
 	public SensorTest() {
 		ultraHedgehog.setAutomaticMode(true);

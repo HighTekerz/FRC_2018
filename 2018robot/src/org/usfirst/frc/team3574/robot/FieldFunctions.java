@@ -1,4 +1,3 @@
-
 package org.usfirst.frc.team3574.robot;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -13,7 +12,7 @@ public class FieldFunctions {
 		
 	}
 
-	public String getOurSide(FieldElementToCheck fieldElementToCheck) {
+	public static String getOurSide(FieldElementToCheck fieldElementToCheck) {
 
 		String gameDataString = DriverStation.getInstance().getGameSpecificMessage();
 

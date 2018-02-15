@@ -5,13 +5,19 @@ import org.usfirst.frc.team3574.commands.driveTrain.TurnToDegree;
 import org.usfirst.frc.team3574.robot.FieldFunctions;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.ConditionalCommand;
 
 /**
  *
  */
 public class PlaceCubeInSwitchFromMiddle extends CommandGroup {
 
+	public boolean isSwitchOurs;
     public PlaceCubeInSwitchFromMiddle() {
+    	
+    
+			
+		
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -28,7 +34,9 @@ public class PlaceCubeInSwitchFromMiddle extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
+    
     	
+
     	   
     	   
 //    	   if (new FieldFunctions.getOurSide(FieldFunctions.FieldElementToCheck.OURSWITCH) == "Left") {

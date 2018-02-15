@@ -7,14 +7,14 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class LiftTheRobotsUp extends Command {
+public class SetLifterToLift extends Command {
 
 	boolean _pistonWillExtend;
 	
-    public LiftTheRobotsUp(boolean pistonWillExtend) {
+    public SetLifterToLift(boolean pistonWillExtend) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.robotLifter);
+    	requires(Robot.lifter);
     	_pistonWillExtend = pistonWillExtend;
     }
 
@@ -24,8 +24,8 @@ public class LiftTheRobotsUp extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.robotLifter.setLeftSolenoid(_pistonWillExtend);
-    	Robot.robotLifter.setRightSolenoid(_pistonWillExtend);
+    	Robot.lifter.setLeftSolenoid(_pistonWillExtend);
+    	Robot.lifter.setRightSolenoid(_pistonWillExtend);
     }
 
     // Make this return true when this Command no longer needs to run execute()

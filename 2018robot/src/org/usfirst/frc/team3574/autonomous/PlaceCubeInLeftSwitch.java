@@ -1,18 +1,15 @@
-package org.usfirst.frc.team3574.commands.lifter;
-
-import org.usfirst.frc.team3574.robot.Robot;
+package org.usfirst.frc.team3574.autonomous;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class SetLifterPlatformDown extends Command {
+public class PlaceCubeInLeftSwitch extends Command {
 
-    public SetLifterPlatformDown() {
+    public PlaceCubeInLeftSwitch() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.robotLifter);
     }
 
     // Called just before this Command runs the first time
@@ -21,8 +18,6 @@ public class SetLifterPlatformDown extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.robotLifter.setLeftSparkOpen();
-    	Robot.robotLifter.setRightSparkOpen();
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -1,10 +1,16 @@
 package org.usfirst.frc.team3574.commands.groups;
 
+import org.usfirst.frc.team3574.commands.Slide.SetSlidePosition;
 import org.usfirst.frc.team3574.commands.arm.SetCobraPosition;
 import org.usfirst.frc.team3574.commands.claw.SetClawOpen;
+<<<<<<< HEAD
 import org.usfirst.frc.team3574.commands.slider.SetSliderPosition;
 import org.usfirst.frc.team3574.subsystems.Arm;
 import org.usfirst.frc.team3574.subsystems.Slider;
+=======
+import org.usfirst.frc.team3574.subsystems.Arm;
+import org.usfirst.frc.team3574.subsystems.Slide;
+>>>>>>> 55a3835ddc7e39b7caaacb24239e027851756a39
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -31,7 +37,7 @@ public class PutPCubeInSwitch extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	addParallel(new SetCobraPosition(Arm.DepressedCobra));
-    	addSequential(new SetSliderPosition(Slider.switchHeight));
+    	addSequential(new SetSlidePosition(Slide.switchHeight));
     	addSequential(new SetClawOpen(false));
     	addSequential(new SetCobraPosition(Arm.AttentiveCobra));
     	addSequential(new SetClawOpen(true));

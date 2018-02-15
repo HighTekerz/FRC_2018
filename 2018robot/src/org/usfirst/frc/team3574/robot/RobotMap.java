@@ -19,8 +19,8 @@ public final class RobotMap {
 	public static int ClawSolenoid = 0; //2
 	public static int WristSolenoid = 1; //3
 	public static int BreakSolenoid = 4;
-	public static int LeftWingSolenoid = 5;
-	public static int RightWingSolenoid = 6;
+	public static int LeftLifterSolenoid = 5;
+	public static int RightLifterSolenoid = 6;
 	
 	public static int DriveTrainLeftTalon1 = 3; //normally 1
 	public static int DriveTrainLeftTalon2 = 2;
@@ -29,6 +29,6 @@ public final class RobotMap {
 	public static int DriveTrainRightTalon1 = 4; //normally 13
 	public static int DriveTrainRightTalon2 = 12;
 		
-	public static int LeftWingReleaseSpark = 0;
-	public static int RightWingReleaseSpark = 1;
+	public static int LeftLifterReleaseSpark = 0;
+	public static int RightLifterReleaseSpark = 1;
 }
