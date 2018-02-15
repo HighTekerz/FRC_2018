@@ -1,8 +1,8 @@
 package org.usfirst.frc.team3574.commands.groups;
 
-import org.usfirst.frc.team3574.commands.Slide.SetSlidePosition;
 import org.usfirst.frc.team3574.commands.arm.SetCobraPosition;
 import org.usfirst.frc.team3574.commands.claw.SetClawOpen;
+import org.usfirst.frc.team3574.commands.slide.SetSlidePosition;
 import org.usfirst.frc.team3574.subsystems.Arm;
 import org.usfirst.frc.team3574.subsystems.Slide;
 
