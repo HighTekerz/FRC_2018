@@ -1,10 +1,10 @@
 package org.usfirst.frc.team3574.commands.groups;
 
+import org.usfirst.frc.team3574.commands.Slide.SetSlidePosition;
 import org.usfirst.frc.team3574.commands.arm.SetCobraPosition;
 import org.usfirst.frc.team3574.commands.claw.SetClawOpen;
-import org.usfirst.frc.team3574.commands.lifter.SetLifterPosition;
 import org.usfirst.frc.team3574.subsystems.Arm;
-import org.usfirst.frc.team3574.subsystems.Lifter;
+import org.usfirst.frc.team3574.subsystems.Slide;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -31,7 +31,7 @@ public class PutPCubeInSwitch extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	addParallel(new SetCobraPosition(Arm.DepressedCobra));
-    	addSequential(new SetLifterPosition(Lifter.switchHeight));
+    	addSequential(new SetSlidePosition(Slide.switchHeight));
     	addSequential(new SetClawOpen(false));
     	addSequential(new SetCobraPosition(Arm.AttentiveCobra));
     	addSequential(new SetClawOpen(true));

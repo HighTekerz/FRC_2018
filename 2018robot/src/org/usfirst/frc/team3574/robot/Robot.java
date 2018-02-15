@@ -13,10 +13,10 @@ import org.usfirst.frc.team3574.commands.util.RumbleASide;
 import org.usfirst.frc.team3574.subsystems.Arm;
 import org.usfirst.frc.team3574.subsystems.Claw;
 import org.usfirst.frc.team3574.subsystems.DriveTrain;
-import org.usfirst.frc.team3574.subsystems.Lifter;
+import org.usfirst.frc.team3574.subsystems.Slide;
 import org.usfirst.frc.team3574.subsystems.SensorTest;
 import org.usfirst.frc.team3574.subsystems.TheHedgehog;
-import org.usfirst.frc.team3574.subsystems.Wings;
+import org.usfirst.frc.team3574.subsystems.Lifter;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
@@ -39,10 +39,9 @@ public class Robot extends TimedRobot {
 	public static final DriveTrain driveTrain = new DriveTrain();
 	public static final TheHedgehog theHedgehog = new TheHedgehog();
 	public static final SensorTest sensorTest = new SensorTest();
+	public static final Slide slide = new Slide();
 	public static final Lifter lifter = new Lifter();
-	public static final Wings wings = new Wings();
 	public static final Claw claw = new Claw();
-			
 	public static final Arm arm = new Arm();
 	
 	Command m_autonomousCommand;
@@ -61,6 +60,10 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		OperatorInput = new OI();
+//		if (we're doing the middle && The right side = ours)
+//				we do the right side PCIS auto
+//		else if (we're doing the middle && The left side = ours)
+//				we do the Left side PCIS auto
 		m_chooser.addDefault("Default Auto", new DriveForwardAutonomous());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", m_chooser);
@@ -167,7 +170,7 @@ public class Robot extends TimedRobot {
 		
 		Robot.driveTrain.log();
 		Robot.sensorTest.log();
-		Robot.lifter.log();
+		Robot.slide.log();
 
 	}
 }

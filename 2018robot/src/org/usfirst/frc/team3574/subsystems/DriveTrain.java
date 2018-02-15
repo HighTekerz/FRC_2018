@@ -42,7 +42,6 @@ public class DriveTrain extends Subsystem {
 		motorRight1.setNeutralMode(NeutralMode.Brake);
 		motorRight2.setNeutralMode(NeutralMode.Brake);
 		motorLeft2.setNeutralMode(NeutralMode.Brake);
-//		motorLeft2.set
 	}
 	public int getEncoderLeft()
 	{
@@ -74,7 +73,9 @@ public class DriveTrain extends Subsystem {
 		motorRight1.set(ControlMode.PercentOutput, rightSpeed);
 		motorRight2.set(ControlMode.PercentOutput, rightSpeed);
 	}    
-
+	public void driveByEncoder () {
+		
+	}
 	//Controls speed and direction of the robot.
 	// -1 = full reverse; 1 = full forward
 	public void driveByArcadeWithModifiers (double percentThrottle, double percentRotationOutput, double scalingValue )

@@ -9,12 +9,12 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  *
  */
-public class Wings extends Subsystem {
+public class Lifter extends Subsystem {
 
-	Solenoid leftSolenoid = new Solenoid(RobotMap.LeftWingSolenoid);
-	Solenoid rightSolenoid = new Solenoid(RobotMap.RightWingSolenoid);
-	Spark leftSpark = new Spark(RobotMap.LeftWingReleaseSpark);
-	Spark rightSpark = new Spark(RobotMap.RightWingReleaseSpark);
+	Solenoid leftSolenoid = new Solenoid(RobotMap.LeftLifterSolenoid);
+	Solenoid rightSolenoid = new Solenoid(RobotMap.RightLifterSolenoid);
+	Spark leftSpark = new Spark(RobotMap.LeftLifterReleaseSpark);
+	Spark rightSpark = new Spark(RobotMap.RightLifterReleaseSpark);
 	
 	//probably just a placeholder value
 	private final double sparkOpenPosition= 5;

@@ -12,9 +12,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class Lifter extends Subsystem {
+public class Slide extends Subsystem {
 
-	TalonSRX liftSim = new TalonSRX(RobotMap.LiftMotor); 
+	TalonSRX slideSim = new TalonSRX(RobotMap.SlideMotor); 
 	final int slotIdx = 0;
 	final int timeoutMs = 50;
 	final double kP = 1.0;
@@ -53,37 +53,37 @@ public class Lifter extends Subsystem {
 	public static int scaleHighWithCube = 85;
 	public static int switchHeight = 5347;
 
-	public Lifter() {
-		liftSim.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, kPIDLoopIdx, kTimeoutMs);
+	public Slide() {
+		slideSim.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, kPIDLoopIdx, kTimeoutMs);
 
-		liftSim.setSensorPhase(kSensorPhase);
+		slideSim.setSensorPhase(kSensorPhase);
 
 
-		liftSim.setInverted(kMotorInvert);
+		slideSim.setInverted(kMotorInvert);
 
 		/* set the peak and nominal outputs, 12V means full */
-		liftSim.configNominalOutputForward(0, kTimeoutMs);
-		liftSim.configNominalOutputReverse(0, kTimeoutMs);
-		liftSim.configPeakOutputForward(1, kTimeoutMs);
-		liftSim.configPeakOutputReverse(-1, kTimeoutMs);
+		slideSim.configNominalOutputForward(0, kTimeoutMs);
+		slideSim.configNominalOutputReverse(0, kTimeoutMs);
+		slideSim.configPeakOutputForward(1, kTimeoutMs);
+		slideSim.configPeakOutputReverse(-1, kTimeoutMs);
 		/*
 		 * set the allowable closed-loop error, Closed-Loop output will be
 		 * neutral within this range. See Table in Section 17.2.1 for native
 		 * units per rotation.
 		 */
-		liftSim.configAllowableClosedloopError(0, kPIDLoopIdx, kTimeoutMs);
+		slideSim.configAllowableClosedloopError(0, kPIDLoopIdx, kTimeoutMs);
 
 		/* set closed loop gains in slot0, typically kF stays zero. */
-		liftSim.config_kF(kPIDLoopIdx, 0.0, kTimeoutMs);
-		liftSim.config_kP(kPIDLoopIdx, 0.7, kTimeoutMs);
-		liftSim.config_kI(kPIDLoopIdx, 0.0, kTimeoutMs);
-		liftSim.config_kD(kPIDLoopIdx, 0., kTimeoutMs);
+		slideSim.config_kF(kPIDLoopIdx, 0.0, kTimeoutMs);
+		slideSim.config_kP(kPIDLoopIdx, 0.7, kTimeoutMs);
+		slideSim.config_kI(kPIDLoopIdx, 0.0, kTimeoutMs);
+		slideSim.config_kD(kPIDLoopIdx, 0., kTimeoutMs);
 
 		/*
 		 * lets grab the 360 degree position of the MagEncoder's absolute
-		 * position, and intitally set the relative sensor to match.
+		 * position, and initially set the relative sensor to match.
 		 */
-		int absolutePosition = liftSim.getSensorCollection().getPulseWidthPosition();
+		int absolutePosition = slideSim.getSensorCollection().getPulseWidthPosition();
 		/* mask out overflows, keep bottom 12 bits */
 		absolutePosition &= 0xFFF;
 		if (kSensorPhase)
@@ -91,12 +91,12 @@ public class Lifter extends Subsystem {
 		if (kMotorInvert)
 			absolutePosition *= -1;
 		/* set the quadrature (relative) sensor to match absolute */
-		liftSim.setSelectedSensorPosition(absolutePosition, kPIDLoopIdx, kTimeoutMs);
+		slideSim.setSelectedSensorPosition(absolutePosition, kPIDLoopIdx, kTimeoutMs);
 		
 	}
 
-	public void setLifterPosition(int setPoint) {
-		liftSim.set(ControlMode.Position, setPoint);
+	public void setSlidePosition(int setPoint) {
+		slideSim.set(ControlMode.Position, setPoint);
 	}
 
 	@Override
@@ -106,7 +106,7 @@ public class Lifter extends Subsystem {
 
 	public void log () {
 		
-		SmartDashboard.putNumber("Absolute Position", liftSim.getSensorCollection().getPulseWidthPosition()/1000000.0
+		SmartDashboard.putNumber("Absolute Position", slideSim.getSensorCollection().getPulseWidthPosition()/1000000.0
 			);
 	}
 }
