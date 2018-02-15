@@ -170,11 +170,7 @@ public class Robot extends TimedRobot {
 		
 		Robot.driveTrain.log();
 		Robot.sensorTest.log();
-<<<<<<< HEAD
-		Robot.slider.log();
-=======
 		Robot.slide.log();
->>>>>>> 55a3835ddc7e39b7caaacb24239e027851756a39
 
 	}
 }

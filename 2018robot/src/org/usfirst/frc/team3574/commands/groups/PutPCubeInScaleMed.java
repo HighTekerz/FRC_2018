@@ -2,9 +2,9 @@ package org.usfirst.frc.team3574.commands.groups;
 
 import org.usfirst.frc.team3574.commands.arm.SetCobraPosition;
 import org.usfirst.frc.team3574.commands.claw.SetClawOpen;
-import org.usfirst.frc.team3574.commands.slider.SetSliderPosition;
+import org.usfirst.frc.team3574.commands.slide.SetSlidePosition;
 import org.usfirst.frc.team3574.subsystems.Arm;
-import org.usfirst.frc.team3574.subsystems.Slider;
+import org.usfirst.frc.team3574.subsystems.Slide;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -34,7 +34,7 @@ public class PutPCubeInScaleMed extends CommandGroup {
     	//puts cube on mid-height scale or on top of another cube at low height
     	
     	addParallel(new SetCobraPosition(Arm.AggressiveCobra));
-    	addSequential(new SetSliderPosition(Slider.scaleMed));
+    	addSequential(new SetSlidePosition(Slide.scaleMed));
     	addSequential(new SetClawOpen(false));
     	addSequential(new SetCobraPosition(Arm.AttentiveCobra));
     	addSequential(new SetClawOpen(true));
