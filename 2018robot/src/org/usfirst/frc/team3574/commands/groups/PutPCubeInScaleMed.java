@@ -11,9 +11,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class PutPCubeInSwitch extends CommandGroup {
+public class PutPCubeInScaleMed extends CommandGroup {
 
-    public PutPCubeInSwitch() {
+    public PutPCubeInScaleMed() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -30,8 +30,11 @@ public class PutPCubeInSwitch extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addParallel(new SetCobraPosition(Arm.DepressedCobra));
-    	addSequential(new SetSliderPosition(Slider.switchHeight));
+    	
+    	//puts cube on mid-height scale or on top of another cube at low height
+    	
+    	addParallel(new SetCobraPosition(Arm.AggressiveCobra));
+    	addSequential(new SetSliderPosition(Slider.scaleMed));
     	addSequential(new SetClawOpen(false));
     	addSequential(new SetCobraPosition(Arm.AttentiveCobra));
     	addSequential(new SetClawOpen(true));

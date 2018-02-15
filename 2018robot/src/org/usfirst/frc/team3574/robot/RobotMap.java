@@ -25,7 +25,7 @@ public final class RobotMap {
 	public static int DriveTrainLeftTalon1 = 3; //normally 1
 	public static int DriveTrainLeftTalon2 = 2;
 	public static int ArmMotor = 1; //normally 3
-	public static int LiftMotor = 13; //normally 4
+	public static int SlideMotor = 13; //normally 4
 	public static int DriveTrainRightTalon1 = 4; //normally 13
 	public static int DriveTrainRightTalon2 = 12;
 		

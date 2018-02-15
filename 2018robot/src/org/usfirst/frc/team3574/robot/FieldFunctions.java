@@ -46,6 +46,9 @@ public class FieldFunctions {
 		default: return "No";
 		
 		}
+		/***need to have a command or something for auto that creates a new FieldFunctions and 
+		 * calls the getOurSide method on OURSWITCH to determine which side/autonomous thing to run
+	***/
 	}
 
 }

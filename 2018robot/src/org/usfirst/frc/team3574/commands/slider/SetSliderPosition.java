@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3574.commands.lifter;
+package org.usfirst.frc.team3574.commands.slider;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -11,22 +11,22 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class SetLifterPosition extends Command {
+public class SetSliderPosition extends Command {
 	
 	SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm:ss");
 	
 	private int _setPosition;
 
 //	private LifterHeights setPosition; 
-    public SetLifterPosition(int setPosition) {
+    public SetSliderPosition(int setPosition) {
     	
     	_setPosition = setPosition;
-     requires(Robot.lifter);
+     requires(Robot.slider);
     }
 
     protected void initialize() {
     	System.out.println("SetLifterPosition Initialized at " + dateFormat.format(new Date()));
-    	Robot.lifter.setLifterPosition(_setPosition);
+    	Robot.slider.setLifterPosition(_setPosition);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -37,7 +37,7 @@ public class SetLifterPosition extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	System.out.println("SetLifterPosition Is Finished");
+    	System.out.println("SetSliderPosition Is Finished");
         return true;
     }
 

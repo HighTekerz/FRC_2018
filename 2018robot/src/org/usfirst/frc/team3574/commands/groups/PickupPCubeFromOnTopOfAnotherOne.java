@@ -1,19 +1,19 @@
 package org.usfirst.frc.team3574.commands.groups;
 
 import org.usfirst.frc.team3574.commands.arm.SetCobraPosition;
+import org.usfirst.frc.team3574.commands.arm.SetWristParallel;
 import org.usfirst.frc.team3574.commands.claw.SetClawOpen;
-import org.usfirst.frc.team3574.commands.slider.SetSliderPosition;
+import org.usfirst.frc.team3574.commands.util.UntilBothSensorsAreTripped;
 import org.usfirst.frc.team3574.subsystems.Arm;
-import org.usfirst.frc.team3574.subsystems.Slider;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
-public class PutPCubeInSwitch extends CommandGroup {
+public class PickupPCubeFromOnTopOfAnotherOne extends CommandGroup {
 
-    public PutPCubeInSwitch() {
+    public PickupPCubeFromOnTopOfAnotherOne() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -30,10 +30,16 @@ public class PutPCubeInSwitch extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addParallel(new SetCobraPosition(Arm.DepressedCobra));
-    	addSequential(new SetSliderPosition(Slider.switchHeight));
+    	
+    	//what am i even doing
+    	//literally just a variant of the other pickup command group but for cubes that are on top of other cubes.
+    	
+    	addSequential(new UntilBothSensorsAreTripped());
+    	addParallel(new SetClawOpen(true));
+    	addSequential(new SetWristParallel(false));
+    	addSequential(new SetCobraPosition(Arm.DepressedCobra));
     	addSequential(new SetClawOpen(false));
-    	addSequential(new SetCobraPosition(Arm.AttentiveCobra));
-    	addSequential(new SetClawOpen(true));
+    	addParallel(new SetCobraPosition(Arm.AttentiveCobra));
+    	addSequential(new SetWristParallel(true));
     }
 }

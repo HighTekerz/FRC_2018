@@ -3,6 +3,7 @@ package org.usfirst.frc.team3574.commands.groups;
 import org.usfirst.frc.team3574.commands.arm.SetCobraPosition;
 import org.usfirst.frc.team3574.commands.claw.SetClawOpen;
 import org.usfirst.frc.team3574.commands.slider.SetSliderPosition;
+import org.usfirst.frc.team3574.robot.Robot;
 import org.usfirst.frc.team3574.subsystems.Arm;
 import org.usfirst.frc.team3574.subsystems.Slider;
 
@@ -11,9 +12,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class PutPCubeInSwitch extends CommandGroup {
+public class PutPCubeInScaleLow extends CommandGroup {
 
-    public PutPCubeInSwitch() {
+    public PutPCubeInScaleLow() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -30,10 +31,18 @@ public class PutPCubeInSwitch extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addParallel(new SetCobraPosition(Arm.DepressedCobra));
-    	addSequential(new SetSliderPosition(Slider.switchHeight));
+    	
+    	//command to put the power cube in the scale while the scale is at its lowest position
+    	
+    	requires(Robot.arm);
+    	requires (Robot.slider);
+    	
+    	addParallel(new SetCobraPosition(Arm.AggressiveCobra));
+    	addSequential(new SetSliderPosition(Slider.scaleLow));
+    	//note: should probably have the true/false with the claw be the other way around. this is very confusing.
     	addSequential(new SetClawOpen(false));
     	addSequential(new SetCobraPosition(Arm.AttentiveCobra));
     	addSequential(new SetClawOpen(true));
+    	
     }
 }
