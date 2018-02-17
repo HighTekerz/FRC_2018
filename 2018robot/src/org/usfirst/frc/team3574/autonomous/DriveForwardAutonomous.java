@@ -10,6 +10,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class DriveForwardAutonomous extends CommandGroup {
 
+	/**
+	 * Autonomous program to drive across the auto line and stop
+	 */
     public DriveForwardAutonomous() {
         // Add Commands here:
         // e.g. addSequential(new Command1());

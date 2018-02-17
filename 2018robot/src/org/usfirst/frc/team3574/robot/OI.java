@@ -14,7 +14,6 @@ import org.usfirst.frc.team3574.commands.driveTrain.DriveByInches;
 import org.usfirst.frc.team3574.commands.driveTrain.RunTestOnMotors;
 import org.usfirst.frc.team3574.commands.driveTrain.TurnToDegree;
 import org.usfirst.frc.team3574.commands.groups.PutPCubeInSwitch;
-import org.usfirst.frc.team3574.commands.slide.SetSlidePosition;
 import org.usfirst.frc.team3574.commands.util.RumbleASide;
 import org.usfirst.frc.team3574.subsystems.Arm;
 import org.usfirst.frc.team3574.subsystems.Slide;
@@ -90,11 +89,11 @@ public class OI {
 		Button drive5FeetBackward = new JoystickButton(driverXbox360Controller, A_BUTTON);
 		drive5FeetBackward.whenPressed(new DriveByInches(120, -0.5));
 
-		Button turnNinetyDegreesRight = new JoystickButton(driverXbox360Controller, X_BUTTON);
-		turnNinetyDegreesRight.whenPressed(new TurnToDegree(90, 0.4));
+		Button turnNinetyDegreesLeft = new JoystickButton(driverXbox360Controller, X_BUTTON);
+		turnNinetyDegreesLeft.whenPressed(new TurnToDegree(90, 0.4));
 
-		Button turnNinetyDegreesLeft = new JoystickButton(driverXbox360Controller, B_BUTTON);
-		turnNinetyDegreesLeft.whenPressed(new TurnToDegree(-90, 0.4));
+		Button turnNinetyDegreesRight = new JoystickButton(driverXbox360Controller, B_BUTTON);
+		turnNinetyDegreesRight.whenPressed(new TurnToDegree(-90, 0.4));
 
 		Button turnFifteenRight = new JoystickButton(driverXbox360Controller, RIGHT_BUMPER);
 		turnFifteenRight.whenPressed(new TurnToDegree(-10, 0.4));

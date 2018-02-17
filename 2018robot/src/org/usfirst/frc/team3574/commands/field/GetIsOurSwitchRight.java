@@ -1,7 +1,5 @@
 package org.usfirst.frc.team3574.commands.field;
 
-import org.usfirst.frc.team3574.autonomous.PlaceCubeInSwitchFromMiddle;
-
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
