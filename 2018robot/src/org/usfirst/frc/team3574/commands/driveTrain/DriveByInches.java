@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3574.commands.driveTrain;
 
 import org.usfirst.frc.team3574.robot.Robot;
-import org.usfirst.frc.team3574.subsystems.DriveTrain;
+//import org.usfirst.frc.team3574.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -53,10 +53,10 @@ public class DriveByInches extends Command {
     		_finalTickTargetRight = Robot.driveTrain.getEncoderRight() - _ticksToTravel;
     	}
     	
-    	System.out.printf("_finalTickTargetLeft: %f  \t Robot.driveTrain.getEncoderLeft() : %d\n", _finalTickTargetLeft,  Robot.driveTrain.getEncoderLeft());
+//    	System.out.printf("_finalTickTargetLeft: %f  \t Robot.driveTrain.getEncoderLeft() : %d\n", _finalTickTargetLeft,  Robot.driveTrain.getEncoderLeft());
     	SmartDashboard.putNumber("Final Tick Target Right", _finalTickTargetRight);
     	SmartDashboard.putNumber("Final Tick Target Left", _finalTickTargetLeft);
-    	System.out.println("DriveByInches initialize");
+//    	System.out.println("DriveByInches initialize");
 
     }
 
@@ -68,22 +68,22 @@ public class DriveByInches extends Command {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	
-    	System.out.println("DriveByInches isFinished");
+//    	System.out.println("DriveByInches isFinished");
     	
     	if (_speed > 0 && Robot.driveTrain.getEncoderLeft() >= _finalTickTargetLeft &&
     			Robot.driveTrain.getEncoderRight() >= _finalTickTargetRight) {
-    		System.out.println("DriveByInches Returns True at " + Robot.driveTrain.getEncoderLeft() + " Right = " + Robot.driveTrain.getEncoderRight() + " Tick Targets: " + _finalTickTargetLeft + " & " + _finalTickTargetRight);
+//    		System.out.println("DriveByInches Returns True at " + Robot.driveTrain.getEncoderLeft() + " Right = " + Robot.driveTrain.getEncoderRight() + " Tick Targets: " + _finalTickTargetLeft + " & " + _finalTickTargetRight);
     		return true;
     	
     	}
     	else if (_speed < 0 && Robot.driveTrain.getEncoderLeft() <= _finalTickTargetLeft &&
     			Robot.driveTrain.getEncoderRight() <= _finalTickTargetRight) {
-    		System.out.println("DriveByInches Returns True at " + Robot.driveTrain.getEncoderLeft() + " Right = " + Robot.driveTrain.getEncoderRight() + " Tick Targets: " + _finalTickTargetLeft + " & " + _finalTickTargetRight);
+//    		System.out.println("DriveByInches Returns True at " + Robot.driveTrain.getEncoderLeft() + " Right = " + Robot.driveTrain.getEncoderRight() + " Tick Targets: " + _finalTickTargetLeft + " & " + _finalTickTargetRight);
     		return true;
     	
     	}
     	else {
-    		System.out.println("DriveByInches Returns False at " + Robot.driveTrain.getEncoderLeft() + " Right = " + Robot.driveTrain.getEncoderRight() + " Tick Targets: " + _finalTickTargetLeft + " & " + _finalTickTargetRight);
+//    		System.out.println("DriveByInches Returns False at " + Robot.driveTrain.getEncoderLeft() + " Right = " + Robot.driveTrain.getEncoderRight() + " Tick Targets: " + _finalTickTargetLeft + " & " + _finalTickTargetRight);
     		return false;
     	}
     }

@@ -11,9 +11,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class PickupPCubeFromOnTopOfAnotherOne extends CommandGroup {
+public class PickupCubeFromOnTopOfAnotherOne extends CommandGroup {
 
-    public PickupPCubeFromOnTopOfAnotherOne() {
+    public PickupCubeFromOnTopOfAnotherOne() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

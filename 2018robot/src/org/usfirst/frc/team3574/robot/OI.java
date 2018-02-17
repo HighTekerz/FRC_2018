@@ -13,7 +13,7 @@ import org.usfirst.frc.team3574.commands.driveTrain.DriveByHedgehog2Distance;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveByInches;
 import org.usfirst.frc.team3574.commands.driveTrain.RunTestOnMotors;
 import org.usfirst.frc.team3574.commands.driveTrain.TurnToDegree;
-import org.usfirst.frc.team3574.commands.groups.PutPCubeInSwitch;
+import org.usfirst.frc.team3574.commands.groups.PutCubeInSwitch;
 import org.usfirst.frc.team3574.commands.util.RumbleASide;
 import org.usfirst.frc.team3574.subsystems.Arm;
 import org.usfirst.frc.team3574.subsystems.Slide;
@@ -83,11 +83,11 @@ public class OI {
 
 
 	public OI() {
-		Button drive5FeetForeward = new JoystickButton(driverXbox360Controller, Y_BUTTON);
-		drive5FeetForeward.whenPressed(new DriveByInches(120, 0.5));
+		Button drive10FeetForeward = new JoystickButton(driverXbox360Controller, Y_BUTTON);
+		drive10FeetForeward.whenPressed(new DriveByInches(120, 0.5));
 
-		Button drive5FeetBackward = new JoystickButton(driverXbox360Controller, A_BUTTON);
-		drive5FeetBackward.whenPressed(new DriveByInches(120, -0.5));
+		Button drive10FeetBackward = new JoystickButton(driverXbox360Controller, A_BUTTON);
+		drive10FeetBackward.whenPressed(new DriveByInches(120, -0.5));
 
 		Button turnNinetyDegreesLeft = new JoystickButton(driverXbox360Controller, X_BUTTON);
 		turnNinetyDegreesLeft.whenPressed(new TurnToDegree(90, 0.4));
@@ -120,7 +120,7 @@ public class OI {
 		Button cobraDead = new JoystickButton(coPilotxbox360Controller, A_BUTTON);
 		cobraDead.whenPressed(new SetCobraPosition(Arm.DeadCobra));
 
-		SmartDashboard.putData(new PutPCubeInSwitch());
+		SmartDashboard.putData(new PutCubeInSwitch());
 
 		//		Button testOurNewThingy = new JoystickButton(testBox, A_BUTTON);
 		//		testOurNewThingy.whenPressed(new SetFullPCubeAssemblyPositions(Arm.AggressiveCobra, slide.scaleMed, false));

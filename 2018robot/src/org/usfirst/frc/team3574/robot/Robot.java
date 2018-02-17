@@ -9,6 +9,7 @@ package org.usfirst.frc.team3574.robot;
 
 import org.usfirst.frc.team3574.autonomous.AutonomousSelector;
 import org.usfirst.frc.team3574.autonomous.DriveForwardAutonomous;
+import org.usfirst.frc.team3574.commands.driveTrain.DriveByInches;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveWithJoy;
 import org.usfirst.frc.team3574.commands.util.RumbleASide;
 import org.usfirst.frc.team3574.subsystems.Arm;
@@ -17,7 +18,7 @@ import org.usfirst.frc.team3574.subsystems.DriveTrain;
 import org.usfirst.frc.team3574.subsystems.Slide;
 import org.usfirst.frc.team3574.subsystems.SensorTest;
 import org.usfirst.frc.team3574.subsystems.TheHedgehog;
-import org.usfirst.frc.team3574.subsystems.Lifter;
+import org.usfirst.frc.team3574.subsystems.Wings;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
@@ -41,7 +42,7 @@ public class Robot extends TimedRobot {
 	public static final TheHedgehog theHedgehog = new TheHedgehog();
 	public static final SensorTest  sensorTest = new SensorTest();
 	public static final Slide  	    slide = new Slide();
-	public static final Lifter      lifter = new Lifter();
+	public static final Wings       wings = new Wings();
 	public static final Claw        claw = new Claw();
 	public static final Arm 	    arm = new Arm();
 	
@@ -59,9 +60,9 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		OperatorInput = new OI();
-		autoChooserForLosers.addObject("Default Auto", new DriveForwardAutonomous());
-		autoChooserForLosers.addDefault("Cube In Switch From Left", new AutonomousSelector(true));
-		autoChooserForLosers.addObject("Cube In Switch From Right", new AutonomousSelector(false));
+		autoChooserForLosers.addObject("Cube In Switch From Left", new AutonomousSelector(true, true));
+		autoChooserForLosers.addDefault("Cube In Switch From Right", new AutonomousSelector(false, true));
+		autoChooserForLosers.addDefault("Pass Auto Line", new DriveForwardAutonomous());
 		
 		SmartDashboard.putData("Auto mode", autoChooserForLosers);
 		
@@ -104,9 +105,8 @@ public class Robot extends TimedRobot {
 		 * = new MyAutoCommand(); break; case "Default Auto": default:
 		 * autonomousCommand = new ExampleCommand(); break; }
 		 */
-		// TODO: make it able to change through shuffle board
-		m_autonomousCommand= new DriveForwardAutonomous();
-
+		
+		
 		// schedule the autonomous command (example)
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.start();

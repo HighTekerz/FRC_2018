@@ -191,9 +191,9 @@ public class DriveTrain extends Subsystem {
 		 * This can be done a number of ways but basically only apply small turning correction when we are moving slow
 		 * and larger correction the faster we move.  Otherwise you may need stiffer pgain at higher velocities. */
 		double maxThrot = getMaxCorrection(forwardThrottle, kMaxCorrectionRatio);
-		System.out.println("Before Cap " + turnThrottle);
+//		System.out.println("Before Cap " + turnThrottle);
 		turnThrottle = cap(turnThrottle, maxThrot);
-		System.out.println("After Cap " + turnThrottle);
+//		System.out.println("After Cap " + turnThrottle);
 		return turnThrottle;
 	}
 

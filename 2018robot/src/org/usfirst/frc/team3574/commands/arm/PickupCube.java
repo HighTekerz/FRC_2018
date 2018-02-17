@@ -10,9 +10,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class PickupPowerCube extends CommandGroup {
+public class PickupCube extends CommandGroup {
 
-    public PickupPowerCube() {
+    public PickupCube() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

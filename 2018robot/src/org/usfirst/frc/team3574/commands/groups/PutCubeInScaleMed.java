@@ -11,9 +11,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class PutPCubeInScaleMed extends CommandGroup {
+public class PutCubeInScaleMed extends CommandGroup {
 
-    public PutPCubeInScaleMed() {
+    public PutCubeInScaleMed() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

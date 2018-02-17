@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  *
  */
-public class Lifter extends Subsystem {
+public class Wings extends Subsystem {
 
 	Solenoid leftSolenoid = new Solenoid(RobotMap.LeftLifterSolenoid);
 	Solenoid rightSolenoid = new Solenoid(RobotMap.RightLifterSolenoid);

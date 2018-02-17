@@ -14,6 +14,7 @@ public class DriveForwardAutonomous extends CommandGroup {
 	 * Autonomous program to drive across the auto line and stop
 	 */
     public DriveForwardAutonomous() {
+    	System.out.println("Drive Forwards Auto");
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

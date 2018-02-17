@@ -12,9 +12,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class PutPCubeInScaleLow extends CommandGroup {
+public class PutCubeInScaleLow extends CommandGroup {
 
-    public PutPCubeInScaleLow() {
+    public PutCubeInScaleLow() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -39,7 +39,6 @@ public class PutPCubeInScaleLow extends CommandGroup {
     	
     	addParallel(new SetCobraPosition(Arm.AggressiveCobra));
     	addSequential(new SetSlidePosition(Slide.scaleLow));
-    	//note: should probably have the true/false with the claw be the other way around. this is very confusing.
     	addSequential(new SetClawOpen(false));
     	addSequential(new SetCobraPosition(Arm.AttentiveCobra));
     	addSequential(new SetClawOpen(true));

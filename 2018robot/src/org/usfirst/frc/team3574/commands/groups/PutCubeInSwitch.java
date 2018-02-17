@@ -12,9 +12,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class PutPCubeInSwitch extends CommandGroup {
+public class PutCubeInSwitch extends CommandGroup {
 
-    public PutPCubeInSwitch() {
+    public PutCubeInSwitch() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
