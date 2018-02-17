@@ -25,12 +25,9 @@ public class DriveTrain extends Subsystem {
 	TalonSRX motorRight2 = new TalonSRX(RobotMap.DriveTrainRightTalon2);
 	Solenoid shifter = new Solenoid(RobotMap.ShifterSolenoid);
 
-	TalonSRX motorTest1 = new TalonSRX(RobotMap.LeftTalon3);
-	TalonSRX motorTest2 = new TalonSRX(RobotMap.LeftTalon4);
 
 
-	TalonSRX imuTalon = new TalonSRX (RobotMap.DriveTrainPenguin1);
-	PigeonIMU penguin = new PigeonIMU (imuTalon);
+	PigeonIMU penguin = new PigeonIMU (motorLeft2);
 
 	double kPgain = 0.04; /* percent throttle per degree of error */
 	double kDgain = 0.0004; /* percent throttle per angular velocity dps */

@@ -3,6 +3,11 @@ package org.usfirst.frc.team3574.subsystems;
 //import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
+import org.usfirst.frc.team3574.robot.RobotMap;
+
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.Ultrasonic;
@@ -20,10 +25,13 @@ public class SensorTest extends Subsystem {
 	// can anyone explain what this does? ^ (emma and sarah)
 	Ultrasonic ultraHedgehog = new Ultrasonic(0, 1, Unit.kInches);
 	I2C iTooCanSee = new I2C(Port.kOnboard, 0x13);
+	
+	TalonSRX FreShaVaCaDo = new TalonSRX (RobotMap.FreshAvocado);
 
+	
 	public SensorTest() {
 		ultraHedgehog.setAutomaticMode(true);
-	
+		FreShaVaCaDo.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor1, 0, 10);
 	}
 	public void log () {
 		SmartDashboard.putNumber("UltraHedgehog thing", ultraHedgehog.getRangeInches());
