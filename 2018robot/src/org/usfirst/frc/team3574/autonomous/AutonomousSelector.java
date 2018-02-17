@@ -12,36 +12,51 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class AutonomousSelector extends Command {
 
-	private int step = 0;
-
-	public AutonomousSelector() {
-
+	private int _step;
+	private boolean _startPositionIsLeft;
+	private boolean _isFinished;
+	Command _command;
+	
+	/**
+	 * Makes the robot do the correct autonomous
+	 * 
+	 * @param startPositionIsLeft boolean denoting whether the robot is starting in the left position. false means the robot is in the right starting position.
+	 */
+	public AutonomousSelector(boolean startPositionIsLeft) {
+		_startPositionIsLeft = startPositionIsLeft;
 	}
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-
+		_step = 1;
+		_isFinished = false;
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		switch (step) {
+		switch (_step) {
 		case 1: 
 			if(FieldFunctions.getOurSide(FieldFunctions.FieldElementToCheck.OURSWITCH) == "Right") {
-					
+				if (_startPositionIsLeft) {
+					_command = (new AutoPutCubeInSwitchFromOtherSide(-90));
+				}
+				else {
+					_command = (new AutoPutCubeInSwitchAhead());
+				}
 			}
-			else {
-				
+			else if(FieldFunctions.getOurSide(FieldFunctions.FieldElementToCheck.OURSWITCH) == "Left"){
+				if (!_startPositionIsLeft) {
+					_command = (new AutoPutCubeInSwitchFromOtherSide(90));
+				}
+				else {
+					_command = (new AutoPutCubeInSwitchAhead());
+				}				
 			}
+			_command.start();
+			_step++;
 			break;
 		case 2:
-
-			break;
-		case 3:
-
-			break;
-		case 4:
-
+			_isFinished = true;
 			break;
 		}
 
@@ -49,7 +64,7 @@ public class AutonomousSelector extends Command {
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return false;
+		return _isFinished;
 	}
 
 	// Called once after isFinished returns true

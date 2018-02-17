@@ -21,7 +21,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class SensorTest extends Subsystem {
 
 	Ultrasonic ultraHedgehog = new Ultrasonic(0, 1, Unit.kInches);
-	I2C iTooCanSee = new I2C(Port.kOnboard, 0x13);
+	static I2C iTooCanSee = new I2C(Port.kOnboard, 0x13);
 	DigitalInput proximitySensor = new DigitalInput(9);
 	DigitalInput anotherProximitySensor = new DigitalInput(8);
 	
@@ -50,11 +50,31 @@ public class SensorTest extends Subsystem {
     	//SmartDashboard.putNumber("cZ", compBuffer.getShort());
     //	SmartDashboard.putNumber("cZ", compBuffer.getShort());
 
+		// Create I2CBus
+				// Select command register
+				// Enables ALS and proximity measurement, LP oscillator
+				iTooCanSee.write(0x80, (byte)0xFF);
+				// Select proximity rate register
+				// 1.95 proximity measurement / s
+				iTooCanSee.write(0x82, (byte)0x00);
+				// Select ALS register
+				// Continuos conversion mode, ALS rate 2 samples / s
+				iTooCanSee.write(0x84, (byte)0x9D);
+
+				// Read 4 bytes of data
+				// luminance msb, luminance lsb, proximity msb, proximity lsb
+				byte[] data = new byte[4];
+				iTooCanSee.read(0x85, 4, data);
+
+				// Convert the data
+				int luminance = ((data[0] & 0xFF) * 256) + (data[1] & 0xFF);
+				int proximity = ((data[2] & 0xFF) * 256) + (data[3] & 0xFF);
+				
+				SmartDashboard.putNumber("Proximity of the Device", proximity);
+				SmartDashboard.putNumber("Ambient Light Luminance In Lux", luminance);
 	}
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
-
-
 	public void initDefaultCommand() {
 
 
