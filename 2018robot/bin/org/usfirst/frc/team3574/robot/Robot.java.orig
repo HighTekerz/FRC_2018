@@ -8,15 +8,12 @@
 package org.usfirst.frc.team3574.robot;
 
 import org.usfirst.frc.team3574.autonomous.DriveForwardAutonomous;
-import org.usfirst.frc.team3574.commands.driveTrain.DriveWithJoy;
-import org.usfirst.frc.team3574.commands.util.RumbleASide;
+import org.usfirst.frc.team3574.commands.RumbleASide;
 import org.usfirst.frc.team3574.subsystems.Arm;
-import org.usfirst.frc.team3574.subsystems.Claw;
 import org.usfirst.frc.team3574.subsystems.DriveTrain;
-import org.usfirst.frc.team3574.subsystems.Slide;
+import org.usfirst.frc.team3574.subsystems.Lift;
 import org.usfirst.frc.team3574.subsystems.SensorTest;
 import org.usfirst.frc.team3574.subsystems.TheHedgehog;
-import org.usfirst.frc.team3574.subsystems.Lifter;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
@@ -35,22 +32,24 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends TimedRobot {
 
-	//subsystems 
+	//subsystems
 	public static final DriveTrain driveTrain = new DriveTrain();
 	public static final TheHedgehog theHedgehog = new TheHedgehog();
 	public static final SensorTest sensorTest = new SensorTest();
-	public static final Slide slide = new Slide();
-	public static final Lifter lifter = new Lifter();
-	public static final Claw claw = new Claw();
-	public static final Arm arm = new Arm();
+	public static final Lift lift = new Lift();
 	
 	Command m_autonomousCommand;
 	public static OI OperatorInput;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
+<<<<<<< HEAD
+	
+
+=======
+	public static final SensorTest sensorTest = new SensorTest();
+	public static final Arm arm = new Arm();
 	
 	
-	
-	
+>>>>>>> 1a9cf9e8feae3c01b70efa248c739d6ef752fdb3
 	public double _matchTime;
 
 	/**
@@ -60,10 +59,6 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		OperatorInput = new OI();
-//		if (we're doing the middle && The right side = ours)
-//				we do the right side PCIS auto
-//		else if (we're doing the middle && The left side = ours)
-//				we do the Left side PCIS auto
 		m_chooser.addDefault("Default Auto", new DriveForwardAutonomous());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", m_chooser);
@@ -166,11 +161,10 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Match Time", _matchTime);
 		SmartDashboard.putNumber("a", (OperatorInput.getDialAxis()+1)/2);
 		SmartDashboard.putString("Switch & Scale Colors", DriverStation.getInstance().getGameSpecificMessage());
-		SmartDashboard.putNumber("POV of driverXbox360Controller", OperatorInput.GetPOV(Robot.OperatorInput.driverXbox360Controller));
+		SmartDashboard.putNumber("POV of xbox", OperatorInput.GetPOV(Robot.OperatorInput.xbox));
 		
 		Robot.driveTrain.log();
 		Robot.sensorTest.log();
-		Robot.slide.log();
 
 	}
 }

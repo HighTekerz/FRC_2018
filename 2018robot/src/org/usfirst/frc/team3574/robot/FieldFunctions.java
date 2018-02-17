@@ -1,4 +1,3 @@
-
 package org.usfirst.frc.team3574.robot;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -13,7 +12,7 @@ public class FieldFunctions {
 		
 	}
 
-	public String getOurSide(FieldElementToCheck fieldElementToCheck) {
+	public static String getOurSide(FieldElementToCheck fieldElementToCheck) {
 
 		String gameDataString = DriverStation.getInstance().getGameSpecificMessage();
 
@@ -46,6 +45,9 @@ public class FieldFunctions {
 		default: return "No";
 		
 		}
+		/***need to have a command or something for auto that creates a new FieldFunctions and 
+		 * calls the getOurSide method on OURSWITCH to determine which side/autonomous thing to run
+	***/
 	}
 
 }

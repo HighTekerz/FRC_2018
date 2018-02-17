@@ -1,0 +1,52 @@
+package org.usfirst.frc.team3574.commands.arm;
+
+import org.usfirst.frc.team3574.robot.Robot;
+import org.usfirst.frc.team3574.subsystems.Arm;
+
+import edu.wpi.first.wpilibj.command.Command;
+
+/**
+ *
+ */
+public class SetWristParallel extends Command {
+	
+	private boolean _setWristParallel;
+	
+    public SetWristParallel(boolean setWristParallel) {
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
+    	requires(Robot.arm);
+    	_setWristParallel = setWristParallel;
+    }
+
+    // Called just before this Command runs the first time
+    protected void initialize() {
+    	System.out.println("SetWristParallel Initialized");
+    	Robot.arm.setWristParallel(_setWristParallel);
+    }
+
+    // Called repeatedly when this Command is scheduled to run
+    protected void execute() {
+    	Robot.arm.setWristParallel(_setWristParallel);
+    	System.out.println("Wrist parallel: " + _setWristParallel);
+    }
+
+    // Make this return true when this Command no longer needs to run execute()
+    protected boolean isFinished() {
+    	Robot.arm.setWristParallel(_setWristParallel);
+    	System.out.println("Wrist things returns true,");
+        return true;
+    }
+
+    // Called once after isFinished returns true
+    protected void end() {
+    	System.out.println("SetWristParallel Is Finished. time since initialized: " + timeSinceInitialized());
+    	Robot.arm.setWristParallel(_setWristParallel);
+    }
+
+    // Called when another command which requires one or more of the same
+    // subsystems is scheduled to run
+    protected void interrupted() {
+    	System.out.println("uh oh! wrist has been interrupted.");
+    }
+}
