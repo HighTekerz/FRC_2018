@@ -16,6 +16,7 @@ public class Slide extends Subsystem {
 
 	TalonSRX slideSim = new TalonSRX(RobotMap.SlideMotor); 
 	final int slotIdx = 0;
+	// <[0-0]> Ascii man waves from the technoworld
 	final int timeoutMs = 50;
 	final double kP = 1.0;
 	final double kI = 1.0;
@@ -98,7 +99,11 @@ public class Slide extends Subsystem {
 	public void setSlidePosition(int setPoint) {
 		slideSim.set(ControlMode.Position, setPoint);
 	}
-
+	
+	public void setSlideARunning() {
+		slideSim.set(ControlMode.PercentOutput, 1);
+	}
+	
 	@Override
 	protected void initDefaultCommand() {
 

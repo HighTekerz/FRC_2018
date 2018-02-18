@@ -32,15 +32,11 @@ public class DriveWithJoy extends Command
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute()
 	{
-
-		//		leftStickXValue = Robot.OperatorInput.getLeftStickX();
-		//		rightStickYValue = Robot.OperatorInput.getRightStickY();
-
-		//		Robot.driveTrain.driveByTank(-Robot.m_oi.getLeftStickY(), Robot.m_oi.getRightStickY());
-		//		Robot.driveTrain.driveByTank(-leftStickYValue, rightStickYValue);
-				Robot.driveTrain.driveByArcadeWithModifiers(Robot.OperatorInput.getRightStickY(), -Robot.OperatorInput.getLeftStickX(), .75);	
+//		Robot.slide.setSlideARunning();
+		Robot.driveTrain.driveByArcade(.8, 0);
+		//		Robot.driveTrain.driveByArcadeWithModifiers(Robot.OperatorInput.getRightStickY(), -Robot.OperatorInput.getLeftStickX(), .75);	
 		//		Robot.driveTrain.driveByArcade(rightStickYValue, -leftStickXValue);
-//		Robot.driveTrain.driveByArcadeWithModifiers(Robot.OperatorInput.getRightTrigger()-Robot.OperatorInput.getLeftTrigger(), Robot.OperatorInput.getRightStickX(), (Robot.OperatorInput.getDialAxis()+1)/2);
+		//		Robot.driveTrain.driveByArcadeWithModifiers(Robot.OperatorInput.getRightTrigger()-Robot.OperatorInput.getLeftTrigger(), Robot.OperatorInput.getRightStickX(), (Robot.OperatorInput.getDialAxis()+1)/2);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

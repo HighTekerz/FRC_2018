@@ -18,7 +18,12 @@ public class DriveByInches extends Command {
 	private double _finalTickTargetRight;
 	
 	private double targetAngleToKeep;
-	
+	/**
+	 * Command to drive a distance
+	 * 
+	 * @param inchesToTravel Gets transformed into ticks in the code
+	 * @param speed the speed at which the robot travels this distance
+	 */
     public DriveByInches(double inchesToTravel, double speed) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);

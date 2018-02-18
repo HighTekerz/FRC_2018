@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3574.commands.groups;
 
 import org.usfirst.frc.team3574.commands.arm.SetCobraPosition;
-import org.usfirst.frc.team3574.commands.claw.SetClawOpen;
+import org.usfirst.frc.team3574.commands.claw.SetClawClosed;
 import org.usfirst.frc.team3574.commands.Slide.SetSlidePosition;
 import org.usfirst.frc.team3574.robot.Robot;
 import org.usfirst.frc.team3574.subsystems.Arm;
@@ -39,9 +39,9 @@ public class PutCubeInScaleLow extends CommandGroup {
     	
     	addParallel(new SetCobraPosition(Arm.AggressiveCobra));
     	addSequential(new SetSlidePosition(Slide.scaleLow));
-    	addSequential(new SetClawOpen(false));
+    	addSequential(new SetClawClosed(true));
     	addSequential(new SetCobraPosition(Arm.AttentiveCobra));
-    	addSequential(new SetClawOpen(true));
+    	addSequential(new SetClawClosed(false));
     	
     }
 }

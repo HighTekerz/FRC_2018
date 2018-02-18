@@ -54,7 +54,7 @@ public class DriveTrain extends Subsystem {
 		//		Value reversed for clarity
 		return -motorRight1.getSensorCollection().getPulseWidthPosition();
 	}
-
+	
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 

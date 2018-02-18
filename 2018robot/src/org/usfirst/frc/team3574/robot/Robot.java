@@ -169,6 +169,7 @@ public class Robot extends TimedRobot {
 		Robot.driveTrain.log();
 		Robot.sensorTest.log();
 		Robot.slide.log();
+		Robot.arm.log();
 
 	}
 }

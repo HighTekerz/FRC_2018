@@ -11,7 +11,6 @@ package org.usfirst.frc.team3574.robot;
 import org.usfirst.frc.team3574.commands.arm.SetCobraPosition;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveByHedgehog2Distance;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveByInches;
-import org.usfirst.frc.team3574.commands.driveTrain.RunTestOnMotors;
 import org.usfirst.frc.team3574.commands.driveTrain.TurnToDegree;
 import org.usfirst.frc.team3574.commands.groups.PutCubeInSwitch;
 import org.usfirst.frc.team3574.commands.util.RumbleASide;
@@ -46,6 +45,7 @@ public class OI {
 	// commands the same as any other Button.
 
 	//// TRIGGERING COMMANDS WITH BUTTONS
+	// <{O_O}> Non-squ@reman: "Hi there"
 	// Once you have a button, it's trivial to bind it to a button in one of
 	// three ways:
 
@@ -124,6 +124,7 @@ public class OI {
 
 		//		Button testOurNewThingy = new JoystickButton(testBox, A_BUTTON);
 		//		testOurNewThingy.whenPressed(new SetFullPCubeAssemblyPositions(Arm.AggressiveCobra, slide.scaleMed, false));
+		// 		<|0_0|> Square man welcomes you
 	}
 
 
