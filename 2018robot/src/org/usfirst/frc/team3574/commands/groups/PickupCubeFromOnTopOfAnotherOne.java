@@ -1,8 +1,9 @@
-package org.usfirst.frc.team3574.commands.arm;
+package org.usfirst.frc.team3574.commands.groups;
 
-import org.usfirst.frc.team3574.commands.claw.SetClawOpen;
+import org.usfirst.frc.team3574.commands.arm.SetCobraPosition;
+import org.usfirst.frc.team3574.commands.arm.SetWristParallel;
+import org.usfirst.frc.team3574.commands.claw.SetClawClosed;
 import org.usfirst.frc.team3574.commands.util.UntilBothSensorsAreTripped;
-import org.usfirst.frc.team3574.robot.Robot;
 import org.usfirst.frc.team3574.subsystems.Arm;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -10,9 +11,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class PickupPowerCube extends CommandGroup {
+public class PickupCubeFromOnTopOfAnotherOne extends CommandGroup {
 
-    public PickupPowerCube() {
+    public PickupCubeFromOnTopOfAnotherOne() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -29,11 +30,16 @@ public class PickupPowerCube extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
+    	
+    	//what am i even doing
+    	// <|O_O|> Polygonman Wishes you well
+    	//literally just a variant of the other pickup command group but for cubes that are on top of other cubes.
+    	
     	addSequential(new UntilBothSensorsAreTripped());
-    	addParallel(new SetClawOpen(true));
+    	addParallel(new SetClawClosed(true));
     	addSequential(new SetWristParallel(false));
-    	addSequential(new SetCobraPosition(Arm.DeadCobra));
-    	addSequential(new SetClawOpen(false));
+    	addSequential(new SetCobraPosition(Arm.DepressedCobra));
+    	addSequential(new SetClawClosed(false));
     	addParallel(new SetCobraPosition(Arm.AttentiveCobra));
     	addSequential(new SetWristParallel(true));
     }

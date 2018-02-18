@@ -1,19 +1,18 @@
-package org.usfirst.frc.team3574.commands.groups;
+package org.usfirst.frc.team3574.commands.arm;
 
-import org.usfirst.frc.team3574.commands.arm.SetCobraPosition;
-import org.usfirst.frc.team3574.commands.claw.SetClawOpen;
-import org.usfirst.frc.team3574.commands.slide.SetSlidePosition;
+import org.usfirst.frc.team3574.commands.claw.SetClawClosed;
+import org.usfirst.frc.team3574.commands.util.UntilBothSensorsAreTripped;
+import org.usfirst.frc.team3574.robot.Robot;
 import org.usfirst.frc.team3574.subsystems.Arm;
-import org.usfirst.frc.team3574.subsystems.Slide;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
-public class PutPCubeInScaleMed extends CommandGroup {
+public class PickupCube extends CommandGroup {
 
-    public PutPCubeInScaleMed() {
+    public PickupCube() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -23,6 +22,7 @@ public class PutPCubeInScaleMed extends CommandGroup {
         // use addParallel()
         // e.g. addParallel(new Command1());
         //      addSequential(new Command2());
+    	// <I0_0I> Rectangle man says hello
         // Command1 and Command2 will run in parallel.
 
         // A command group will require all of the subsystems that each member
@@ -30,13 +30,12 @@ public class PutPCubeInScaleMed extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	
-    	//puts cube on mid-height scale or on top of another cube at low height
-    	
-    	addParallel(new SetCobraPosition(Arm.AggressiveCobra));
-    	addSequential(new SetSlidePosition(Slide.scaleMed));
-    	addSequential(new SetClawOpen(false));
-    	addSequential(new SetCobraPosition(Arm.AttentiveCobra));
-    	addSequential(new SetClawOpen(true));
+    	addSequential(new UntilBothSensorsAreTripped());
+    	addParallel(new SetClawClosed(false));
+    	addSequential(new SetWristParallel(false));
+    	addSequential(new SetCobraPosition(Arm.DeadCobra));
+    	addSequential(new SetClawClosed(true));
+    	addParallel(new SetCobraPosition(Arm.AttentiveCobra));
+    	addSequential(new SetWristParallel(true));
     }
 }

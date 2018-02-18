@@ -1,33 +1,31 @@
-package org.usfirst.frc.team3574.commands.driveTrain;
+package org.usfirst.frc.team3574.commands.wings;
 
 import org.usfirst.frc.team3574.robot.Robot;
-import org.usfirst.frc.team3574.subsystems.DriveTrain;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class RunTestOnMotors extends Command {
+public class SetWingsToLift extends Command {
 
+	boolean _pistonWillExtend;
 	
-	private Timer thisTimerHere = new Timer();
-    public RunTestOnMotors() {
+    public SetWingsToLift(boolean pistonWillExtend) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.driveTrain);
+    	requires(Robot.wings);
+    	_pistonWillExtend = pistonWillExtend;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	thisTimerHere.reset();
-    	thisTimerHere.start();
-    	}
+    }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.driveTrain.testOneMotorAtATime(-0.5);
+    	Robot.wings.setLeftSolenoid(_pistonWillExtend);
+    	Robot.wings.setRightSolenoid(_pistonWillExtend);
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -7,20 +7,21 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class SetClawOpen extends Command {
+// <|X_X|> Dead Shapeman: .....
+public class SetClawClosed extends Command {
 
-	private boolean _setClawOpen;
+	private boolean _setClawClosed;
 
-	public SetClawOpen(boolean setClawOpen) {
+	public SetClawClosed(boolean setClawClosed) {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 		requires(Robot.claw);
-		_setClawOpen = setClawOpen;
+		_setClawClosed = setClawClosed;
 	}
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		Robot.claw.setClawOpen(_setClawOpen);
+	Robot.claw.setClawClosed(_setClawClosed);
 	}
 
 	// Called repeatedly when this Command is scheduled to run

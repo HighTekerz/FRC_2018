@@ -1,21 +1,20 @@
-package org.usfirst.frc.team3574.commands.lifter;
+package org.usfirst.frc.team3574.commands.sensors;
 
 import org.usfirst.frc.team3574.robot.Robot;
+import org.usfirst.frc.team3574.subsystems.TheHedgehog;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class SetLifterToLift extends Command {
+public class GetHedgehogDistance extends Command {
 
-	boolean _pistonWillExtend;
-	
-    public SetLifterToLift(boolean pistonWillExtend) {
+    public GetHedgehogDistance() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.lifter);
-    	_pistonWillExtend = pistonWillExtend;
+    	requires(Robot.theHedgehog);
     }
 
     // Called just before this Command runs the first time
@@ -24,8 +23,7 @@ public class SetLifterToLift extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.lifter.setLeftSolenoid(_pistonWillExtend);
-    	Robot.lifter.setRightSolenoid(_pistonWillExtend);
+    	SmartDashboard.putNumber("Hedgehog Voltage", Robot.theHedgehog.getActualDistance());
     }
 
     // Make this return true when this Command no longer needs to run execute()

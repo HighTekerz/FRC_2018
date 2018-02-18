@@ -1,20 +1,24 @@
 package org.usfirst.frc.team3574.commands.groups;
 
 import org.usfirst.frc.team3574.commands.arm.SetCobraPosition;
+<<<<<<< HEAD:2018robot/src/org/usfirst/frc/team3574/commands/groups/PutPCubeInScaleMed.java
 import org.usfirst.frc.team3574.commands.claw.SetClawOpen;
 import org.usfirst.frc.team3574.commands.slide.SetSlidePosition;
+=======
+import org.usfirst.frc.team3574.commands.claw.SetClawClosed;
+import org.usfirst.frc.team3574.commands.Slide.SetSlidePosition;
+>>>>>>> refs/remotes/origin/master:2018robot/src/org/usfirst/frc/team3574/commands/groups/PutCubeInScaleMed.java
 import org.usfirst.frc.team3574.subsystems.Arm;
 import org.usfirst.frc.team3574.subsystems.Slide;
-
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
-public class PutPCubeInSwitch extends CommandGroup {
+public class PutCubeInScaleMed extends CommandGroup {
 
-    public PutPCubeInSwitch() {
+    public PutCubeInScaleMed() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -31,10 +35,13 @@ public class PutPCubeInSwitch extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addParallel(new SetCobraPosition(Arm.DepressedCobra));
-    	addSequential(new SetSlidePosition(Slide.switchHeight));
-    	addSequential(new SetClawOpen(false));
+    	
+    	//puts cube on mid-height scale or on top of another cube at low height
+    	
+    	addParallel(new SetCobraPosition(Arm.AggressiveCobra));
+    	addSequential(new SetSlidePosition(Slide.scaleMed));
+    	addSequential(new SetClawClosed(false));
     	addSequential(new SetCobraPosition(Arm.AttentiveCobra));
-    	addSequential(new SetClawOpen(true));
+    	addSequential(new SetClawClosed(true));
     }
 }

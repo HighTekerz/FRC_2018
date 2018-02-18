@@ -1,20 +1,25 @@
 package org.usfirst.frc.team3574.commands.groups;
 
 import org.usfirst.frc.team3574.commands.arm.SetCobraPosition;
+<<<<<<< HEAD:2018robot/src/org/usfirst/frc/team3574/commands/groups/PutPCubeInSwitch.java
 import org.usfirst.frc.team3574.commands.claw.SetClawOpen;
 import org.usfirst.frc.team3574.commands.slide.SetSlidePosition;
-import org.usfirst.frc.team3574.robot.Robot;
+=======
+import org.usfirst.frc.team3574.commands.claw.SetClawClosed;
+import org.usfirst.frc.team3574.commands.Slide.SetSlidePosition;
+>>>>>>> refs/remotes/origin/master:2018robot/src/org/usfirst/frc/team3574/commands/groups/PutCubeInSwitch.java
 import org.usfirst.frc.team3574.subsystems.Arm;
 import org.usfirst.frc.team3574.subsystems.Slide;
+
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
-public class PutPCubeInScaleLow extends CommandGroup {
+public class PutCubeInSwitch extends CommandGroup {
 
-    public PutPCubeInScaleLow() {
+    public PutCubeInSwitch() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -31,18 +36,10 @@ public class PutPCubeInScaleLow extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	
-    	//command to put the power cube in the scale while the scale is at its lowest position
-    	
-    	requires(Robot.arm);
-    	requires (Robot.slide);
-    	
-    	addParallel(new SetCobraPosition(Arm.AggressiveCobra));
-    	addSequential(new SetSlidePosition(Slide.scaleLow));
-    	//note: should probably have the true/false with the claw be the other way around. this is very confusing.
-    	addSequential(new SetClawOpen(false));
+    	addParallel(new SetCobraPosition(Arm.DepressedCobra));
+    	addSequential(new SetSlidePosition(Slide.switchHeight));
+    	addSequential(new SetClawClosed(true));
     	addSequential(new SetCobraPosition(Arm.AttentiveCobra));
-    	addSequential(new SetClawOpen(true));
-    	
+    	addSequential(new SetClawClosed(false));
     }
 }
