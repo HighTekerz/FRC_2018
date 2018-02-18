@@ -1,11 +1,9 @@
 package org.usfirst.frc.team3574.commands.groups;
 
 import org.usfirst.frc.team3574.commands.arm.SetCobraPosition;
-<<<<<<< HEAD:2018robot/src/org/usfirst/frc/team3574/commands/groups/PutPCubeInScaleMed.java
 import org.usfirst.frc.team3574.commands.claw.SetClawOpen;
 import org.usfirst.frc.team3574.commands.slide.SetSlidePosition;
 =======
-import org.usfirst.frc.team3574.commands.claw.SetClawClosed;
 import org.usfirst.frc.team3574.commands.Slide.SetSlidePosition;
 >>>>>>> refs/remotes/origin/master:2018robot/src/org/usfirst/frc/team3574/commands/groups/PutCubeInScaleMed.java
 import org.usfirst.frc.team3574.subsystems.Arm;
@@ -40,8 +38,8 @@ public class PutCubeInScaleMed extends CommandGroup {
     	
     	addParallel(new SetCobraPosition(Arm.AggressiveCobra));
     	addSequential(new SetSlidePosition(Slide.scaleMed));
-    	addSequential(new SetClawClosed(false));
+    	addSequential(new SetClawOpen(false));
     	addSequential(new SetCobraPosition(Arm.AttentiveCobra));
-    	addSequential(new SetClawClosed(true));
+    	addSequential(new SetClawOpen(true));
     }
 }

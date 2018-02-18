@@ -1,6 +1,6 @@
 package org.usfirst.frc.team3574.commands.arm;
 
-import org.usfirst.frc.team3574.commands.claw.SetClawClosed;
+import org.usfirst.frc.team3574.commands.claw.SetClawOpen;
 import org.usfirst.frc.team3574.commands.util.UntilBothSensorsAreTripped;
 import org.usfirst.frc.team3574.robot.Robot;
 import org.usfirst.frc.team3574.subsystems.Arm;
@@ -22,7 +22,6 @@ public class PickupCube extends CommandGroup {
         // use addParallel()
         // e.g. addParallel(new Command1());
         //      addSequential(new Command2());
-    	// <I0_0I> Rectangle man says hello
         // Command1 and Command2 will run in parallel.
 
         // A command group will require all of the subsystems that each member
@@ -31,10 +30,10 @@ public class PickupCube extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	addSequential(new UntilBothSensorsAreTripped());
-    	addParallel(new SetClawClosed(false));
+    	addParallel(new SetClawOpen(true));
     	addSequential(new SetWristParallel(false));
     	addSequential(new SetCobraPosition(Arm.DeadCobra));
-    	addSequential(new SetClawClosed(true));
+    	addSequential(new SetClawOpen(false));
     	addParallel(new SetCobraPosition(Arm.AttentiveCobra));
     	addSequential(new SetWristParallel(true));
     }

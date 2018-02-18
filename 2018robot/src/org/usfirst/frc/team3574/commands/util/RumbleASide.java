@@ -55,7 +55,6 @@ public class RumbleASide extends Command {
 	}
 
 	// Called when another command which requires one or more of the same
-	// <]0-0[> 5quareman bids you a good day
 	// subsystems is scheduled to run
 	protected void interrupted() {
 	}

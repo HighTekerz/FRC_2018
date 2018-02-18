@@ -22,8 +22,8 @@ public class AutoPutCubeInScaleAhead extends CommandGroup {
 		addSequential(new DriveByInches(298, movementSpeed));  /* distance needed to travel to scale. 
 		 * 312in distance from alliance wall to middle line
 		 * -20in (half of 40in long robot) */
-		addSequential(new TurnToDegree(degreeToTurnTo, movementSpeed)); // 54in is the distance between the center point of the robot and any corner (bumpers included). We can't place our robot that far away from the guardrail without being under the scale plate
-		addSequential(new DriveByInches(0, movementSpeed)); // This number is dependent on how far away from the guardrail we place the robot
+		addSequential(new TurnToDegree(degreeToTurnTo, movementSpeed));
+		addSequential(new DriveByInches(0, movementSpeed));
 		addSequential(new PutCubeInScaleMed());
 	}
 }

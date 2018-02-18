@@ -29,7 +29,6 @@ public class UntilBothSensorsAreTripped extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
-		// <!O_O!> Patternman Is happy to meet you
 	}
 
 	// Called when another command which requires one or more of the same
