@@ -1,8 +1,12 @@
-package org.usfirst.frc.team3574.commands.groups;
+package org.usfirst.frc.team3574.commands.arm;
 
-import org.usfirst.frc.team3574.commands.arm.SetCobraPosition;
-import org.usfirst.frc.team3574.commands.arm.SetWristParallel;
+<<<<<<< HEAD
+//import org.usfirst.frc.team3574.commands.claw.SetClawOpen;
+=======
+import org.usfirst.frc.team3574.commands.claw.SetClawOpen;
+>>>>>>> parent of f0e8612... Current Code, Mostly straightening things out
 import org.usfirst.frc.team3574.commands.util.UntilBothSensorsAreTripped;
+import org.usfirst.frc.team3574.robot.Robot;
 import org.usfirst.frc.team3574.subsystems.Arm;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -10,9 +14,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class PickupCubeFromOnTopOfAnotherOne extends CommandGroup {
+public class PickupCube extends CommandGroup {
 
-    public PickupCubeFromOnTopOfAnotherOne() {
+    public PickupCube() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -29,15 +33,18 @@ public class PickupCubeFromOnTopOfAnotherOne extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	
-    	//what am i even doing
-    	//literally just a variant of the other pickup command group but for cubes that are on top of other cubes.
-    	
     	addSequential(new UntilBothSensorsAreTripped());
+<<<<<<< HEAD
 //    	addParallel(new SetClawOpen(true));
     	addSequential(new SetWristParallel(false));
-    	addSequential(new SetCobraPosition(Arm.DepressedCobra));
+    	addSequential(new SetCobraPosition(Arm.DeadCobra));
 //    	addSequential(new SetClawOpen(false));
+=======
+    	addParallel(new SetClawOpen(true));
+    	addSequential(new SetWristParallel(false));
+    	addSequential(new SetCobraPosition(Arm.DeadCobra));
+    	addSequential(new SetClawOpen(false));
+>>>>>>> parent of f0e8612... Current Code, Mostly straightening things out
     	addParallel(new SetCobraPosition(Arm.AttentiveCobra));
     	addSequential(new SetWristParallel(true));
     }

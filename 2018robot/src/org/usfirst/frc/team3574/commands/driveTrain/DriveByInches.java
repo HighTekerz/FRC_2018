@@ -68,8 +68,6 @@ public class DriveByInches extends Command {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	
-//    	System.out.println("DriveByInches isFinished");
-    	
     	if (_speed > 0 && Robot.driveTrain.getEncoderLeft() >= _finalTickTargetLeft &&
     			Robot.driveTrain.getEncoderRight() >= _finalTickTargetRight) {
 //    		System.out.println("DriveByInches Returns True at " + Robot.driveTrain.getEncoderLeft() + " Right = " + Robot.driveTrain.getEncoderRight() + " Tick Targets: " + _finalTickTargetLeft + " & " + _finalTickTargetRight);
