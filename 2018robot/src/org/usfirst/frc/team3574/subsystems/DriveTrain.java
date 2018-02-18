@@ -221,14 +221,22 @@ public class DriveTrain extends Subsystem {
 		PigeonIMU.GeneralStatus genStatus = new PigeonIMU.GeneralStatus();
 		PigeonIMU.FusionStatus fusionStatus = new PigeonIMU.FusionStatus();
 		double [] xyz_dps = new double [3];
+		double [] accelerometer = new double [3];
+		double [] _6dquaternion = new double [4];
 		/* grab some input data from Pigeon and gamepad*/
 		penguin.getGeneralStatus(genStatus);
 		penguin.getRawGyro(xyz_dps);
 		penguin.getFusedHeading(fusionStatus);
+		penguin.getAccelerometerAngles(accelerometer);
+		penguin.get6dQuaternion(_6dquaternion);
 		double currentAngle = fusionStatus.heading;
 		_currentAngleToPass = currentAngle;
 		boolean angleIsGood = (penguin.getState() == PigeonIMU.PigeonState.Ready) ? true : false;
 		double currentAngularRate = xyz_dps[2];
+		SmartDashboard.putNumber("Accelerometer0", accelerometer[0]);
+		SmartDashboard.putNumber("Accelerometer1", accelerometer[1]);
+		SmartDashboard.putNumber("Accelerometer2", accelerometer[2]);
+		SmartDashboard.putNumberArray("_6dQuaternion", _6dquaternion);
 		SmartDashboard.putNumber("angle", currentAngle);
 		SmartDashboard.putNumber("Encoder Right", this.getEncoderRight());
 		SmartDashboard.putNumber("Encoder Left", this.getEncoderLeft());
