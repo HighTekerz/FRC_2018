@@ -5,6 +5,7 @@ import org.omg.CORBA.SetOverrideType;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveWithJoy;
 import org.usfirst.frc.team3574.robot.RobotMap;
 
+import com.ctre.phoenix.motion.MotionProfileStatus;
 //import org.usfirst.frc.team3574.robot.RobotMap;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -26,19 +27,21 @@ public class DriveTrain extends Subsystem {
 	Solenoid shifter = new Solenoid(RobotMap.ShifterSolenoid);
 
 	PigeonIMU penguin = new PigeonIMU (motorLeft2);
+	
+
 
 	double kPgain = 0.04; /* percent throttle per degree of error */
 	double kDgain = 0.0004; /* percent throttle per angular velocity dps */
 	double kMaxCorrectionRatio = 0.30; /* cap corrective turning throttle to 30 percent of forward throttle */
-	
+
 	public double _currentAngleToPass;
 
 	public DriveTrain() {
 		// TODO Auto-generated constructor stub
 		motorLeft1.set(ControlMode.PercentOutput, 0.0);
-		motorLeft2.set(ControlMode.PercentOutput,  0.0);
+		motorLeft2.set(ControlMode.Follower,  0.0);
 		motorRight1.set(ControlMode.PercentOutput,  0.0);
-		motorRight2.set(ControlMode.PercentOutput,  0.0);
+		motorRight2.set(ControlMode.Follower,  0.0);
 		motorLeft1.setNeutralMode(NeutralMode.Brake);
 		motorRight1.setNeutralMode(NeutralMode.Brake);
 		motorRight2.setNeutralMode(NeutralMode.Brake);
@@ -75,6 +78,18 @@ public class DriveTrain extends Subsystem {
 		motorRight2.set(ControlMode.PercentOutput, rightSpeed);
 	}    
 
+	public void driveByEncoders (int setpoint, MotionProfileStatus _status) {
+		
+		motorLeft1.getMotionProfileStatus(_status);
+		
+		if (_status.hasUnderrun)
+			
+			motorLeft1.clearMotionProfileHasUnderrun(setpoint);
+		
+		motorLeft1.set(ControlMode.MotionProfile, setpoint);
+
+	}
+
 	//Controls speed and direction of the robot.
 	// -1 = full reverse; 1 = full forward
 	public void driveByArcadeWithModifiers (double percentThrottle, double percentRotationOutput, double scalingValue )
@@ -101,7 +116,7 @@ public class DriveTrain extends Subsystem {
 		motorRight2.set(ControlMode.PercentOutput, (percentThrottle + percentRotationOutput) * -1.0);		
 	}
 
-	
+
 	public void driveStraightByArcade (double percentThrottle, double percentRotationOutput, double targetAngle) {
 
 		percentThrottle = valueAfterDeadzoned(percentThrottle);
@@ -145,13 +160,13 @@ public class DriveTrain extends Subsystem {
 		//		x'   = a             * x^3                     +  (1-a)             * x
 		return scalingCutoff * joystickValueToTheThird + ((1-scalingCutoff) * joystickValue);
 	}
-	
+
 	public void testOneMotorAtATime (double speed) {
 		motorLeft1.set(ControlMode.PercentOutput, speed);
 		motorLeft2.set(ControlMode.PercentOutput, speed);
 		motorRight1.set(ControlMode.PercentOutput, speed);
 		motorRight2.set(ControlMode.PercentOutput, speed);
-		
+
 	}
 
 	public void doNothing () 
@@ -178,7 +193,7 @@ public class DriveTrain extends Subsystem {
 		PigeonIMU.GeneralStatus genStatus = new PigeonIMU.GeneralStatus();
 		PigeonIMU.FusionStatus fusionStatus = new PigeonIMU.FusionStatus();
 		double [] xyz_dps = new double [3];
-		
+
 		//		/* grab some input data from Pigeon */
 		penguin.getGeneralStatus(genStatus);
 		penguin.getRawGyro(xyz_dps);
@@ -186,7 +201,7 @@ public class DriveTrain extends Subsystem {
 		double currentAngle = fusionStatus.heading;
 		double currentAngularRate = xyz_dps[2];
 		double turnThrottle = (targetAngle - currentAngle) * kPgain - (currentAngularRate) * kDgain;
-		
+
 		/* the max correction is the forward throttle times a scaler,
 		 * This can be done a number of ways but basically only apply small turning correction when we are moving slow
 		 * and larger correction the faster we move.  Otherwise you may need stiffer pgain at higher velocities. */
@@ -221,7 +236,9 @@ public class DriveTrain extends Subsystem {
 		PigeonIMU.GeneralStatus genStatus = new PigeonIMU.GeneralStatus();
 		PigeonIMU.FusionStatus fusionStatus = new PigeonIMU.FusionStatus();
 		double [] xyz_dps = new double [3];
+		double[] accelerometer = new double [3];
 		/* grab some input data from Pigeon and gamepad*/
+		penguin.getAccelerometerAngles(accelerometer);
 		penguin.getGeneralStatus(genStatus);
 		penguin.getRawGyro(xyz_dps);
 		penguin.getFusedHeading(fusionStatus);
@@ -232,7 +249,11 @@ public class DriveTrain extends Subsystem {
 		SmartDashboard.putNumber("angle", currentAngle);
 		SmartDashboard.putNumber("Encoder Right", this.getEncoderRight());
 		SmartDashboard.putNumber("Encoder Left", this.getEncoderLeft());
-		
+
+		SmartDashboard.putNumber("accelerometer1", accelerometer [0]);
+		SmartDashboard.putNumber("accelerometer2", accelerometer [1]);
+		SmartDashboard.putNumber("accelerometer3", accelerometer [2]);
+
 		SmartDashboard.putNumber("Motor Left 1 Voltage", motorLeft1.getMotorOutputVoltage());
 		SmartDashboard.putNumber("Motor Left 2 Voltage", motorLeft2.getMotorOutputVoltage());
 		SmartDashboard.putNumber("Motor Right 1 Voltage", motorRight1.getMotorOutputVoltage());

@@ -1,12 +1,8 @@
 package org.usfirst.frc.team3574.subsystems;
 
 
+import org.omg.CORBA.SetOverrideType;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveWithJoy;
-<<<<<<< HEAD
-import org.usfirst.frc.team3574.robot.Robot;
-=======
-import org.usfirst.frc.team3574.commands.driveTrain.RunTestOnMotors;
->>>>>>> 96bbf10f9911ac80fd6bf6c220e02eee93726645
 import org.usfirst.frc.team3574.robot.RobotMap;
 
 //import org.usfirst.frc.team3574.robot.RobotMap;
@@ -29,6 +25,11 @@ public class DriveTrain extends Subsystem {
 	TalonSRX motorRight2 = new TalonSRX(RobotMap.DriveTrainRightTalon2);
 	Solenoid shifter = new Solenoid(RobotMap.ShifterSolenoid);
 
+<<<<<<< HEAD
+
+
+=======
+>>>>>>> 784f9542c503dab01fb5b11e110a6b33b92994da
 	PigeonIMU penguin = new PigeonIMU (motorLeft2);
 
 	double kPgain = 0.04; /* percent throttle per degree of error */
@@ -65,8 +66,7 @@ public class DriveTrain extends Subsystem {
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
 		//setDefaultCommand(new MySpecialCommand());
-//		setDefaultCommand(new DriveWithJoy());
-		setDefaultCommand(new RunTestOnMotors());
+		setDefaultCommand(new DriveWithJoy());
 	}
 
 	//Drives the robot using s inputs for the left and right side motors.
@@ -238,12 +238,9 @@ public class DriveTrain extends Subsystem {
 		SmartDashboard.putNumber("Encoder Right", this.getEncoderRight());
 		SmartDashboard.putNumber("Encoder Left", this.getEncoderLeft());
 		
-<<<<<<< HEAD
-=======
 		SmartDashboard.putNumber("Motor Left 1 Voltage", motorLeft1.getMotorOutputVoltage());
 		SmartDashboard.putNumber("Motor Left 2 Voltage", motorLeft2.getMotorOutputVoltage());
 		SmartDashboard.putNumber("Motor Right 1 Voltage", motorRight1.getMotorOutputVoltage());
 		SmartDashboard.putNumber("Motor Right 2 Voltage", motorRight2.getMotorOutputVoltage());
->>>>>>> 96bbf10f9911ac80fd6bf6c220e02eee93726645
 	}
 }
