@@ -2,7 +2,7 @@ package org.usfirst.frc.team3574.commands.groups;
 
 import org.usfirst.frc.team3574.commands.arm.SetCobraPosition;
 import org.usfirst.frc.team3574.commands.arm.SetWristParallel;
-import org.usfirst.frc.team3574.commands.claw.SetClawOpen;
+//import org.usfirst.frc.team3574.commands.claw.SetClawOpen;
 import org.usfirst.frc.team3574.commands.util.UntilBothSensorsAreTripped;
 import org.usfirst.frc.team3574.subsystems.Arm;
 
@@ -35,10 +35,10 @@ public class PickupCubeFromOnTopOfAnotherOne extends CommandGroup {
     	//literally just a variant of the other pickup command group but for cubes that are on top of other cubes.
     	
     	addSequential(new UntilBothSensorsAreTripped());
-    	addParallel(new SetClawOpen(true));
+//    	addParallel(new SetClawOpen(true));
     	addSequential(new SetWristParallel(false));
     	addSequential(new SetCobraPosition(Arm.DepressedCobra));
-    	addSequential(new SetClawOpen(false));
+//    	addSequential(new SetClawOpen(false));
     	addParallel(new SetCobraPosition(Arm.AttentiveCobra));
     	addSequential(new SetWristParallel(true));
     }
