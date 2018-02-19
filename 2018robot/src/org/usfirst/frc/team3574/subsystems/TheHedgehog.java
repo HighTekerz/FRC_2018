@@ -1,6 +1,6 @@
 package org.usfirst.frc.team3574.subsystems;
 
-import org.usfirst.frc.team3574.commands.GetHedgehogDistance;
+import org.usfirst.frc.team3574.commands.sensors.GetHedgehogDistance;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.command.Subsystem;

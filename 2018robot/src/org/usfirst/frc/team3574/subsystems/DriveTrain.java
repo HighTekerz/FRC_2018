@@ -1,17 +1,26 @@
 package org.usfirst.frc.team3574.subsystems;
 
 
+import java.util.concurrent.TimeUnit;
+
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.SystemMenuBar;
+
 import org.omg.CORBA.SetOverrideType;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveWithJoy;
 import org.usfirst.frc.team3574.robot.RobotMap;
 
+import com.ctre.phoenix.motion.MotionProfileStatus;
 //import org.usfirst.frc.team3574.robot.RobotMap;
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.sensors.PigeonIMU;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -25,24 +34,58 @@ public class DriveTrain extends Subsystem {
 	TalonSRX motorRight2 = new TalonSRX(RobotMap.DriveTrainRightTalon2);
 	Solenoid shifter = new Solenoid(RobotMap.ShifterSolenoid);
 
+	StringBuilder _sb = new StringBuilder();
+	double targetPos = 0;
+	
+	Timer t = new Timer();
+	double lastT = 0;
+	double currentT = 0;
+	/**
+	 * Which PID slot to pull gains from. Starting 2018, you can choose from
+	 * 0,1,2 or 3. Only the first two (0,1) are visible in web-based
+	 * configuration.
+	 */
+	public static final int kSlotIdx = 0;
+
+	/*
+	 * Talon SRX/ Victor SPX will supported multiple (cascaded) PID loops. For
+	 * now we just want the primary one.
+	 */
+	public static final int kPIDLoopIdx = 0;
+
+	/*
+	 * set to zero to skip waiting for confirmation, set to nonzero to wait and
+	 * report to DS if action fails.
+	 */
+	public static final int kTimeoutMs = 10;
+
+	private static int _loops = 0;
+	private static int _timesInMotionMagic = 0;
+
 	PigeonIMU penguin = new PigeonIMU (motorLeft2);
+
+
 
 	double kPgain = 0.04; /* percent throttle per degree of error */
 	double kDgain = 0.0004; /* percent throttle per angular velocity dps */
 	double kMaxCorrectionRatio = 0.30; /* cap corrective turning throttle to 30 percent of forward throttle */
-	
+
 	public double _currentAngleToPass;
 
 	public DriveTrain() {
 		// TODO Auto-generated constructor stub
 		motorLeft1.set(ControlMode.PercentOutput, 0.0);
-		motorLeft2.set(ControlMode.PercentOutput,  0.0);
+		motorLeft2.set(ControlMode.Follower,  0.0);
 		motorRight1.set(ControlMode.PercentOutput,  0.0);
-		motorRight2.set(ControlMode.PercentOutput,  0.0);
+		motorRight2.set(ControlMode.Follower,  0.0);
 		motorLeft1.setNeutralMode(NeutralMode.Brake);
 		motorRight1.setNeutralMode(NeutralMode.Brake);
 		motorRight2.setNeutralMode(NeutralMode.Brake);
 		motorLeft2.setNeutralMode(NeutralMode.Brake);
+		
+		 t.reset();
+		 t.start();
+		 
 	}
 	public int getEncoderLeft()
 	{
@@ -75,6 +118,18 @@ public class DriveTrain extends Subsystem {
 		motorRight2.set(ControlMode.PercentOutput, rightSpeed);
 	}    
 
+	public void driveByEncoders (int setpoint, MotionProfileStatus _status) {
+
+		motorLeft1.getMotionProfileStatus(_status);
+
+		if (_status.hasUnderrun)
+
+			motorLeft1.clearMotionProfileHasUnderrun(setpoint);
+
+		motorLeft1.set(ControlMode.MotionProfile, setpoint);
+
+	}
+
 	//Controls speed and direction of the robot.
 	// -1 = full reverse; 1 = full forward
 	public void driveByArcadeWithModifiers (double percentThrottle, double percentRotationOutput, double scalingValue )
@@ -101,7 +156,7 @@ public class DriveTrain extends Subsystem {
 		motorRight2.set(ControlMode.PercentOutput, (percentThrottle + percentRotationOutput) * -1.0);		
 	}
 
-	
+
 	public void driveStraightByArcade (double percentThrottle, double percentRotationOutput, double targetAngle) {
 
 		percentThrottle = valueAfterDeadzoned(percentThrottle);
@@ -145,13 +200,13 @@ public class DriveTrain extends Subsystem {
 		//		x'   = a             * x^3                     +  (1-a)             * x
 		return scalingCutoff * joystickValueToTheThird + ((1-scalingCutoff) * joystickValue);
 	}
-	
+
 	public void testOneMotorAtATime (double speed) {
 		motorLeft1.set(ControlMode.PercentOutput, speed);
 		motorLeft2.set(ControlMode.PercentOutput, speed);
 		motorRight1.set(ControlMode.PercentOutput, speed);
 		motorRight2.set(ControlMode.PercentOutput, speed);
-		
+
 	}
 
 	public void doNothing () 
@@ -178,7 +233,7 @@ public class DriveTrain extends Subsystem {
 		PigeonIMU.GeneralStatus genStatus = new PigeonIMU.GeneralStatus();
 		PigeonIMU.FusionStatus fusionStatus = new PigeonIMU.FusionStatus();
 		double [] xyz_dps = new double [3];
-		
+
 		//		/* grab some input data from Pigeon */
 		penguin.getGeneralStatus(genStatus);
 		penguin.getRawGyro(xyz_dps);
@@ -186,14 +241,14 @@ public class DriveTrain extends Subsystem {
 		double currentAngle = fusionStatus.heading;
 		double currentAngularRate = xyz_dps[2];
 		double turnThrottle = (targetAngle - currentAngle) * kPgain - (currentAngularRate) * kDgain;
-		
+
 		/* the max correction is the forward throttle times a scaler,
 		 * This can be done a number of ways but basically only apply small turning correction when we are moving slow
 		 * and larger correction the faster we move.  Otherwise you may need stiffer pgain at higher velocities. */
 		double maxThrot = getMaxCorrection(forwardThrottle, kMaxCorrectionRatio);
-		System.out.println("Before Cap " + turnThrottle);
+		//		System.out.println("Before Cap " + turnThrottle);
 		turnThrottle = cap(turnThrottle, maxThrot);
-		System.out.println("After Cap " + turnThrottle);
+		//		System.out.println("After Cap " + turnThrottle);
 		return turnThrottle;
 	}
 
@@ -224,6 +279,7 @@ public class DriveTrain extends Subsystem {
 		double [] accelerometer = new double [3];
 		double [] _6dquaternion = new double [4];
 		/* grab some input data from Pigeon and gamepad*/
+		penguin.getAccelerometerAngles(accelerometer);
 		penguin.getGeneralStatus(genStatus);
 		penguin.getRawGyro(xyz_dps);
 		penguin.getFusedHeading(fusionStatus);
@@ -240,10 +296,148 @@ public class DriveTrain extends Subsystem {
 		SmartDashboard.putNumber("angle", currentAngle);
 		SmartDashboard.putNumber("Encoder Right", this.getEncoderRight());
 		SmartDashboard.putNumber("Encoder Left", this.getEncoderLeft());
-		
+
+		SmartDashboard.putNumber("accelerometer1", accelerometer [0]);
+		SmartDashboard.putNumber("accelerometer2", accelerometer [1]);
+		SmartDashboard.putNumber("accelerometer3", accelerometer [2]);
+
 		SmartDashboard.putNumber("Motor Left 1 Voltage", motorLeft1.getMotorOutputVoltage());
 		SmartDashboard.putNumber("Motor Left 2 Voltage", motorLeft2.getMotorOutputVoltage());
 		SmartDashboard.putNumber("Motor Right 1 Voltage", motorRight1.getMotorOutputVoltage());
 		SmartDashboard.putNumber("Motor Right 2 Voltage", motorRight2.getMotorOutputVoltage());
+		
+		currentT = t.get();
+		
+		
+		System.out.println("{" + motorLeft1.getSensorCollection().getQuadraturePosition() + ",\t" + 
+				motorLeft1.getSensorCollection().getQuadratureVelocity() + ",\t"  + (currentT - lastT) + "}," );
+		
+		lastT = currentT;
+	}
+
+	public void prepareForMotionMagic() {
+		
+		
+		/* first choose the sensor */
+		motorLeft1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, kPIDLoopIdx,  kTimeoutMs);
+		motorLeft1.setSensorPhase(false);
+		motorLeft1.setInverted(false);
+
+		/* Set relevant frame periods to be at least as fast as periodic rate */
+		motorLeft1.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10,  kTimeoutMs);
+		motorLeft1.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10,  kTimeoutMs);
+
+		/* set the peak and nominal outputs */
+		motorLeft1.configNominalOutputForward(0,  kTimeoutMs);
+		motorLeft1.configNominalOutputReverse(0,  kTimeoutMs);
+		motorLeft1.configPeakOutputForward(1,  kTimeoutMs);
+		motorLeft1.configPeakOutputReverse(-1,  kTimeoutMs);
+
+		/* set closed loop gains in slot0 - see documentation */
+		motorLeft1.selectProfileSlot( kSlotIdx,  kPIDLoopIdx);
+		motorLeft1.config_kF(0, 0.0,  kTimeoutMs);
+		motorLeft1.config_kP(0, 0.8,  kTimeoutMs);
+		motorLeft1.config_kI(0, 0,  kTimeoutMs);
+		motorLeft1.config_kD(0, 0.,  kTimeoutMs);
+		/* set acceleration and vcruise velocity - see documentation */
+		motorLeft1.configMotionCruiseVelocity(15000,  kTimeoutMs);
+		motorLeft1.configMotionAcceleration(6000,  kTimeoutMs);
+		/* zero the sensor */
+		motorLeft1.setSelectedSensorPosition(0,  kPIDLoopIdx,  kTimeoutMs);
+
+		motorRight1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,  kPIDLoopIdx,  kTimeoutMs);
+		motorRight1.setSensorPhase(false);
+		motorRight1.setInverted(false);
+
+		/* Set relevant frame periods to be at least as fast as periodic rate */
+		motorRight1.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10,  kTimeoutMs);
+		motorRight1.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10,  kTimeoutMs);
+
+		/* set the peak and nominal outputs */
+		motorRight1.configNominalOutputForward(0,  kTimeoutMs);
+		motorRight1.configNominalOutputReverse(0,  kTimeoutMs);
+		motorRight1.configPeakOutputForward(1,  kTimeoutMs);
+		motorRight1.configPeakOutputReverse(-1,  kTimeoutMs);
+
+		/* set closed loop gains in slot0 - see documentation */
+		motorRight1.selectProfileSlot( kSlotIdx,  kPIDLoopIdx);
+		motorRight1.config_kF(0, 0.0,  kTimeoutMs);
+		motorRight1.config_kP(0, 0.8,  kTimeoutMs);
+		motorRight1.config_kI(0, 0,  kTimeoutMs);
+		motorRight1.config_kD(0, 0.0,  kTimeoutMs);
+		/* set acceleration and vcruise velocity - see documentation */
+		motorRight1.configMotionCruiseVelocity(15000,  kTimeoutMs);
+		motorRight1.configMotionAcceleration(6000,  kTimeoutMs);
+		/* zero the sensor */
+		motorRight1.setSelectedSensorPosition(0,  kPIDLoopIdx,  kTimeoutMs);
+
+		motorLeft2.follow(motorLeft1);
+		motorRight2.follow(motorRight1);
+
+		SmartDashboard.putNumber("setPoint", 1);
+
+	}
+
+	public void driveByPIDLoop(double valueToLockOn) {
+		/* calculate the percent motor output */
+		double motorOutput = motorLeft1.getMotorOutputPercent();
+		/* prepare line to print */
+//		_sb.append("\tOut%:");
+//		_sb.append(motorOutput);
+//		_sb.append("\tVel:");
+//		_sb.append(motorLeft1.getSelectedSensorVelocity( kPIDLoopIdx));
+
+		/* Motion Magic - 4096 ticks/rev * 10 Rotations in either direction */
+		targetPos = valueToLockOn;
+		motorLeft1.set(ControlMode.Position, targetPos);
+		motorRight1.set(ControlMode.Position, -targetPos);
+		
+		/* append more signals to print when in speed mode. */
+//		_sb.append("\terr:");
+//		_sb.append(motorLeft1.getClosedLoopError( kPIDLoopIdx));
+//		_sb.append("\ttrg:");
+//		_sb.append(targetPos);
+		//		} else {
+		/* Percent voltage mode */
+		//			_talon.set(ControlMode.PercentOutput, leftYstick);
+		//		}
+		
+		/* instrumentation */
+		Process(motorLeft1, _sb, targetPos);
+		try {
+			TimeUnit.MILLISECONDS.sleep(10);
+		} catch (Exception e) {
+		}
+	}
+
+	public static void Process(TalonSRX tal, StringBuilder sb, double target)
+	{
+		/* smart dash plots */
+		SmartDashboard.putNumber("SensorVel", tal.getSelectedSensorVelocity(kPIDLoopIdx));
+		SmartDashboard.putNumber("SensorPos", tal.getSelectedSensorPosition(kPIDLoopIdx));
+		SmartDashboard.putNumber("MotorOutputPercent", tal.getMotorOutputPercent());
+		SmartDashboard.putNumber("ClosedLoopError", tal.getClosedLoopError(kPIDLoopIdx));
+		SmartDashboard.putNumber("ClosedLoopTarget", target);
+		
+		
+		/* check if we are motion-magic-ing */
+		if (tal.getControlMode() == ControlMode.MotionMagic) {
+			++_timesInMotionMagic;
+		} else {
+			_timesInMotionMagic = 0;
+		}
+		if (_timesInMotionMagic > 10) {
+			/* print the Active Trajectory Point Motion Magic is servoing towards */
+			SmartDashboard.putNumber("ActTrajVelocity", tal.getActiveTrajectoryVelocity());
+			SmartDashboard.putNumber("ActTrajPosition", tal.getActiveTrajectoryPosition());
+			SmartDashboard.putNumber("ActTrajHeading", tal.getActiveTrajectoryHeading());
+		}
+		/* periodically print to console */
+		if (++_loops >= 10) {
+			_loops = 0;
+			System.out.println(sb.toString());
+		}
+		/* clear line cache */
+		sb.setLength(0);
 	}
 }

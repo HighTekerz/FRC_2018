@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3574.commands.lifter;
+package org.usfirst.frc.team3574.commands.wings;
 
 import org.usfirst.frc.team3574.robot.Robot;
 
@@ -7,14 +7,14 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class SetLifterToLift extends Command {
+public class SetWingsToLift extends Command {
 
 	boolean _pistonWillExtend;
 	
-    public SetLifterToLift(boolean pistonWillExtend) {
+    public SetWingsToLift(boolean pistonWillExtend) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.lifter);
+    	requires(Robot.wings);
     	_pistonWillExtend = pistonWillExtend;
     }
 
@@ -24,8 +24,8 @@ public class SetLifterToLift extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.lifter.setLeftSolenoid(_pistonWillExtend);
-    	Robot.lifter.setRightSolenoid(_pistonWillExtend);
+    	Robot.wings.setLeftSolenoid(_pistonWillExtend);
+    	Robot.wings.setRightSolenoid(_pistonWillExtend);
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -3,8 +3,13 @@ package org.usfirst.frc.team3574.subsystems;
 //import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
+import org.usfirst.frc.team3574.robot.RobotMap;
+
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.Ultrasonic;
@@ -26,29 +31,19 @@ public class SensorTest extends Subsystem {
 		return proximitySensor.get() && anotherProximitySensor.get();	
 	}
 	
+//	TalonSRX FreShaVaCaDo = new TalonSRX (RobotMap.FreshAvocado);
+
+	
 	public SensorTest() {
 		ultraHedgehog.setAutomaticMode(true);
-	
+//		FreShaVaCaDo.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor1, 0, 10);
 	}
 	public void log () {
 		SmartDashboard.putNumber("UltraHedgehog thing", ultraHedgehog.getRangeInches());
         SmartDashboard.putBoolean("andanothersensor", !proximitySensor.get());
 		SmartDashboard.getBoolean("Even Another Sensor Like How Many Of These Do We Need?", anotherProximitySensor.get());
 		
-//	  	iTooCanSee. read(0x27, 2, dataBuffer);
-      	
-    	//compBuffer.order(ByteOrder.BIG_ENDIAN);
-    	
-    	//SmartDashboard.putNumber("cX", compBuffer.getShort());
-    	//SmartDashboard.putNumber("cY", compBuffer.getShort());
-    	//SmartDashboard.putNumber("cZ", compBuffer.getShort());
-    //	SmartDashboard.putNumber("cZ", compBuffer.getShort());
-
 	}
-	// Put methods for controlling this subsystem
-	// here. Call these from Commands.
-
-
 	public void initDefaultCommand() {
 
 

@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3574.commands.lifter;
+package org.usfirst.frc.team3574.commands.driveTrain;
 
 import org.usfirst.frc.team3574.robot.Robot;
 
@@ -7,12 +7,14 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class SetLifterDown extends Command {
-
-    public SetLifterDown() {
+public class DriveWhileSwerving extends Command {
+	
+	public double _percentThrottle;
+	public double _percentRotationOutput;
+	
+    public DriveWhileSwerving() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.lifter);
     }
 
     // Called just before this Command runs the first time
@@ -21,8 +23,7 @@ public class SetLifterDown extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.lifter.setLeftSparkOpen();
-    	Robot.lifter.setRightSparkOpen();
+    	Robot.driveTrain.driveByArcade(_percentThrottle, _percentRotationOutput);
     }
 
     // Make this return true when this Command no longer needs to run execute()

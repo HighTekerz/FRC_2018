@@ -1,18 +1,20 @@
-package org.usfirst.frc.team3574.commands.arm;
+package org.usfirst.frc.team3574.commands.groups;
 
-import org.usfirst.frc.team3574.commands.claw.SetClawOpen;
-import org.usfirst.frc.team3574.commands.util.UntilBothSensorsAreTripped;
-import org.usfirst.frc.team3574.robot.Robot;
+import org.usfirst.frc.team3574.commands.arm.SetCobraPosition;
+//import org.usfirst.frc.team3574.commands.claw.SetClawOpen;
+import org.usfirst.frc.team3574.commands.slide.SetSlidePosition;
 import org.usfirst.frc.team3574.subsystems.Arm;
+import org.usfirst.frc.team3574.subsystems.Slide;
+
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
-public class PickupPowerCube extends CommandGroup {
+public class PutCubeInSwitch extends CommandGroup {
 
-    public PickupPowerCube() {
+    public PutCubeInSwitch() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -29,12 +31,10 @@ public class PickupPowerCube extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addSequential(new UntilBothSensorsAreTripped());
-    	addParallel(new SetClawOpen(true));
-    	addSequential(new SetWristParallel(false));
-    	addSequential(new SetCobraPosition(Arm.DeadCobra));
-    	addSequential(new SetClawOpen(false));
-    	addParallel(new SetCobraPosition(Arm.AttentiveCobra));
-    	addSequential(new SetWristParallel(true));
+    	addParallel(new SetCobraPosition(Arm.DepressedCobra));
+    	addSequential(new SetSlidePosition(Slide.switchHeight));
+//    	addSequential(new SetClawOpen(false));
+    	addSequential(new SetCobraPosition(Arm.AttentiveCobra));
+//    	addSequential(new SetClawOpen(true));
     }
 }

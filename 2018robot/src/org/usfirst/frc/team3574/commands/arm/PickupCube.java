@@ -1,20 +1,18 @@
-package org.usfirst.frc.team3574.autonomous;
+package org.usfirst.frc.team3574.commands.arm;
 
-import org.usfirst.frc.team3574.commands.driveTrain.DoNothing;
-import org.usfirst.frc.team3574.commands.driveTrain.DriveByInches;
+import org.usfirst.frc.team3574.commands.claw.SetClawOpen;
+import org.usfirst.frc.team3574.commands.util.UntilBothSensorsAreTripped;
+import org.usfirst.frc.team3574.robot.Robot;
+import org.usfirst.frc.team3574.subsystems.Arm;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
-public class DriveForwardAutonomous extends CommandGroup {
+public class PickupCube extends CommandGroup {
 
-	/**
-	 * Autonomous program to drive across the auto line and stop
-	 */
-    public DriveForwardAutonomous() {
-    	System.out.println("Drive Forwards Auto");
+    public PickupCube() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -31,9 +29,12 @@ public class DriveForwardAutonomous extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addSequential(new DriveByInches(90, .4)); /* 120in from alliance wall to auto line
-    												 - 40in long robot
-    												 + 10in to make sure we get over the line */
-    	addSequential(new DoNothing());
+    	addSequential(new UntilBothSensorsAreTripped());
+    	addParallel(new SetClawOpen(true));
+    	addSequential(new SetWristParallel(false));
+    	addSequential(new SetCobraPosition(Arm.DeadCobra));
+    	addSequential(new SetClawOpen(false));
+    	addParallel(new SetCobraPosition(Arm.AttentiveCobra));
+    	addSequential(new SetWristParallel(true));
     }
 }

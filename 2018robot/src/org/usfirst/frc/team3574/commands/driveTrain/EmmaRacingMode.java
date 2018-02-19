@@ -1,19 +1,24 @@
-package org.usfirst.frc.team3574.autonomous;
+package org.usfirst.frc.team3574.commands.driveTrain;
+
+import org.usfirst.frc.team3574.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class PlaceCubeInLeftSwitch extends Command {
+public class EmmaRacingMode extends Command {
 
-    public PlaceCubeInLeftSwitch() {
+    public EmmaRacingMode() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	requires(Robot.driveTrain);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.driveTrain.driveByArcadeWithModifiers(Robot.OperatorInput.getRightTrigger()-Robot.OperatorInput.getLeftTrigger(), Robot.OperatorInput.getRightStickX(), (Robot.OperatorInput.getDialAxis()+1)/2);
+	
     }
 
     // Called repeatedly when this Command is scheduled to run

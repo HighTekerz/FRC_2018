@@ -1,38 +1,33 @@
-package org.usfirst.frc.team3574.commands.field;
+package org.usfirst.frc.team3574.commands.driveTrain;
 
-import org.usfirst.frc.team3574.autonomous.PlaceCubeInSwitchFromMiddle;
+import org.usfirst.frc.team3574.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class GetIsOurSwitchRight extends Command {
+public class DriveByPID extends Command {
 
-	private int intToMakeItRunTwice = 0;
-
-	public GetIsOurSwitchRight() {
+	public DriveByPID() {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
+		requires(Robot.driveTrain);
 	}
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
+		Robot.driveTrain.prepareForMotionMagic();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
+		Robot.driveTrain.driveByPIDLoop(5000);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		if (intToMakeItRunTwice == 1) {
-			return true;
-		}
-		else {
-			intToMakeItRunTwice++;
-			return false;
-		}
+		return false;
 	}
 
 	// Called once after isFinished returns true

@@ -1,19 +1,13 @@
 package org.usfirst.frc.team3574.commands.groups;
 
-import org.usfirst.frc.team3574.commands.arm.SetCobraPosition;
-import org.usfirst.frc.team3574.commands.claw.SetClawOpen;
-import org.usfirst.frc.team3574.commands.slide.SetSlidePosition;
-import org.usfirst.frc.team3574.subsystems.Arm;
-import org.usfirst.frc.team3574.subsystems.Slide;
-
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
-public class PutPCubeInScaleMed extends CommandGroup {
+public class AutoTest1 extends CommandGroup {
 
-    public PutPCubeInScaleMed() {
+    public AutoTest1() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -30,13 +24,5 @@ public class PutPCubeInScaleMed extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	
-    	//puts cube on mid-height scale or on top of another cube at low height
-    	
-    	addParallel(new SetCobraPosition(Arm.AggressiveCobra));
-    	addSequential(new SetSlidePosition(Slide.scaleMed));
-    	addSequential(new SetClawOpen(false));
-    	addSequential(new SetCobraPosition(Arm.AttentiveCobra));
-    	addSequential(new SetClawOpen(true));
     }
 }

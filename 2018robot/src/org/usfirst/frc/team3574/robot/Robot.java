@@ -7,7 +7,9 @@
 
 package org.usfirst.frc.team3574.robot;
 
+import org.usfirst.frc.team3574.autonomous.AutonomousSelector;
 import org.usfirst.frc.team3574.autonomous.DriveForwardAutonomous;
+import org.usfirst.frc.team3574.commands.driveTrain.DriveByInches;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveWithJoy;
 import org.usfirst.frc.team3574.commands.util.RumbleASide;
 import org.usfirst.frc.team3574.subsystems.Arm;
@@ -16,7 +18,7 @@ import org.usfirst.frc.team3574.subsystems.DriveTrain;
 import org.usfirst.frc.team3574.subsystems.Slide;
 import org.usfirst.frc.team3574.subsystems.SensorTest;
 import org.usfirst.frc.team3574.subsystems.TheHedgehog;
-import org.usfirst.frc.team3574.subsystems.Lifter;
+import org.usfirst.frc.team3574.subsystems.Wings;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
@@ -36,20 +38,18 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends TimedRobot {
 
 	//subsystems 
-	public static final DriveTrain driveTrain = new DriveTrain();
+	public static final DriveTrain  driveTrain = new DriveTrain();
 	public static final TheHedgehog theHedgehog = new TheHedgehog();
-	public static final SensorTest sensorTest = new SensorTest();
-	public static final Slide slide = new Slide();
-	public static final Lifter lifter = new Lifter();
-	public static final Claw claw = new Claw();
-	public static final Arm arm = new Arm();
+	public static final SensorTest  sensorTest = new SensorTest();
+	public static final Slide  	    slide = new Slide();
+	public static final Wings       wings = new Wings();
+	public static final Claw        claw = new Claw();
+	public static final Arm 	    arm = new Arm();
 	
 	Command m_autonomousCommand;
 	public static OI OperatorInput;
-	SendableChooser<Command> m_chooser = new SendableChooser<>();
-	
-	
-	
+	SendableChooser<Command> autoChooserForLosers = new SendableChooser<>();
+	SendableChooser<Command> startPositionChooser = new SendableChooser<>();	
 	
 	public double _matchTime;
 
@@ -60,13 +60,12 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		OperatorInput = new OI();
-//		if (we're doing the middle && The right side = ours)
-//				we do the right side PCIS auto
-//		else if (we're doing the middle && The left side = ours)
-//				we do the Left side PCIS auto
-		m_chooser.addDefault("Default Auto", new DriveForwardAutonomous());
-		// chooser.addObject("My Auto", new MyAutoCommand());
-		SmartDashboard.putData("Auto mode", m_chooser);
+		autoChooserForLosers.addObject("Cube In Switch From Left", new AutonomousSelector(true, true));
+		autoChooserForLosers.addDefault("Cube In Switch From Right", new AutonomousSelector(false, true));
+		autoChooserForLosers.addDefault("Pass Auto Line", new DriveForwardAutonomous());
+		
+		SmartDashboard.putData("Auto mode", autoChooserForLosers);
+		
 		SmartDashboard.putData(Scheduler.getInstance());
 	}
 
@@ -98,7 +97,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		m_autonomousCommand = m_chooser.getSelected();
+		m_autonomousCommand = autoChooserForLosers.getSelected();
 
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -106,9 +105,8 @@ public class Robot extends TimedRobot {
 		 * = new MyAutoCommand(); break; case "Default Auto": default:
 		 * autonomousCommand = new ExampleCommand(); break; }
 		 */
-		// TODO: make it able to change through shuffle board
-		m_autonomousCommand= new DriveForwardAutonomous();
-
+		
+		
 		// schedule the autonomous command (example)
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.start();
@@ -155,7 +153,6 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void testPeriodic() {
-
 		this.log();
 	}
 
