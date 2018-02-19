@@ -3,6 +3,8 @@ package org.usfirst.frc.team3574.subsystems;
 
 import java.util.concurrent.TimeUnit;
 
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.SystemMenuBar;
+
 import org.omg.CORBA.SetOverrideType;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveWithJoy;
 import org.usfirst.frc.team3574.robot.RobotMap;
@@ -18,6 +20,7 @@ import com.ctre.phoenix.sensors.PigeonIMU;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -33,7 +36,10 @@ public class DriveTrain extends Subsystem {
 
 	StringBuilder _sb = new StringBuilder();
 	double targetPos = 0;
-
+	
+	Timer t = new Timer();
+	double lastT = 0;
+	double currentT = 0;
 	/**
 	 * Which PID slot to pull gains from. Starting 2018, you can choose from
 	 * 0,1,2 or 3. Only the first two (0,1) are visible in web-based
@@ -76,6 +82,10 @@ public class DriveTrain extends Subsystem {
 		motorRight1.setNeutralMode(NeutralMode.Brake);
 		motorRight2.setNeutralMode(NeutralMode.Brake);
 		motorLeft2.setNeutralMode(NeutralMode.Brake);
+		
+		 t.reset();
+		 t.start();
+		 
 	}
 	public int getEncoderLeft()
 	{
@@ -288,10 +298,19 @@ public class DriveTrain extends Subsystem {
 		SmartDashboard.putNumber("Motor Left 2 Voltage", motorLeft2.getMotorOutputVoltage());
 		SmartDashboard.putNumber("Motor Right 1 Voltage", motorRight1.getMotorOutputVoltage());
 		SmartDashboard.putNumber("Motor Right 2 Voltage", motorRight2.getMotorOutputVoltage());
+		
+		currentT = t.get();
+		
+		
+		System.out.println("{" + motorLeft1.getSensorCollection().getQuadraturePosition() + ",\t" + 
+				motorLeft1.getSensorCollection().getQuadratureVelocity() + ",\t"  + (currentT - lastT) + "}," );
+		
+		lastT = currentT;
 	}
 
 	public void prepareForMotionMagic() {
-
+		
+		
 		/* first choose the sensor */
 		motorLeft1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, kPIDLoopIdx,  kTimeoutMs);
 		motorLeft1.setSensorPhase(false);
@@ -355,12 +374,11 @@ public class DriveTrain extends Subsystem {
 	public void driveByPIDLoop(double valueToLockOn) {
 		/* calculate the percent motor output */
 		double motorOutput = motorLeft1.getMotorOutputPercent();
-
 		/* prepare line to print */
-		_sb.append("\tOut%:");
-		_sb.append(motorOutput);
-		_sb.append("\tVel:");
-		_sb.append(motorLeft1.getSelectedSensorVelocity( kPIDLoopIdx));
+//		_sb.append("\tOut%:");
+//		_sb.append(motorOutput);
+//		_sb.append("\tVel:");
+//		_sb.append(motorLeft1.getSelectedSensorVelocity( kPIDLoopIdx));
 
 		/* Motion Magic - 4096 ticks/rev * 10 Rotations in either direction */
 		targetPos = valueToLockOn;
@@ -368,10 +386,10 @@ public class DriveTrain extends Subsystem {
 		motorRight1.set(ControlMode.Position, -targetPos);
 		
 		/* append more signals to print when in speed mode. */
-		_sb.append("\terr:");
-		_sb.append(motorLeft1.getClosedLoopError( kPIDLoopIdx));
-		_sb.append("\ttrg:");
-		_sb.append(targetPos);
+//		_sb.append("\terr:");
+//		_sb.append(motorLeft1.getClosedLoopError( kPIDLoopIdx));
+//		_sb.append("\ttrg:");
+//		_sb.append(targetPos);
 		//		} else {
 		/* Percent voltage mode */
 		//			_talon.set(ControlMode.PercentOutput, leftYstick);
@@ -393,7 +411,8 @@ public class DriveTrain extends Subsystem {
 		SmartDashboard.putNumber("MotorOutputPercent", tal.getMotorOutputPercent());
 		SmartDashboard.putNumber("ClosedLoopError", tal.getClosedLoopError(kPIDLoopIdx));
 		SmartDashboard.putNumber("ClosedLoopTarget", target);
-
+		
+		
 		/* check if we are motion-magic-ing */
 		if (tal.getControlMode() == ControlMode.MotionMagic) {
 			++_timesInMotionMagic;
