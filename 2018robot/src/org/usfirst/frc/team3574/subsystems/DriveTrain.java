@@ -7,9 +7,11 @@ import javax.swing.plaf.basic.BasicInternalFrameTitlePane.SystemMenuBar;
 
 import org.omg.CORBA.SetOverrideType;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveWithJoy;
+import org.usfirst.frc.team3574.robot.MotionProfileRight;
 import org.usfirst.frc.team3574.robot.RobotMap;
 
 import com.ctre.phoenix.motion.MotionProfileStatus;
+import com.ctre.phoenix.motion.SetValueMotionProfile;
 //import org.usfirst.frc.team3574.robot.RobotMap;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -34,9 +36,11 @@ public class DriveTrain extends Subsystem {
 	TalonSRX motorRight2 = new TalonSRX(RobotMap.DriveTrainRightTalon2);
 	Solenoid shifter = new Solenoid(RobotMap.ShifterSolenoid);
 
+	MotionProfileRight mPRIGHT = new MotionProfileRight(motorRight1);
+	MotionProfileRight mPLeft = new MotionProfileRight(motorLeft1);
 	StringBuilder _sb = new StringBuilder();
 	double targetPos = 0;
-	
+
 	Timer t = new Timer();
 	double lastT = 0;
 	double currentT = 0;
@@ -82,10 +86,10 @@ public class DriveTrain extends Subsystem {
 		motorRight1.setNeutralMode(NeutralMode.Brake);
 		motorRight2.setNeutralMode(NeutralMode.Brake);
 		motorLeft2.setNeutralMode(NeutralMode.Brake);
-		
-		 t.reset();
-		 t.start();
-		 
+
+		t.reset();
+		t.start();
+
 	}
 	public int getEncoderLeft()
 	{
@@ -305,19 +309,22 @@ public class DriveTrain extends Subsystem {
 		SmartDashboard.putNumber("Motor Left 2 Voltage", motorLeft2.getMotorOutputVoltage());
 		SmartDashboard.putNumber("Motor Right 1 Voltage", motorRight1.getMotorOutputVoltage());
 		SmartDashboard.putNumber("Motor Right 2 Voltage", motorRight2.getMotorOutputVoltage());
-		
+
 		currentT = t.get();
-		
-		
-		System.out.println("{" + motorLeft1.getSensorCollection().getQuadraturePosition() + ",\t" + 
-				motorLeft1.getSensorCollection().getQuadratureVelocity() + ",\t"  + (currentT - lastT) + "}," );
-		
+
+
+
+		System.out.println("{" + motorLeft1.getActiveTrajectoryHeading() + ",\t" + 
+				motorLeft1.getActiveTrajectoryVelocity() + ",\t"  + (int)((currentT - lastT) * 1000 + 5) + "},\t" +
+				"{" + motorRight1.getActiveTrajectoryHeading() + ",\t" + 
+				motorRight1.getActiveTrajectoryVelocity() + ",\t"  + (int)((currentT - lastT) * 1000 + 5) + "}," );
+
 		lastT = currentT;
 	}
 
 	public void prepareForMotionMagic() {
-		
-		
+
+
 		/* first choose the sensor */
 		motorLeft1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, kPIDLoopIdx,  kTimeoutMs);
 		motorLeft1.setSensorPhase(false);
@@ -382,26 +389,26 @@ public class DriveTrain extends Subsystem {
 		/* calculate the percent motor output */
 		double motorOutput = motorLeft1.getMotorOutputPercent();
 		/* prepare line to print */
-//		_sb.append("\tOut%:");
-//		_sb.append(motorOutput);
-//		_sb.append("\tVel:");
-//		_sb.append(motorLeft1.getSelectedSensorVelocity( kPIDLoopIdx));
+		//		_sb.append("\tOut%:");
+		//		_sb.append(motorOutput);
+		//		_sb.append("\tVel:");
+		//		_sb.append(motorLeft1.getSelectedSensorVelocity( kPIDLoopIdx));
 
 		/* Motion Magic - 4096 ticks/rev * 10 Rotations in either direction */
 		targetPos = valueToLockOn;
 		motorLeft1.set(ControlMode.Position, targetPos);
 		motorRight1.set(ControlMode.Position, -targetPos);
-		
+
 		/* append more signals to print when in speed mode. */
-//		_sb.append("\terr:");
-//		_sb.append(motorLeft1.getClosedLoopError( kPIDLoopIdx));
-//		_sb.append("\ttrg:");
-//		_sb.append(targetPos);
+		//		_sb.append("\terr:");
+		//		_sb.append(motorLeft1.getClosedLoopError( kPIDLoopIdx));
+		//		_sb.append("\ttrg:");
+		//		_sb.append(targetPos);
 		//		} else {
 		/* Percent voltage mode */
 		//			_talon.set(ControlMode.PercentOutput, leftYstick);
 		//		}
-		
+
 		/* instrumentation */
 		Process(motorLeft1, _sb, targetPos);
 		try {
@@ -418,8 +425,8 @@ public class DriveTrain extends Subsystem {
 		SmartDashboard.putNumber("MotorOutputPercent", tal.getMotorOutputPercent());
 		SmartDashboard.putNumber("ClosedLoopError", tal.getClosedLoopError(kPIDLoopIdx));
 		SmartDashboard.putNumber("ClosedLoopTarget", target);
-		
-		
+
+
 		/* check if we are motion-magic-ing */
 		if (tal.getControlMode() == ControlMode.MotionMagic) {
 			++_timesInMotionMagic;
@@ -440,4 +447,23 @@ public class DriveTrain extends Subsystem {
 		/* clear line cache */
 		sb.setLength(0);
 	}
+	
+	public void MPInit() {
+		mPLeft.startMotionProfile();
+		mPRIGHT.startMotionProfile();
+
+	}
+	
+	public void MPExec() {
+		SetValueMotionProfile setOutputLeft = mPLeft.getSetValue();
+		SetValueMotionProfile setOutputRight = mPRIGHT.getSetValue();
+		motorLeft1.set(ControlMode.MotionProfile, setOutputLeft.value);
+		motorRight1.set(ControlMode.MotionProfile, setOutputRight.value);
+	}
+	
+	public void MPEnd() {
+		mPLeft.reset();
+		mPRIGHT.reset();
+	}
+	
 }
