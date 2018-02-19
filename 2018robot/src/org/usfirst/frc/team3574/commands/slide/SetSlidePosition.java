@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3574.commands.Slide;
+package org.usfirst.frc.team3574.commands.slide;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

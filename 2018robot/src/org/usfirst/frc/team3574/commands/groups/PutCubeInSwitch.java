@@ -1,8 +1,8 @@
 package org.usfirst.frc.team3574.commands.groups;
 
 import org.usfirst.frc.team3574.commands.arm.SetCobraPosition;
-import org.usfirst.frc.team3574.commands.claw.SetClawClosed;
-import org.usfirst.frc.team3574.commands.Slide.SetSlidePosition;
+//import org.usfirst.frc.team3574.commands.claw.SetClawOpen;
+import org.usfirst.frc.team3574.commands.slide.SetSlidePosition;
 import org.usfirst.frc.team3574.subsystems.Arm;
 import org.usfirst.frc.team3574.subsystems.Slide;
 
@@ -33,8 +33,8 @@ public class PutCubeInSwitch extends CommandGroup {
         // arm.
     	addParallel(new SetCobraPosition(Arm.DepressedCobra));
     	addSequential(new SetSlidePosition(Slide.switchHeight));
-    	addSequential(new SetClawClosed(true));
+//    	addSequential(new SetClawOpen(false));
     	addSequential(new SetCobraPosition(Arm.AttentiveCobra));
-    	addSequential(new SetClawClosed(false));
+//    	addSequential(new SetClawOpen(true));
     }
 }

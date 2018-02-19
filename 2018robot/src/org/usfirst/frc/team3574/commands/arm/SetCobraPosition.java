@@ -11,11 +11,16 @@ public class SetCobraPosition extends Command {
 
 	private int _cobraPosition; 
 	
-    
+    /**
+     * Command to move the Arm to different locations
+     * 
+     * @param cobraPosition Denotes which arm position you want to go to. Pull your number from the arm subsystem (e.g. Robot.arm.AggressiveCobra)
+     */
 	public SetCobraPosition(int cobraPosition) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
 		requires(Robot.arm);
+		int g = Robot.arm.AggressiveCobra;
     	_cobraPosition = cobraPosition;
     }
 

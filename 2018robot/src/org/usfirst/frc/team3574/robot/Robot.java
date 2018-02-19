@@ -25,6 +25,7 @@ import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -153,11 +154,12 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void testPeriodic() {
-
 		this.log();
 	}
 
-
+	/**
+	 * Calls all log methods in subsystems, putting data on the smartdashboard and console
+	 */
 	public void log() {
 		SmartDashboard.putNumber("Percent Throttle", OperatorInput.getRightStickY());
 		SmartDashboard.putNumber("Percent Rotation", OperatorInput.getLeftStickX());
@@ -169,7 +171,6 @@ public class Robot extends TimedRobot {
 		Robot.driveTrain.log();
 		Robot.sensorTest.log();
 		Robot.slide.log();
-		Robot.arm.log();
 
 	}
 }

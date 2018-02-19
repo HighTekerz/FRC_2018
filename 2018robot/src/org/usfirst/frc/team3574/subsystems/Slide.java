@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -16,11 +17,12 @@ public class Slide extends Subsystem {
 
 	TalonSRX slideSim = new TalonSRX(RobotMap.SlideMotor); 
 	final int slotIdx = 0;
-	// <[0-0]> Ascii man waves from the technoworld
 	final int timeoutMs = 50;
 	final double kP = 1.0;
 	final double kI = 1.0;
 	final double kD = 1.0;
+	
+	DigitalInput scaleDetector = new DigitalInput(4);
 
 	/**
 	 * Which PID slot to pull gains from. Starting 2018, you can choose from
@@ -100,10 +102,14 @@ public class Slide extends Subsystem {
 		slideSim.set(ControlMode.Position, setPoint);
 	}
 	
-	public void setSlideARunning() {
-		slideSim.set(ControlMode.PercentOutput, 1);
+	public void setSlideSpeed(double speed) {
+		slideSim.set(ControlMode.PercentOutput, speed);
 	}
 	
+	public boolean isScaleDetectorTripped() {
+		return scaleDetector.get();
+	}
+
 	@Override
 	protected void initDefaultCommand() {
 

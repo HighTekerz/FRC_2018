@@ -20,10 +20,6 @@ public class Wings extends Subsystem {
 	private final double sparkOpenPosition= 5;
 	
     public void initDefaultCommand() {
-      
-    	
-    	
-    	
     }
     public void setLeftSolenoid(boolean pistonIsOpen) {
     

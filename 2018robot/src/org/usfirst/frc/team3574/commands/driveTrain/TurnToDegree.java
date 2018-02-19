@@ -19,7 +19,6 @@ public class TurnToDegree extends Command {
 
 	public TurnToDegree(double degree, double speed) {
 		// Use requires() here to declare subsystem dependencies
-		// <T0_0T> Squareman Greets you
 		// eg. requires(chassis);
 		_speed = speed;
 		_oGDegreeToReach = degree;

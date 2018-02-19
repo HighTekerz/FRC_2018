@@ -11,6 +11,8 @@ package org.usfirst.frc.team3574.robot;
 import org.usfirst.frc.team3574.commands.arm.SetCobraPosition;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveByHedgehog2Distance;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveByInches;
+import org.usfirst.frc.team3574.commands.driveTrain.DriveByPID;
+import org.usfirst.frc.team3574.commands.driveTrain.RunTestOnMotors;
 import org.usfirst.frc.team3574.commands.driveTrain.TurnToDegree;
 import org.usfirst.frc.team3574.commands.groups.PutCubeInSwitch;
 import org.usfirst.frc.team3574.commands.util.RumbleASide;
@@ -45,7 +47,6 @@ public class OI {
 	// commands the same as any other Button.
 
 	//// TRIGGERING COMMANDS WITH BUTTONS
-	// <{O_O}> Non-squ@reman: "Hi there"
 	// Once you have a button, it's trivial to bind it to a button in one of
 	// three ways:
 
@@ -83,48 +84,10 @@ public class OI {
 
 
 	public OI() {
-		Button drive10FeetForeward = new JoystickButton(driverXbox360Controller, Y_BUTTON);
-		drive10FeetForeward.whenPressed(new DriveByInches(120, 0.5));
 
-		Button drive10FeetBackward = new JoystickButton(driverXbox360Controller, A_BUTTON);
-		drive10FeetBackward.whenPressed(new DriveByInches(120, -0.5));
-
-		Button turnNinetyDegreesLeft = new JoystickButton(driverXbox360Controller, X_BUTTON);
-		turnNinetyDegreesLeft.whenPressed(new TurnToDegree(90, 0.4));
-
-		Button turnNinetyDegreesRight = new JoystickButton(driverXbox360Controller, B_BUTTON);
-		turnNinetyDegreesRight.whenPressed(new TurnToDegree(-90, 0.4));
-
-		Button turnFifteenRight = new JoystickButton(driverXbox360Controller, RIGHT_BUMPER);
-		turnFifteenRight.whenPressed(new TurnToDegree(-10, 0.4));
-
-		Button turnFifteenLeft = new JoystickButton(driverXbox360Controller, LEFT_BUMPER);
-		turnFifteenLeft.whenPressed(new TurnToDegree(10, 0.4));
-
-		//These last two are for testing autonomous stuff mostly.
-		Button driveToDistance = new JoystickButton(driverXbox360Controller, START);
-		driveToDistance.whenPressed(new DriveByHedgehog2Distance(24, - 0.25));
-
-		Button driveToNewDistance = new JoystickButton(driverXbox360Controller, BACK);
-		driveToNewDistance.whenPressed(new DriveByHedgehog2Distance(24,  0.25));
-
-		Button cobraAttentive = new JoystickButton(coPilotxbox360Controller, Y_BUTTON);
-		cobraAttentive.whenPressed(new SetCobraPosition(Arm.AttentiveCobra));
-
-		Button cobraAggressive = new JoystickButton(coPilotxbox360Controller, X_BUTTON);
-		cobraAggressive.whenPressed(new SetCobraPosition(Arm.AggressiveCobra));
-
-		Button cobraDepressed = new JoystickButton(coPilotxbox360Controller, B_BUTTON);
-		cobraDepressed.whenPressed(new SetCobraPosition(Arm.DepressedCobra));
-
-		Button cobraDead = new JoystickButton(coPilotxbox360Controller, A_BUTTON);
-		cobraDead.whenPressed(new SetCobraPosition(Arm.DeadCobra));
-
+		SmartDashboard.putData(new DriveByPID(20000));
+		
 		SmartDashboard.putData(new PutCubeInSwitch());
-
-		//		Button testOurNewThingy = new JoystickButton(testBox, A_BUTTON);
-		//		testOurNewThingy.whenPressed(new SetFullPCubeAssemblyPositions(Arm.AggressiveCobra, slide.scaleMed, false));
-		// 		<|0_0|> Square man welcomes you
 	}
 
 

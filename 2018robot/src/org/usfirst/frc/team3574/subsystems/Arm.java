@@ -6,9 +6,9 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 /**
@@ -25,13 +25,16 @@ public class Arm extends Subsystem {
 	public static final int AggressiveCobra = 2000;
 	public static final int DepressedCobra = 3000;
 	public static final int DeadCobra = 4000;
-	public static final int armMotor = RobotMap.ArmMotor;
+	public static final int armMotor = RobotMap.ArmMotor; 
+	//remember, this one is lowercaseUppercase. UppercaseUppercase is the object.
 	public static final int slotIdx = RobotMap.ArmMotor;
+	//these are not the correct constant values, just placeholders.
 	public final double kP = 1.0;
 	public final double kI = 1.0;
 	public final double kD = 1.0;
 	public final int timeoutMs = 50;
 	public boolean armDoneMoving = false;
+	
 
 	
 //	DigitalInput leftCubeSensor = new DigitalInput(1);	
@@ -47,7 +50,7 @@ public class Arm extends Subsystem {
 
 	public Arm() {
 		
-		ArmMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, kPIDLoopIdx, kTimeoutMs);
+		ArmMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, kPIDLoopIdx, kTimeoutMs);
 
 		ArmMotor.setSensorPhase(kSensorPhase);
 
@@ -119,20 +122,11 @@ public class Arm extends Subsystem {
 			break;
 		} 
 	}
-	
-	public int getArmEncoder() {
-		return ArmMotor.getSensorCollection().getQuadraturePosition();
-	}
 
 	private void assumeThePosition(int cobraPosition){
 		ArmMotor.set(ControlMode.Position, cobraPosition);
 	}
-
-	public boolean areBothSensorsTripped() {
-//		return leftCubeSensor.get() && rightCubeSensor.get();
-		return false;
-	}
-
+	
 	/*
 	 * Elbow
 	 */
@@ -141,9 +135,5 @@ public class Arm extends Subsystem {
 	/*
 	 * 
 	 */
-	
-	public void log() {
-		SmartDashboard.putNumber("Encoder Arm", this.getArmEncoder());
-	}
 }
 
