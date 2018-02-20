@@ -2,24 +2,24 @@ package org.usfirst.frc.team3574.subsystems;
 
 
 import java.util.concurrent.TimeUnit;
-
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.SystemMenuBar;
+import org.omg.CORBA.SetOverrideType;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveWithJoy;
 import org.usfirst.frc.team3574.robot.Robot;
 import org.usfirst.frc.team3574.robot.RobotMap;
-
 import com.ctre.phoenix.motion.MotionProfileStatus;
-//import org.usfirst.frc.team3574.robot.RobotMap;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.sensors.PigeonIMU;
-
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Sendable;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
@@ -39,7 +39,11 @@ public class DriveTrain extends Subsystem {
 
 	DigitalInput leftFrontCubeSensor = new DigitalInput(2);
 	DigitalInput RightFrontCubeSensor = new DigitalInput(3);
-
+	double targetPos = 0;
+	
+	Timer t = new Timer();
+	double lastT = 0;
+	double currentT = 0; 
 	/**
 	 * Which PID slot to pull gains from. Starting 2018, you can choose from
 	 * 0,1,2 or 3. Only the first two (0,1) are visible in web-based
@@ -82,6 +86,10 @@ public class DriveTrain extends Subsystem {
 		motorRight1.setNeutralMode(NeutralMode.Brake);
 		motorRight2.setNeutralMode(NeutralMode.Brake);
 		motorLeft2.setNeutralMode(NeutralMode.Brake);
+		
+		 t.reset();
+		 t.start();
+		 
 	}
 	public int getEncoderLeft()
 	{
@@ -130,7 +138,7 @@ public class DriveTrain extends Subsystem {
 		motorLeft1.set(ControlMode.MotionProfile, setpoint);
 
 	}
-	
+
 	/**
 	 * Driving mechanism with throttle and turn
 	 * Modified version that makes input values smaller to allow for more precise user control
@@ -168,7 +176,6 @@ public class DriveTrain extends Subsystem {
 		motorRight1.set(ControlMode.PercentOutput, (percentThrottle + percentRotationOutput) * -1.0);
 		motorRight2.set(ControlMode.PercentOutput, (percentThrottle + percentRotationOutput) * -1.0);		
 	}
-
 	/**
 	 * Autonomous driving mechanism that attempts to keep the same angle
 	 * 
@@ -296,15 +303,22 @@ public class DriveTrain extends Subsystem {
 		PigeonIMU.FusionStatus fusionStatus = new PigeonIMU.FusionStatus();
 		double [] xyz_dps = new double [3];
 		double[] accelerometer = new double [3];
+		double [] _6dquaternion = new double [4];
 		/* grab some input data from Pigeon and gamepad*/
 		penguin.getAccelerometerAngles(accelerometer);
 		penguin.getGeneralStatus(genStatus);
 		penguin.getRawGyro(xyz_dps);
 		penguin.getFusedHeading(fusionStatus);
+		penguin.getAccelerometerAngles(accelerometer);
+		penguin.get6dQuaternion(_6dquaternion);
 		double currentAngle = fusionStatus.heading;
 		_currentAngleToPass = currentAngle;
 		boolean angleIsGood = (penguin.getState() == PigeonIMU.PigeonState.Ready) ? true : false;
 		double currentAngularRate = xyz_dps[2];
+		SmartDashboard.putNumber("Accelerometer0", accelerometer[0]);
+		SmartDashboard.putNumber("Accelerometer1", accelerometer[1]);
+		SmartDashboard.putNumber("Accelerometer2", accelerometer[2]);
+		SmartDashboard.putNumberArray("_6dQuaternion", _6dquaternion);
 		SmartDashboard.putNumber("angle", currentAngle);
 		SmartDashboard.putNumber("Encoder Right", this.getEncoderRight());
 		SmartDashboard.putNumber("Encoder Left", this.getEncoderLeft());
@@ -317,6 +331,14 @@ public class DriveTrain extends Subsystem {
 		SmartDashboard.putNumber("Motor Left 2 Voltage", motorLeft2.getMotorOutputVoltage());
 		SmartDashboard.putNumber("Motor Right 1 Voltage", motorRight1.getMotorOutputVoltage());
 		SmartDashboard.putNumber("Motor Right 2 Voltage", motorRight2.getMotorOutputVoltage());
+		
+		currentT = t.get();
+		
+		
+		System.out.println("{" + motorLeft1.getSensorCollection().getQuadraturePosition() + ",\t" + 
+				motorLeft1.getSensorCollection().getQuadratureVelocity() + ",\t"  + (currentT - lastT) + "}," );
+		
+		lastT = currentT;
 	}
 
 	public void prepareForMotionMagic() {

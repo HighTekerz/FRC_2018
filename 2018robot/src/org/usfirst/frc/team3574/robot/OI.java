@@ -18,7 +18,6 @@ import org.usfirst.frc.team3574.commands.groups.PutCubeInSwitch;
 import org.usfirst.frc.team3574.commands.util.RumbleASide;
 import org.usfirst.frc.team3574.subsystems.Arm;
 import org.usfirst.frc.team3574.subsystems.Slide;
-import org.usfirst.frc.team3574.commands.driveTrain.DriveByInches;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Joystick.AxisType;
@@ -88,6 +87,7 @@ public class OI {
 		SmartDashboard.putData(new DriveByPID(20000));
 		
 		SmartDashboard.putData(new PutCubeInSwitch());
+
 	}
 
 

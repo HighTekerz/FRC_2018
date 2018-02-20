@@ -101,7 +101,6 @@ public class Slide extends Subsystem {
 	public void setSlidePosition(int setPoint) {
 		slideSim.set(ControlMode.Position, setPoint);
 	}
-	
 	public void setSlideSpeed(double speed) {
 		slideSim.set(ControlMode.PercentOutput, speed);
 	}
