@@ -1,26 +1,28 @@
 package org.usfirst.frc.team3574.commands.claw;
 
 import org.usfirst.frc.team3574.robot.Robot;
+import org.usfirst.frc.team3574.subsystems.ClawPosition;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class SetClawOpen extends Command {
+public class SetClawPosition extends Command {
+	
+	private ClawPosition pos;
 
-	private boolean _setClawOpen;
-
-	public SetClawOpen(boolean setClawOpen) {
+	public SetClawPosition(ClawPosition position) {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 		requires(Robot.claw);
-		_setClawOpen = setClawOpen;
+
+		this.pos = position;
 	}
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		Robot.claw.setClawOpen(_setClawOpen);
+		Robot.claw.setClawPosition(this.pos);
 	}
 
 	// Called repeatedly when this Command is scheduled to run

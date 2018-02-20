@@ -25,30 +25,28 @@ public class Arm extends Subsystem {
 	public static final int AggressiveCobra = 2000;
 	public static final int DepressedCobra = 3000;
 	public static final int DeadCobra = 4000;
-	public static final int armMotor = RobotMap.ArmMotor; 
-	//remember, this one is lowercaseUppercase. UppercaseUppercase is the object.
-	public static final int slotIdx = RobotMap.ArmMotor;
-	//these are not the correct constant values, just placeholders.
+
+	//TODO: tune this loop
 	public final double kP = 1.0;
 	public final double kI = 1.0;
 	public final double kD = 1.0;
 	public final int timeoutMs = 50;
 	public boolean armDoneMoving = false;
-	
 
-	
 
-	
-	
-		public static final int kSlotIdx = 0;
-		public static final int kPIDLoopIdx = 0;
-		public static final int kTimeoutMs = 10;
-		public static boolean kSensorPhase = false;
-		public static boolean kMotorInvert = false;
+
+
+
+
+	public static final int kSlotIdx = 0;
+	public static final int kPIDLoopIdx = 0;
+	public static final int kTimeoutMs = 10;
+	public static boolean kSensorPhase = false;
+	public static boolean kMotorInvert = false;
 
 
 	public Arm() {
-		
+
 		ArmMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, kPIDLoopIdx, kTimeoutMs);
 
 		ArmMotor.setSensorPhase(kSensorPhase);
@@ -62,7 +60,7 @@ public class Arm extends Subsystem {
 		ArmMotor.configPeakOutputReverse(-1, kTimeoutMs);
 		ArmMotor.configAllowableClosedloopError(0, kPIDLoopIdx, kTimeoutMs);
 
-		
+
 		ArmMotor.config_kF(kPIDLoopIdx, 0.0, kTimeoutMs);
 		ArmMotor.config_kP(kPIDLoopIdx, 0.7, kTimeoutMs);
 		ArmMotor.config_kI(kPIDLoopIdx, 0.0, kTimeoutMs);
@@ -81,10 +79,10 @@ public class Arm extends Subsystem {
 			absolutePosition *= -1;
 		/* set the quadrature (relative) sensor to match absolute */
 		ArmMotor.setSelectedSensorPosition(absolutePosition, kPIDLoopIdx, kTimeoutMs);
-		
+
 	}
 
-	
+
 
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
@@ -125,7 +123,7 @@ public class Arm extends Subsystem {
 	private void assumeThePosition(int cobraPosition){
 		ArmMotor.set(ControlMode.Position, cobraPosition);
 	}
-	
+
 	/*
 	 * Elbow
 	 */

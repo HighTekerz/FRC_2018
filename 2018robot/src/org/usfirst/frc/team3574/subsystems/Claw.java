@@ -20,10 +20,15 @@ public class Claw extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
     
-	public void setClawOpen(boolean Value) {
-		clawSolenoid.set(Value);
+	public void setClawPosition(ClawPosition position) {
+		switch(position) {
+		case OPEN:
+			clawSolenoid.set(true);
+			break;
+		case CLOSED:
+			clawSolenoid.set(false);
+			break;
+		}
 	}
-	
-
 }
 
