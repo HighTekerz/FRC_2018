@@ -20,6 +20,7 @@ import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.sensors.PigeonIMU;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
@@ -67,6 +68,9 @@ public class DriveTrain extends Subsystem {
 	private static int _timesInMotionMagic = 0;
 
 	PigeonIMU penguin = new PigeonIMU (motorLeft2);
+
+	DigitalInput leftCubeSensor = new DigitalInput (RobotMap.IRR1);	
+	DigitalInput rightCubeSensor = new DigitalInput (RobotMap.IRR2);
 
 
 
@@ -314,10 +318,10 @@ public class DriveTrain extends Subsystem {
 
 
 
-		System.out.println("{" + motorLeft1.getActiveTrajectoryHeading() + ",\t" + 
-				motorLeft1.getActiveTrajectoryVelocity() + ",\t"  + (int)((currentT - lastT) * 1000 + 5) + "},\t" +
-				"{" + motorRight1.getActiveTrajectoryHeading() + ",\t" + 
-				motorRight1.getActiveTrajectoryVelocity() + ",\t"  + (int)((currentT - lastT) * 1000 + 5) + "}," );
+		System.out.println("{" + motorLeft1.getSensorCollection().getQuadraturePosition() + ",\t" + 
+				motorLeft1.getSensorCollection().getQuadratureVelocity() + ",\t"  + (int)((currentT - lastT) * 1000 + 5) + "},\t" +
+				"{" + motorRight1.getSensorCollection().getQuadraturePosition() + ",\t" + 
+				motorRight1.getSensorCollection().getQuadratureVelocity() + ",\t"  + (int)((currentT - lastT) * 1000 + 5) + "}," );
 
 		lastT = currentT;
 	}

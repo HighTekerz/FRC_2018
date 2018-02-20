@@ -35,8 +35,7 @@ public class Arm extends Subsystem {
 	public boolean armDoneMoving = false;
 
 	
-//	DigitalInput leftCubeSensor = new DigitalInput(1);	
-//	DigitalInput rightCubeSensor = new DigitalInput(2);
+
 	
 	
 		public static final int kSlotIdx = 0;
