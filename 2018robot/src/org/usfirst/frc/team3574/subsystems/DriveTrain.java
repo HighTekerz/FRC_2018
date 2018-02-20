@@ -5,32 +5,22 @@ import java.util.concurrent.TimeUnit;
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane.SystemMenuBar;
 import org.omg.CORBA.SetOverrideType;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveWithJoy;
-<<<<<<< HEAD
 import org.usfirst.frc.team3574.robot.Robot;
-=======
 import org.usfirst.frc.team3574.robot.MotionProfileRight;
->>>>>>> 612f06072eeef8974f4aa91660631168fc25ca99
 import org.usfirst.frc.team3574.robot.RobotMap;
 import com.ctre.phoenix.motion.MotionProfileStatus;
-<<<<<<< HEAD
-=======
 import com.ctre.phoenix.motion.SetValueMotionProfile;
-//import org.usfirst.frc.team3574.robot.RobotMap;
->>>>>>> 612f06072eeef8974f4aa91660631168fc25ca99
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.sensors.PigeonIMU;
-<<<<<<< HEAD
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Sendable;
-=======
 
 import edu.wpi.first.wpilibj.DigitalInput;
->>>>>>> 612f06072eeef8974f4aa91660631168fc25ca99
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
