@@ -47,7 +47,7 @@ public class Robot extends TimedRobot {
 	public static final Claw        claw = new Claw();
 	public static final Arm 	    arm = new Arm();
 	
-	Command m_autonomousCommand;
+ 	Command m_autonomousCommand;
 	public static OI OperatorInput;
 	SendableChooser<Command> autoChooserForLosers = new SendableChooser<>();
 	SendableChooser<Command> startPositionChooser = new SendableChooser<>();	

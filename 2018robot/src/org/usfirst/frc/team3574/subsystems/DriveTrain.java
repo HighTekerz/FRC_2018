@@ -5,18 +5,32 @@ import java.util.concurrent.TimeUnit;
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane.SystemMenuBar;
 import org.omg.CORBA.SetOverrideType;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveWithJoy;
+<<<<<<< HEAD
 import org.usfirst.frc.team3574.robot.Robot;
+=======
+import org.usfirst.frc.team3574.robot.MotionProfileRight;
+>>>>>>> 612f06072eeef8974f4aa91660631168fc25ca99
 import org.usfirst.frc.team3574.robot.RobotMap;
 import com.ctre.phoenix.motion.MotionProfileStatus;
+<<<<<<< HEAD
+=======
+import com.ctre.phoenix.motion.SetValueMotionProfile;
+//import org.usfirst.frc.team3574.robot.RobotMap;
+>>>>>>> 612f06072eeef8974f4aa91660631168fc25ca99
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.sensors.PigeonIMU;
+<<<<<<< HEAD
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Sendable;
+=======
+
+import edu.wpi.first.wpilibj.DigitalInput;
+>>>>>>> 612f06072eeef8974f4aa91660631168fc25ca99
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
@@ -35,12 +49,14 @@ public class DriveTrain extends Subsystem {
 	TalonSRX motorRight2 = new TalonSRX(RobotMap.DriveTrainRightTalon2);
 	Solenoid shifter = new Solenoid(RobotMap.ShifterSolenoid);
 
+	MotionProfileRight mPRIGHT = new MotionProfileRight(motorRight1);
+	MotionProfileRight mPLeft = new MotionProfileRight(motorLeft1);
 	StringBuilder _sb = new StringBuilder();
 
 	DigitalInput leftFrontCubeSensor = new DigitalInput(2);
 	DigitalInput RightFrontCubeSensor = new DigitalInput(3);
 	double targetPos = 0;
-	
+
 	Timer t = new Timer();
 	double lastT = 0;
 	double currentT = 0; 
@@ -68,6 +84,9 @@ public class DriveTrain extends Subsystem {
 
 	PigeonIMU penguin = new PigeonIMU (motorLeft2);
 
+	DigitalInput leftCubeSensor = new DigitalInput (RobotMap.IRR1);	
+	DigitalInput rightCubeSensor = new DigitalInput (RobotMap.IRR2);
+
 
 
 	double kPgain = 0.04; /* percent throttle per degree of error */
@@ -86,10 +105,10 @@ public class DriveTrain extends Subsystem {
 		motorRight1.setNeutralMode(NeutralMode.Brake);
 		motorRight2.setNeutralMode(NeutralMode.Brake);
 		motorLeft2.setNeutralMode(NeutralMode.Brake);
-		
-		 t.reset();
-		 t.start();
-		 
+
+		t.reset();
+		t.start();
+
 	}
 	public int getEncoderLeft()
 	{
@@ -331,13 +350,16 @@ public class DriveTrain extends Subsystem {
 		SmartDashboard.putNumber("Motor Left 2 Voltage", motorLeft2.getMotorOutputVoltage());
 		SmartDashboard.putNumber("Motor Right 1 Voltage", motorRight1.getMotorOutputVoltage());
 		SmartDashboard.putNumber("Motor Right 2 Voltage", motorRight2.getMotorOutputVoltage());
-		
+
 		currentT = t.get();
-		
-		
+
+
+
 		System.out.println("{" + motorLeft1.getSensorCollection().getQuadraturePosition() + ",\t" + 
-				motorLeft1.getSensorCollection().getQuadratureVelocity() + ",\t"  + (currentT - lastT) + "}," );
-		
+				motorLeft1.getSensorCollection().getQuadratureVelocity() + ",\t"  + (int)((currentT - lastT) * 1000 + 5) + "},\t" +
+				"{" + motorRight1.getSensorCollection().getQuadraturePosition() + ",\t" + 
+				motorRight1.getSensorCollection().getQuadratureVelocity() + ",\t"  + (int)((currentT - lastT) * 1000 + 5) + "}," );
+
 		lastT = currentT;
 	}
 
@@ -408,20 +430,21 @@ public class DriveTrain extends Subsystem {
 		double motorOutput = motorLeft1.getMotorOutputPercent();
 
 		/* prepare line to print */
-		_sb.append("\tOut%:");
-		_sb.append(motorOutput);
-		_sb.append("\tVel:");
-		_sb.append(motorLeft1.getSelectedSensorVelocity( kPIDLoopIdx));
+		//		_sb.append("\tOut%:");
+		//		_sb.append(motorOutput);
+		//		_sb.append("\tVel:");
+		//		_sb.append(motorLeft1.getSelectedSensorVelocity( kPIDLoopIdx));
 
 		/* Motion Magic - 4096 ticks/rev * 10 Rotations in either direction */
-		motorLeft1.set(ControlMode.MotionMagic, valueToLockOn);
-		motorRight1.set(ControlMode.MotionMagic, -valueToLockOn);
+		targetPos = valueToLockOn;
+		motorLeft1.set(ControlMode.Position, targetPos);
+		motorRight1.set(ControlMode.Position, -targetPos);
 
 		/* append more signals to print when in speed mode. */
-		_sb.append("\terr:");
-		_sb.append(motorLeft1.getClosedLoopError( kPIDLoopIdx));
-		_sb.append("\ttrg:");
-		_sb.append(valueToLockOn);
+		//		_sb.append("\terr:");
+		//		_sb.append(motorLeft1.getClosedLoopError( kPIDLoopIdx));
+		//		_sb.append("\ttrg:");
+		//		_sb.append(targetPos);
 		//		} else {
 		/* Percent voltage mode */
 		//			_talon.set(ControlMode.PercentOutput, leftYstick);
@@ -468,4 +491,23 @@ public class DriveTrain extends Subsystem {
 	public boolean areBothFrontSensorsTripped() {
 		return (leftFrontCubeSensor.get() && RightFrontCubeSensor.get());
 	}
+	
+	public void MPInit() {
+		mPLeft.startMotionProfile();
+		mPRIGHT.startMotionProfile();
+
+	}
+	
+	public void MPExec() {
+		SetValueMotionProfile setOutputLeft = mPLeft.getSetValue();
+		SetValueMotionProfile setOutputRight = mPRIGHT.getSetValue();
+		motorLeft1.set(ControlMode.MotionProfile, setOutputLeft.value);
+		motorRight1.set(ControlMode.MotionProfile, setOutputRight.value);
+	}
+	
+	public void MPEnd() {
+		mPLeft.reset();
+		mPRIGHT.reset();
+	}
+	
 }

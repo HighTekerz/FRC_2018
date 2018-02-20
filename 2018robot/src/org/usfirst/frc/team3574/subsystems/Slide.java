@@ -7,6 +7,8 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -55,6 +57,8 @@ public class Slide extends Subsystem {
 	public static int scaleHigh = 75;
 	public static int scaleHighWithCube = 85;
 	public static int switchHeight = 5347;
+	
+	I2C iTooCanSee = new I2C(Port.kOnboard, 0x13);
 
 	public Slide() {
 		slideSim.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, kPIDLoopIdx, kTimeoutMs);

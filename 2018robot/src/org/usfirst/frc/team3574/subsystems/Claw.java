@@ -23,6 +23,7 @@ public class Claw extends Subsystem {
 	public void setClawOpen(boolean Value) {
 		clawSolenoid.set(Value);
 	}
+	
 
 }
 

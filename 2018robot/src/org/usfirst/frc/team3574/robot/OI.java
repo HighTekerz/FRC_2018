@@ -12,6 +12,7 @@ import org.usfirst.frc.team3574.commands.arm.SetCobraPosition;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveByHedgehog2Distance;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveByInches;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveByPID;
+import org.usfirst.frc.team3574.commands.driveTrain.MakeMotionProflileGo;
 import org.usfirst.frc.team3574.commands.driveTrain.RunTestOnMotors;
 import org.usfirst.frc.team3574.commands.driveTrain.TurnToDegree;
 import org.usfirst.frc.team3574.commands.groups.PutCubeInSwitch;
@@ -87,7 +88,9 @@ public class OI {
 		SmartDashboard.putData(new DriveByPID(20000));
 		
 		SmartDashboard.putData(new PutCubeInSwitch());
-
+		SmartDashboard.putData(new MakeMotionProflileGo());
+		//		Button testOurNewThingy = new JoystickButton(testBox, A_BUTTON);
+		//		testOurNewThingy.whenPressed(new SetFullPCubeAssemblyPositions(Arm.AggressiveCobra, slide.scaleMed, false));
 	}
 
 
