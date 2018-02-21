@@ -43,8 +43,8 @@ public class DriveTrain extends Subsystem {
 	MotionProfileRight mPLeft = new MotionProfileRight(motorLeft1);
 	StringBuilder _sb = new StringBuilder();
 
-	DigitalInput leftFrontCubeSensor = new DigitalInput(2);
-	DigitalInput RightFrontCubeSensor = new DigitalInput(3);
+	DigitalInput leftFrontCubeSensor = new DigitalInput(RobotMap.IRR1);
+	DigitalInput RightFrontCubeSensor = new DigitalInput(RobotMap.IRR2);
 	double targetPos = 0;
 
 	Timer t = new Timer();
@@ -72,12 +72,11 @@ public class DriveTrain extends Subsystem {
 	private static int _loops = 0;
 	private static int _timesInMotionMagic = 0;
 
-	PigeonIMU penguin = new PigeonIMU (motorLeft2);
+	PigeonIMU penguin = new PigeonIMU (RobotMap.Pigeon);
 
-	DigitalInput leftCubeSensor = new DigitalInput (RobotMap.IRR1);	
-	DigitalInput rightCubeSensor = new DigitalInput (RobotMap.IRR2);
-
-
+//	DigitalInput leftCubeSensor = new DigitalInput (RobotMap.IRR1);	
+//	DigitalInput rightCubeSensor = new DigitalInput (RobotMap.IRR2);
+//
 
 	double kPgain = 0.04; /* percent throttle per degree of error */
 	double kDgain = 0.0004; /* percent throttle per angular velocity dps */
