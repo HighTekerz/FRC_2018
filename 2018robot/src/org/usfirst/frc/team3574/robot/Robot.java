@@ -15,10 +15,11 @@ import org.usfirst.frc.team3574.commands.util.RumbleASide;
 import org.usfirst.frc.team3574.subsystems.Arm;
 import org.usfirst.frc.team3574.subsystems.Claw;
 import org.usfirst.frc.team3574.subsystems.DriveTrain;
+import org.usfirst.frc.team3574.subsystems.ForkLifter;
 import org.usfirst.frc.team3574.subsystems.Slide;
 import org.usfirst.frc.team3574.subsystems.SensorTest;
 import org.usfirst.frc.team3574.subsystems.TheHedgehog;
-import org.usfirst.frc.team3574.subsystems.Wings;
+import org.usfirst.frc.team3574.subsystems.JackWings;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
@@ -43,9 +44,10 @@ public class Robot extends TimedRobot {
 	public static final TheHedgehog theHedgehog = new TheHedgehog();
 	public static final SensorTest  sensorTest = new SensorTest();
 	public static final Slide  	    slide = new Slide();
-	public static final Wings       wings = new Wings();
+	public static final JackWings   jackWings = new JackWings();
 	public static final Claw        claw = new Claw();
 	public static final Arm 	    arm = new Arm();
+	public static final ForkLifter forkLifter = new ForkLifter();
 	
  	Command m_autonomousCommand;
 	public static OI OperatorInput;

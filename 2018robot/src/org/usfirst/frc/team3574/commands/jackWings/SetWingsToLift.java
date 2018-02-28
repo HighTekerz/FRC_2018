@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3574.commands.wings;
+package org.usfirst.frc.team3574.commands.jackWings;
 
 import org.usfirst.frc.team3574.robot.Robot;
 
@@ -14,7 +14,7 @@ public class SetWingsToLift extends Command {
     public SetWingsToLift(boolean pistonWillExtend) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.wings);
+    	requires(Robot.jackWings);
     	_pistonWillExtend = pistonWillExtend;
     }
 
@@ -24,8 +24,8 @@ public class SetWingsToLift extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.wings.setLeftSolenoid(_pistonWillExtend);
-    	Robot.wings.setRightSolenoid(_pistonWillExtend);
+    	Robot.jackWings.setLeftSolenoid(_pistonWillExtend);
+    	Robot.jackWings.setRightSolenoid(_pistonWillExtend);
     }
 
     // Make this return true when this Command no longer needs to run execute()
