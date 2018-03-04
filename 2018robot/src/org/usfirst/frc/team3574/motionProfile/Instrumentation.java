@@ -22,7 +22,7 @@
  * 
  * 
  */
-package org.usfirst.frc.team3574.robot;
+package org.usfirst.frc.team3574.motionProfile;
 
 import com.ctre.phoenix.motion.*;
 

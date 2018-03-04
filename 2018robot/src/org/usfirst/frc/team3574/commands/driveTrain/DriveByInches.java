@@ -81,7 +81,7 @@ public class DriveByInches extends Command {
     	
     	}
     	else {
-//    		System.out.println("DriveByInches Returns False at " + Robot.driveTrain.getEncoderLeft() + " Right = " + Robot.driveTrain.getEncoderRight() + " Tick Targets: " + _finalTickTargetLeft + " & " + _finalTickTargetRight);
+    		System.out.println("DriveByInches Returns False at " + Robot.driveTrain.getEncoderLeft() + " Right = " + Robot.driveTrain.getEncoderRight() + " Tick Targets: " + _finalTickTargetLeft + " & " + _finalTickTargetRight);
     		return false;
     	}
     }

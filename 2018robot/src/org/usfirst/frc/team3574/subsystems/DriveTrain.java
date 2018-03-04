@@ -5,8 +5,8 @@ import java.util.concurrent.TimeUnit;
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane.SystemMenuBar;
 import org.omg.CORBA.SetOverrideType;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveWithJoy;
+import org.usfirst.frc.team3574.motionProfile.MotionProfileRight;
 import org.usfirst.frc.team3574.robot.Robot;
-import org.usfirst.frc.team3574.robot.MotionProfileRight;
 import org.usfirst.frc.team3574.robot.RobotMap;
 import com.ctre.phoenix.motion.MotionProfileStatus;
 import com.ctre.phoenix.motion.SetValueMotionProfile;
@@ -109,13 +109,8 @@ public class DriveTrain extends Subsystem {
 		//		Value reversed for clarity
 		return -motorRight1.getSensorCollection().getPulseWidthPosition();
 	}
-
-	// Put methods for controlling this subsystem
-	// here. Call these from Commands.
-
+	
 	public void initDefaultCommand() {
-		// Set the default command for a subsystem here.
-		//setDefaultCommand(new MySpecialCommand());
 		setDefaultCommand(new DriveWithJoy());
 	}
 	
@@ -344,10 +339,10 @@ public class DriveTrain extends Subsystem {
 
 
 
-		System.out.println("{" + motorLeft1.getSensorCollection().getQuadraturePosition() + ",\t" + 
-				motorLeft1.getSensorCollection().getQuadratureVelocity() + ",\t"  + (int)((currentT - lastT) * 1000 + 5) + "},\t" +
-				"{" + motorRight1.getSensorCollection().getQuadraturePosition() + ",\t" + 
-				motorRight1.getSensorCollection().getQuadratureVelocity() + ",\t"  + (int)((currentT - lastT) * 1000 + 5) + "}," );
+//		System.out.println("{" + motorLeft1.getSensorCollection().getQuadraturePosition() + ",\t" + 
+//				motorLeft1.getSensorCollection().getQuadratureVelocity() + ",\t"  + (int)((currentT - lastT) * 1000 + 5) + "},\t" +
+//				"{" + motorRight1.getSensorCollection().getQuadraturePosition() + ",\t" + 
+//				motorRight1.getSensorCollection().getQuadratureVelocity() + ",\t"  + (int)((currentT - lastT) * 1000 + 5) + "}," );
 
 		lastT = currentT;
 	}

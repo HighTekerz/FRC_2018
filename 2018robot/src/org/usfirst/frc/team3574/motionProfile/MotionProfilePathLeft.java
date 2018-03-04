@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3574.robot;
+package org.usfirst.frc.team3574.motionProfile;
 
 public class MotionProfilePathLeft {
 

@@ -8,25 +8,16 @@
 package org.usfirst.frc.team3574.robot;
 
 
-import org.usfirst.frc.team3574.commands.arm.SetCobraPosition;
-import org.usfirst.frc.team3574.commands.driveTrain.DriveByHedgehog2Distance;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveByInches;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveByPID;
 import org.usfirst.frc.team3574.commands.driveTrain.MakeMotionProflileGo;
-import org.usfirst.frc.team3574.commands.driveTrain.RunTestOnMotors;
-import org.usfirst.frc.team3574.commands.driveTrain.TurnToDegree;
 import org.usfirst.frc.team3574.commands.groups.PutCubeInSwitch;
-import org.usfirst.frc.team3574.commands.util.RumbleASide;
-import org.usfirst.frc.team3574.subsystems.Arm;
-import org.usfirst.frc.team3574.subsystems.Slide;
+import org.usfirst.frc.team3574.triggers.POVBottomRange;
+import org.usfirst.frc.team3574.triggers.POVTopRange;
+
 import edu.wpi.first.wpilibj.GenericHID.Hand;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Joystick.AxisType;
-import edu.wpi.first.wpilibj.GenericHID.RumbleType;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.XboxController; 
 import edu.wpi.first.wpilibj.buttons.Button;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -81,24 +72,27 @@ public class OI {
 	static final int LEFT_STICK_X = 0;
 	static final int LEFT_STICK_Y = 1;
 
-
+	int pov = 0;
 
 	public OI() {
-
+		
+		Button povTop = new POVTopRange(driverXbox360Controller, pov);
+		povTop.whenPressed(new DriveByInches(24, 0.5));
+		
+		Button povBottom = new POVBottomRange(driverXbox360Controller, pov);
+		povBottom.whenPressed(new DriveByInches(-24, 0.5));
+		
 		SmartDashboard.putData(new DriveByPID(20000));
 		
 		SmartDashboard.putData(new PutCubeInSwitch());
 		SmartDashboard.putData(new MakeMotionProflileGo());
-		//		Button testOurNewThingy = new JoystickButton(testBox, A_BUTTON);
-		//		testOurNewThingy.whenPressed(new SetFullPCubeAssemblyPositions(Arm.AggressiveCobra, slide.scaleMed, false));
 	}
-
-
 
 	public double getLeftStickY ()
 	{
-		return driverXbox360Controller.getY(Hand.kLeft); 
+		return driverXbox360Controller.getY(Hand.kLeft);
 	}
+	
 	public double getRightStickY()
 	{
 		return -driverXbox360Controller.getY(Hand.kRight); 
@@ -108,10 +102,12 @@ public class OI {
 	{
 		return driverXbox360Controller.getX(Hand.kLeft);
 	}
+	
 	public double getRightStickX()
 	{
 		return driverXbox360Controller.getX(Hand.kRight);
 	}
+	
 	public double getRightTrigger()
 	{
 		return driverXbox360Controller.getTriggerAxis(Hand.kRight);
@@ -120,13 +116,14 @@ public class OI {
 	public double GetPOV(XboxController stickToCheck) {
 		return stickToCheck.getPOV();
 	}
+	
 	public double getLeftTrigger()
 	{
 		return driverXbox360Controller.getTriggerAxis(Hand.kLeft);
 	}
+	
 	public double getDialAxis()
 	{
 		return 0;
-		//		return -logitechAttack.getAxis(AxisType.kZ);
 	}
 }

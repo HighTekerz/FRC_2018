@@ -7,7 +7,7 @@
 
 package org.usfirst.frc.team3574.robot;
 
-import org.usfirst.frc.team3574.autonomous.AutonomousSelector;
+import org.usfirst.frc.team3574.autonomous.AutonomousSelectorForSwitch;
 import org.usfirst.frc.team3574.autonomous.DriveForwardAutonomous;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveByInches;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveWithJoy;
@@ -63,8 +63,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		OperatorInput = new OI();
-		autoChooserForLosers.addObject("Cube In Switch From Left", new AutonomousSelector(true, true));
-		autoChooserForLosers.addDefault("Cube In Switch From Right", new AutonomousSelector(false, true));
+		autoChooserForLosers.addObject("Cube In Switch From Middle", new AutonomousSelectorForSwitch());
 		autoChooserForLosers.addDefault("Pass Auto Line", new DriveForwardAutonomous());
 		
 		SmartDashboard.putData("Auto mode", autoChooserForLosers);

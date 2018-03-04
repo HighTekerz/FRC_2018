@@ -21,6 +21,7 @@ public class JackWings extends Subsystem {
 	
     public void initDefaultCommand() {
     }
+    
     public void setLeftSolenoid(boolean pistonIsOpen) {
     
     	leftSolenoid.set(pistonIsOpen);
