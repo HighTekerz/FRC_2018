@@ -29,12 +29,11 @@ public class AutonomousSelectorForSwitch extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	// Testing if command functions correctly
-    	int degree = 90;
     	if (ourSwitchSide.contains("Left")) {
-    			_command = new AutoPutCubeInSwitch(-degree);
+    			_command = new AutoPutCubeInSwitch(-1);
     	}
     	else{
-			_command = new AutoPutCubeInSwitch(degree);
+			_command = new AutoPutCubeInSwitch(1);
     	}
     	_command.start();
     	_isFinished = true;
