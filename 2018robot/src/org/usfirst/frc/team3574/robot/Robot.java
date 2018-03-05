@@ -47,7 +47,7 @@ public class Robot extends TimedRobot {
 	public static final JackWings   jackWings = new JackWings();
 	public static final Claw        claw = new Claw();
 	public static final Arm 	    arm = new Arm();
-	public static final ForkLifter forkLifter = new ForkLifter();
+	public static final ForkLifter  forkLifter = new ForkLifter();
 	
  	Command m_autonomousCommand;
 	public static OI OperatorInput;

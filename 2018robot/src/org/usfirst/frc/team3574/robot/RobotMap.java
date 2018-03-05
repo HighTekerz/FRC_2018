@@ -37,7 +37,7 @@ public final class RobotMap {
 	public static int RightLifterReleaseSpark = 1;
 	
 		//Sensors
-	public static int Pigeon = DriveTrainLeftTalon2;
+	public static int Pigeon = SlideMotor;
 	public static int ToF = 1;
 	public static int IRR1 = 2;
 	public static int IRR2 = 3;

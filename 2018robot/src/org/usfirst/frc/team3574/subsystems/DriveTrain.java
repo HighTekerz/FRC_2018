@@ -72,7 +72,7 @@ public class DriveTrain extends Subsystem {
 	private static int _loops = 0;
 	private static int _timesInMotionMagic = 0;
 
-	PigeonIMU penguin = new PigeonIMU (RobotMap.Pigeon);
+	PigeonIMU pid_geon = new PigeonIMU (RobotMap.Pigeon);
 
 //	DigitalInput leftCubeSensor = new DigitalInput (RobotMap.IRR1);	
 //	DigitalInput rightCubeSensor = new DigitalInput (RobotMap.IRR2);
@@ -264,9 +264,9 @@ public class DriveTrain extends Subsystem {
 		double [] xyz_dps = new double [3];
 
 		//		/* grab some input data from Pigeon */
-		penguin.getGeneralStatus(genStatus);
-		penguin.getRawGyro(xyz_dps);
-		penguin.getFusedHeading(fusionStatus);
+		pid_geon.getGeneralStatus(genStatus);
+		pid_geon.getRawGyro(xyz_dps);
+		pid_geon.getFusedHeading(fusionStatus);
 		double currentAngle = fusionStatus.heading;
 		double currentAngularRate = xyz_dps[2];
 		double turnThrottle = (targetAngle - currentAngle) * kPgain - (currentAngularRate) * kDgain;
@@ -308,21 +308,23 @@ public class DriveTrain extends Subsystem {
 		double[] accelerometer = new double [3];
 		double [] _6dquaternion = new double [4];
 		/* grab some input data from Pigeon and gamepad*/
-		penguin.getAccelerometerAngles(accelerometer);
-		penguin.getGeneralStatus(genStatus);
-		penguin.getRawGyro(xyz_dps);
-		penguin.getFusedHeading(fusionStatus);
-		penguin.getAccelerometerAngles(accelerometer);
-		penguin.get6dQuaternion(_6dquaternion);
+		pid_geon.getGeneralStatus(genStatus);
+		pid_geon.getRawGyro(xyz_dps);
+		pid_geon.getFusedHeading(fusionStatus);
+		pid_geon.getAccelerometerAngles(accelerometer);
+		pid_geon.get6dQuaternion(_6dquaternion);
 		double currentAngle = fusionStatus.heading;
 		_currentAngleToPass = currentAngle;
-		boolean angleIsGood = (penguin.getState() == PigeonIMU.PigeonState.Ready) ? true : false;
+		boolean angleIsGood = (pid_geon.getState() == PigeonIMU.PigeonState.Ready) ? true : false;
 		double currentAngularRate = xyz_dps[2];
 		SmartDashboard.putNumber("Accelerometer0", accelerometer[0]);
 		SmartDashboard.putNumber("Accelerometer1", accelerometer[1]);
 		SmartDashboard.putNumber("Accelerometer2", accelerometer[2]);
 		SmartDashboard.putNumberArray("_6dQuaternion", _6dquaternion);
 		SmartDashboard.putNumber("angle", currentAngle);
+		
+		System.out.println("Current thing = " + genStatus);
+		
 		SmartDashboard.putNumber("Encoder Right", this.getEncoderRight());
 		SmartDashboard.putNumber("Encoder Left", this.getEncoderLeft());
 
@@ -408,6 +410,7 @@ public class DriveTrain extends Subsystem {
 		SmartDashboard.putNumber("setPoint", 1);
 
 	}
+
 
 	public void driveByPIDLoop(double valueToLockOn) {
 		/* calculate the percent motor output */
