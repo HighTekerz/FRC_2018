@@ -155,6 +155,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void testPeriodic() {
+		LiveWindow.run();
 		this.log();
 	}
 

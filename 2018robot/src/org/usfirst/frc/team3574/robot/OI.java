@@ -95,11 +95,11 @@ public class OI {
 	
 	public double getRightStickY()
 	{
-		return -driverXbox360Controller.getY(Hand.kRight); 
+		return driverXbox360Controller.getY(Hand.kRight);
 	}
 
 	public double getLeftStickX()
-	{
+	{             
 		return driverXbox360Controller.getX(Hand.kLeft);
 	}
 	

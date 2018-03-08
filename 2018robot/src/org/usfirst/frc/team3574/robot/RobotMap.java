@@ -16,28 +16,28 @@ package org.usfirst.frc.team3574.robot;
 public final class RobotMap {
 	
 		//Solenoids
-	public static int ShifterSolenoid = 0; //normally 0
-	public static int ShifterSolenoid2 = 1; // normally 1
-	public static int ClawSolenoid = 2; //normally 2
-	public static int WristSolenoid = 3; //normally 3
+	public static int ShifterSolenoid = 0; //0 on pancake
+	public static int ShifterSolenoid2 = 1; //1 on pancake
+	public static int ClawSolenoid = 2; //2 on pancake
+	public static int WristSolenoid = 3; //3 on pancake
 	public static int BreakSolenoid = 4;
 	public static int LeftLifterSolenoid = 5;
 	public static int RightLifterSolenoid = 6;
 	
 		//TalonSRX
-	public static int DriveTrainLeftTalon1 = 1; //normally 1
-	public static int DriveTrainLeftTalon2 = 2;
-	public static int ArmMotor = 3; //normally 3
-	public static int SlideMotor = 4; //normally 4
-	public static int DriveTrainRightTalon1 = 13; //normally 13
-	public static int DriveTrainRightTalon2 = 12;
+	public static int DriveTrainLeftTalon1 = 2; //1 on pancake, 2 on Coatl
+	public static int DriveTrainLeftTalon2 = 4; //2 on pancake, 4 on Coatl
+	public static int ArmMotor = 5; //3 on pancake, 5 on Coatl
+	public static int SlideMotor = 6; //4 on pancake, 6 on Coatl
+	public static int DriveTrainRightTalon1 = 1; //13 on pancake, 1 on Coatl
+	public static int DriveTrainRightTalon2 = 3; //12 on pancake, 3 on Coatl
 		
 		//Sparks
 	public static int LeftLifterReleaseSpark = 0;
 	public static int RightLifterReleaseSpark = 1;
 	
 		//Sensors
-	public static int Pigeon = SlideMotor;
+	public static int Pigeon = DriveTrainLeftTalon2;
 	public static int ToF = 1;
 	public static int IRR1 = 2;
 	public static int IRR2 = 3;

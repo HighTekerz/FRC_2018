@@ -72,7 +72,7 @@ public class DriveTrain extends Subsystem {
 	private static int _loops = 0;
 	private static int _timesInMotionMagic = 0;
 
-	PigeonIMU pid_geon = new PigeonIMU (RobotMap.Pigeon);
+	PigeonIMU pid_geon = new PigeonIMU(motorLeft2);
 
 //	DigitalInput leftCubeSensor = new DigitalInput (RobotMap.IRR1);	
 //	DigitalInput rightCubeSensor = new DigitalInput (RobotMap.IRR2);
@@ -230,14 +230,6 @@ public class DriveTrain extends Subsystem {
 		return scalingCutoff * joystickValueToTheThird + ((1-scalingCutoff) * joystickValue);
 	}
 
-	public void testOneMotorAtATime (double speed) {
-		motorLeft1.set(ControlMode.PercentOutput, speed);
-		motorLeft2.set(ControlMode.PercentOutput, speed);
-		motorRight1.set(ControlMode.PercentOutput, speed);
-		motorRight2.set(ControlMode.PercentOutput, speed);
-
-	}
-
 	public void doNothing () 
 	{
 		driveByTank(0.0, 0.0);
@@ -259,13 +251,10 @@ public class DriveTrain extends Subsystem {
 
 	public double driveStraight(double forwardThrottle, double targetAngle) {
 		//    	/* some temps for Pigeon API */
-		PigeonIMU.GeneralStatus genStatus = new PigeonIMU.GeneralStatus();
 		PigeonIMU.FusionStatus fusionStatus = new PigeonIMU.FusionStatus();
 		double [] xyz_dps = new double [3];
 
 		//		/* grab some input data from Pigeon */
-		pid_geon.getGeneralStatus(genStatus);
-		pid_geon.getRawGyro(xyz_dps);
 		pid_geon.getFusedHeading(fusionStatus);
 		double currentAngle = fusionStatus.heading;
 		double currentAngularRate = xyz_dps[2];
@@ -321,16 +310,9 @@ public class DriveTrain extends Subsystem {
 		SmartDashboard.putNumber("Accelerometer1", accelerometer[1]);
 		SmartDashboard.putNumber("Accelerometer2", accelerometer[2]);
 		SmartDashboard.putNumberArray("_6dQuaternion", _6dquaternion);
-		SmartDashboard.putNumber("angle", currentAngle);
-		
-		System.out.println("Current thing = " + genStatus);
-		
+		SmartDashboard.putNumber("Angle", currentAngle);
 		SmartDashboard.putNumber("Encoder Right", this.getEncoderRight());
 		SmartDashboard.putNumber("Encoder Left", this.getEncoderLeft());
-
-		SmartDashboard.putNumber("accelerometer1", accelerometer [0]);
-		SmartDashboard.putNumber("accelerometer2", accelerometer [1]);
-		SmartDashboard.putNumber("accelerometer3", accelerometer [2]);
 
 		SmartDashboard.putNumber("Motor Left 1 Voltage", motorLeft1.getMotorOutputVoltage());
 		SmartDashboard.putNumber("Motor Left 2 Voltage", motorLeft2.getMotorOutputVoltage());
