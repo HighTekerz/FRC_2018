@@ -12,6 +12,7 @@ import org.usfirst.frc.team3574.commands.driveTrain.DriveByInches;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveByPID;
 import org.usfirst.frc.team3574.commands.driveTrain.MakeMotionProflileGo;
 import org.usfirst.frc.team3574.commands.groups.PutCubeInSwitch;
+import org.usfirst.frc.team3574.commands.slide.SetSlidePosition;
 import org.usfirst.frc.team3574.triggers.POVBottomRange;
 import org.usfirst.frc.team3574.triggers.POVTopRange;
 
@@ -86,6 +87,7 @@ public class OI {
 		
 		SmartDashboard.putData(new PutCubeInSwitch());
 		SmartDashboard.putData(new MakeMotionProflileGo());
+		SmartDashboard.putData(new SetSlidePosition(1000));
 	}
 
 	public double getLeftStickY ()

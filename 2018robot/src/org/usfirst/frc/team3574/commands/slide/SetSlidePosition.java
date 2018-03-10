@@ -25,6 +25,7 @@ public class SetSlidePosition extends Command {
 
     protected void initialize() {
     	System.out.println("SetSlidePosition Initialized at " + dateFormat.format(new Date()));
+    	//Measurements of pulley show that it's circumference is about 5.9in
     	Robot.slide.setSlidePosition(_setPosition);
     }
 
