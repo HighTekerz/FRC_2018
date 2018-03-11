@@ -13,32 +13,30 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class SetSlidePosition extends Command {
 	
-	SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm:ss");
+//	SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm:ss");
 	
 	private int _setPosition;
 
     public SetSlidePosition(int setPosition) {
+    	requires(Robot.slide);
     	
     	_setPosition = setPosition;
-     requires(Robot.slide);
     }
 
     protected void initialize() {
-    	System.out.println("SetSlidePosition Initialized at " + dateFormat.format(new Date()));
     	//Measurements of pulley show that it's circumference is about 5.9in
     	Robot.slide.setSlidePosition(_setPosition);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	System.out.println("*elevator music*");
-
+//    	System.out.println(_setPosition);
     }
-
+    
+    
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	System.out.println("SetSlidePosition Is Finished");
-        return true;
+		return false;
     }
 
     // Called once after isFinished returns true

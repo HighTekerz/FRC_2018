@@ -7,10 +7,15 @@
 
 package org.usfirst.frc.team3574.robot;
 
+import org.usfirst.frc.team3574.autonomous.AutoPutCubeInSwitch;
+import org.usfirst.frc.team3574.autonomous.AutonomousSelectorForScale;
 import org.usfirst.frc.team3574.autonomous.AutonomousSelectorForSwitch;
 import org.usfirst.frc.team3574.autonomous.DriveForwardAutonomous;
+import org.usfirst.frc.team3574.commands.driveTrain.DoNothing;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveByInches;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveWithJoy;
+import org.usfirst.frc.team3574.commands.groups.autopidtestone;
+import org.usfirst.frc.team3574.commands.slide.ResetEncIfAtLowestPoint;
 import org.usfirst.frc.team3574.commands.util.RumbleASide;
 import org.usfirst.frc.team3574.subsystems.Arm;
 import org.usfirst.frc.team3574.subsystems.Claw;
@@ -18,7 +23,6 @@ import org.usfirst.frc.team3574.subsystems.DriveTrain;
 import org.usfirst.frc.team3574.subsystems.ForkLifter;
 import org.usfirst.frc.team3574.subsystems.Slide;
 import org.usfirst.frc.team3574.subsystems.SensorTest;
-import org.usfirst.frc.team3574.subsystems.TheHedgehog;
 import org.usfirst.frc.team3574.subsystems.JackWings;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -41,7 +45,6 @@ public class Robot extends TimedRobot {
 
 	//subsystems 
 	public static final DriveTrain  driveTrain = new DriveTrain();
-	public static final TheHedgehog theHedgehog = new TheHedgehog();
 	public static final SensorTest  sensorTest = new SensorTest();
 	public static final Slide  	    slide = new Slide();
 	public static final JackWings   jackWings = new JackWings();
@@ -63,8 +66,11 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		OperatorInput = new OI();
-		autoChooserForLosers.addObject("Cube In Switch From Middle", new AutonomousSelectorForSwitch());
-		autoChooserForLosers.addDefault("Pass Auto Line", new DriveForwardAutonomous());
+		autoChooserForLosers.addDefault("Do Nothing", new DoNothing());
+		autoChooserForLosers.addObject("Drive Across Line", new DriveForwardAutonomous());
+		autoChooserForLosers.addObject("Cube in Switch from Middle", new AutonomousSelectorForSwitch());
+		autoChooserForLosers.addObject("Cube in Scale from Left", new AutonomousSelectorForScale(true));
+		autoChooserForLosers.addObject("Cube in Scale from Right", new AutonomousSelectorForScale(false));
 		
 		SmartDashboard.putData("Auto mode", autoChooserForLosers);
 		
@@ -83,7 +89,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
-		this.log();
+		this.runAlways();
 	}
 
 	/**
@@ -100,7 +106,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		m_autonomousCommand = autoChooserForLosers.getSelected();
-
+		
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
 		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
@@ -113,7 +119,7 @@ public class Robot extends TimedRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.start();
 		}
-		this.log();
+		this.runAlways();
 	}
 
 	/**
@@ -122,8 +128,8 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		this.log();
-	}
+		this.runAlways();
+		}
 
 	@Override
 	public void teleopInit() {
@@ -134,8 +140,7 @@ public class Robot extends TimedRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
-		this.log();
-
+		this.runAlways();
 	}
 
 	/**
@@ -144,7 +149,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		_matchTime = DriverStation.getInstance().getMatchTime();
-		this.log();
+		this.runAlways();
 //		Robot.driveTrain.driveStraight(0.5, 0);
 
 		Scheduler.getInstance().run();
@@ -156,6 +161,11 @@ public class Robot extends TimedRobot {
 	@Override
 	public void testPeriodic() {
 		LiveWindow.run();
+		this.runAlways();
+	}
+	
+	public void runAlways() {
+		new ResetEncIfAtLowestPoint().start();
 		this.log();
 	}
 
@@ -173,6 +183,5 @@ public class Robot extends TimedRobot {
 		Robot.driveTrain.log();
 		Robot.sensorTest.log();
 		Robot.slide.log();
-
 	}
 }

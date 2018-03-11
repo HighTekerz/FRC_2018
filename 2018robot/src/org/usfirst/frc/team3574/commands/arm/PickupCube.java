@@ -22,9 +22,9 @@ public class PickupCube extends CommandGroup {
 		addSequential(new UntilBothSensorsAreTripped());
 		addParallel(new SetClawPosition(ClawPosition.OPEN));
 		addSequential(new SetWristParallel(false));
-		addSequential(new SetCobraPosition(Arm.DeadCobra));
+		addSequential(new SetArmPosition(Arm.DeadCobra));
 		addSequential(new SetClawPosition(ClawPosition.CLOSED));
-		addParallel(new SetCobraPosition(Arm.AttentiveCobra));
+		addParallel(new SetArmPosition(Arm.PreparedCobra));
 		addSequential(new SetWristParallel(true));
 	}
 }

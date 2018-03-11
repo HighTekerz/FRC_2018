@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3574.commands.forkLifter;
+package org.usfirst.frc.team3574.commands.slide;
 
 import org.usfirst.frc.team3574.robot.Robot;
 
@@ -7,12 +7,11 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class SetForksDown extends Command {
+public class ResetEncIfAtLowestPoint extends Command {
 
-    public SetForksDown() {
+    public ResetEncIfAtLowestPoint() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.forkLifter);
     }
 
     // Called just before this Command runs the first time
@@ -21,7 +20,9 @@ public class SetForksDown extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.forkLifter.setForksDown();
+    	if (Robot.slide.getBottomStopSwitchIsPressed()) {
+    		Robot.slide.resetEnc();
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()

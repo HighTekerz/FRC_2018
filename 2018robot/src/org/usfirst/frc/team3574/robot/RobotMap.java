@@ -36,14 +36,17 @@ public final class RobotMap {
 	public static int LeftLifterReleaseSpark = 0;
 	public static int RightLifterReleaseSpark = 1;
 	
-		//Sensors
-	public static int Pigeon = DriveTrainLeftTalon2;
-	public static int ToF = 1;
-	public static int IRR1 = 2;
-	public static int IRR2 = 3;
-	public static int Sonic1 = 4;
-	public static int Sonic2 = 5;
-	public static int ColorSensor = 6;
-	public static int ClawLimitSwitch1 = 7;
-	public static int ClawLimitSwitch2 = 8;  
+		//Sensors\
+	
+	public static int SlideLimitSwitchTop = 1;
+	public static int SlideLimitSwitchBottom = 0;
+//	public static int ToF = 0;
+	public static int IRR1 = 3;
+	public static int IRR2 = 2;
+//	public static int Sonic1 = 3;
+//	public static int Sonic2 = 4;
+//	public static int ColorSensor = 5;
+//	public static int ClawLimitSwitch1 = 6;
+//	public static int ClawLimitSwitch2 = 7;
+	
 }

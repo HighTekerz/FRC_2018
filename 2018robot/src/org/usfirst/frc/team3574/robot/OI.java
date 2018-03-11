@@ -12,13 +12,19 @@ import org.usfirst.frc.team3574.commands.driveTrain.DriveByInches;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveByPID;
 import org.usfirst.frc.team3574.commands.driveTrain.MakeMotionProflileGo;
 import org.usfirst.frc.team3574.commands.groups.PutCubeInSwitch;
+import org.usfirst.frc.team3574.commands.slide.NewSlidePositionDown;
+import org.usfirst.frc.team3574.commands.slide.NewSlidePositionUp;
 import org.usfirst.frc.team3574.commands.slide.SetSlidePosition;
+import org.usfirst.frc.team3574.commands.slide.SlideByInches;
+import org.usfirst.frc.team3574.commands.slide.TestSlide;
+import org.usfirst.frc.team3574.commands.slide.TestSlide2;
 import org.usfirst.frc.team3574.triggers.POVBottomRange;
 import org.usfirst.frc.team3574.triggers.POVTopRange;
 
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.XboxController; 
 import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -76,18 +82,24 @@ public class OI {
 	int pov = 0;
 
 	public OI() {
+
+		Button button1 = new JoystickButton(driverXbox360Controller, A_BUTTON);
+		button1.whenPressed(new SetSlidePosition(-100000));
 		
-		Button povTop = new POVTopRange(driverXbox360Controller, pov);
-		povTop.whenPressed(new DriveByInches(24, 0.5));
+		Button button2 = new JoystickButton(driverXbox360Controller, B_BUTTON);
+		button2.whenPressed(new SetSlidePosition(100000));
 		
-		Button povBottom = new POVBottomRange(driverXbox360Controller, pov);
-		povBottom.whenPressed(new DriveByInches(-24, 0.5));
+		Button button3 = new JoystickButton(driverXbox360Controller, X_BUTTON);
+		button3.whenPressed(new TestSlide());
+		Button button4 = new JoystickButton(driverXbox360Controller, Y_BUTTON);
+		button4.whenPressed(new TestSlide2());
 		
-		SmartDashboard.putData(new DriveByPID(20000));
+		SmartDashboard.putData(new SlideByInches(2));
 		
-		SmartDashboard.putData(new PutCubeInSwitch());
-		SmartDashboard.putData(new MakeMotionProflileGo());
-		SmartDashboard.putData(new SetSlidePosition(1000));
+//		SmartDashboard.putData(new DriveByPID(20000));
+//		
+//		SmartDashboard.putData(new PutCubeInSwitch());
+//		SmartDashboard.putData(new MakeMotionProflileGo());
 	}
 
 	public double getLeftStickY ()
@@ -128,4 +140,19 @@ public class OI {
 	{
 		return 0;
 	}
+
+	
+
+
+	public double CoPilotRightStickY() {
+		return coPilotxbox360Controller.getRawAxis(5);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 }

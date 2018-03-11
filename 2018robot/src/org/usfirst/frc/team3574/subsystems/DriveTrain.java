@@ -39,12 +39,15 @@ public class DriveTrain extends Subsystem {
 	TalonSRX motorRight2 = new TalonSRX(RobotMap.DriveTrainRightTalon2);
 	Solenoid shifter = new Solenoid(RobotMap.ShifterSolenoid);
 
+	PigeonIMU pid_geon = new PigeonIMU(motorLeft2);
+
+	DigitalInput leftFrontCubeSensor = new DigitalInput(RobotMap.IRR1);
+	DigitalInput RightFrontCubeSensor = new DigitalInput(RobotMap.IRR2);
+	
 	MotionProfileRight mPRIGHT = new MotionProfileRight(motorRight1);
 	MotionProfileRight mPLeft = new MotionProfileRight(motorLeft1);
 	StringBuilder _sb = new StringBuilder();
 
-	DigitalInput leftFrontCubeSensor = new DigitalInput(RobotMap.IRR1);
-	DigitalInput RightFrontCubeSensor = new DigitalInput(RobotMap.IRR2);
 	double targetPos = 0;
 
 	Timer t = new Timer();
@@ -71,12 +74,6 @@ public class DriveTrain extends Subsystem {
 
 	private static int _loops = 0;
 	private static int _timesInMotionMagic = 0;
-
-	PigeonIMU pid_geon = new PigeonIMU(motorLeft2);
-
-//	DigitalInput leftCubeSensor = new DigitalInput (RobotMap.IRR1);	
-//	DigitalInput rightCubeSensor = new DigitalInput (RobotMap.IRR2);
-//
 
 	double kPgain = 0.04; /* percent throttle per degree of error */
 	double kDgain = 0.0004; /* percent throttle per angular velocity dps */
@@ -139,7 +136,6 @@ public class DriveTrain extends Subsystem {
 			motorLeft1.clearMotionProfileHasUnderrun(setpoint);
 
 		motorLeft1.set(ControlMode.MotionProfile, setpoint);
-
 	}
 
 	/**
@@ -152,17 +148,16 @@ public class DriveTrain extends Subsystem {
  	 */
 	public void driveByArcadeWithModifiers (double percentThrottle, double percentRotationOutput, double scalingValue )
 	{
-
 		percentThrottle = valueAfterDeadzoned(percentThrottle);
 		percentRotationOutput = valueAfterDeadzoned(percentRotationOutput);
-
+		
 		percentThrottle = scalingSpeed(percentThrottle, scalingValue);
 		percentRotationOutput = scalingSpeed(percentRotationOutput, scalingValue);
-
+		
 		SmartDashboard.putNumber("ACTUAL Percent Throttle", percentThrottle);
 		SmartDashboard.putNumber("ACTUAL Percent Rotation", percentRotationOutput);
-
-		this.driveByArcade(percentThrottle, percentRotationOutput);
+		
+		this.driveByArcade(-percentThrottle, percentRotationOutput);
 	}
 
 	/**
@@ -173,12 +168,13 @@ public class DriveTrain extends Subsystem {
 	 */
 	public void driveByArcade (double percentThrottle, double percentRotationOutput) {
 
-		motorLeft1.set(ControlMode.PercentOutput, percentThrottle - percentRotationOutput);
-		motorLeft2.set(ControlMode.PercentOutput, percentThrottle - percentRotationOutput);
+		motorLeft1.set(ControlMode.PercentOutput, -percentThrottle - percentRotationOutput);
+		motorLeft2.set(ControlMode.PercentOutput, -percentThrottle - percentRotationOutput);
 
-		motorRight1.set(ControlMode.PercentOutput, (percentThrottle + percentRotationOutput) * -1.0);
-		motorRight2.set(ControlMode.PercentOutput, (percentThrottle + percentRotationOutput) * -1.0);		
+		motorRight1.set(ControlMode.PercentOutput, (-percentThrottle + percentRotationOutput) * -1.0);
+		motorRight2.set(ControlMode.PercentOutput, (-percentThrottle + percentRotationOutput) * -1.0);		
 	}
+	
 	/**
 	 * Autonomous driving mechanism that attempts to keep the same angle
 	 * 
@@ -202,28 +198,29 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public double scalingSpeed (double joystickValue,double scalingCutoff) {
-		//		TODO: Find better scaling system
-		//		Here's a simple algorithm to add sensitivity adjustment to your joystick:
-		//
-		//		x' = a * x^3 + (1-a) * x
-		//
-		//		x is a joystick output ranging from -1 to +1
-		//
-		//		x' is the sensitivity-adjusted output (also will be -1 to +1)
-		//
-		//		"a" is a variable ranging from 0 to +1
-		//
-		//		When a=0, you get x' = x
-		//
-		//		When a=1, you get x' = x^3 which gives very fine control of small outputs
-		//
-		//		When a is between 0 and 1, you get something in between.
+		/**		TODO: Find better scaling system
+				Here's a simple algorithm to add sensitivity adjustment to your joystick:
+		
+				x' = a * x^3 + (1-a) * x
+		
+				x is a joystick output ranging from -1 to +1
+		
+				x' is the sensitivity-adjusted output (also will be -1 to +1)
+		
+				"a" is a variable ranging from 0 to +1
+		
+				When a=0, you get x' = x
+		
+				When a=1, you get x' = x^3 which gives very fine control of small outputs
+		
+				When a is between 0 and 1, you get something in between.
 
-		//		joystickValue is "x"
+				joystickValue is "x"
 
-		//		below is "a", wait, no.
+				below is "a", wait, no.
 
-		//		below is "x^3"
+				below is "x^3"
+		*/
 		double joystickValueToTheThird = Math.pow(joystickValue, 3);
 
 		//		x'   = a             * x^3                     +  (1-a)             * x

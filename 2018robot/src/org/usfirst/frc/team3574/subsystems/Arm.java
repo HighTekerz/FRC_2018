@@ -21,10 +21,10 @@ public class Arm extends Subsystem {
 	Solenoid Wrist = new Solenoid(RobotMap.WristSolenoid);
 	TalonSRX ArmMotor = new TalonSRX(RobotMap.ArmMotor);
 
-	public static final int AttentiveCobra = 1000;
-	public static final int AggressiveCobra = 2000;
-	public static final int DepressedCobra = 3000;
-	public static final int DeadCobra = 4000;
+	public static final int PreparedCobra = 1;
+	public static final int AggressiveCobra = 2;
+	public static final int RelaxedCobra = 3;
+	public static final int DeadCobra = 4;
 
 	//TODO: tune this loop
 	public final double kP = 1.0;
@@ -96,20 +96,20 @@ public class Arm extends Subsystem {
 		System.out.println("Reached putTheArmSomeWhere");
 		switch (cobraForm) {
 
-		case (AttentiveCobra):
-			assumeThePosition(cobraForm);
+		case (PreparedCobra):
+			setShoulderPosition(cobraForm);
 		break;
 
 		case (AggressiveCobra):
-			assumeThePosition(cobraForm);
+			setShoulderPosition(cobraForm);
 		break;
 
-		case (DepressedCobra):
-			assumeThePosition(cobraForm);
+		case (RelaxedCobra):
+			setShoulderPosition(cobraForm);
 		break;
 
 		case (DeadCobra):
-			assumeThePosition(cobraForm);
+			setShoulderPosition(cobraForm);
 		break;
 
 		default:
@@ -118,7 +118,7 @@ public class Arm extends Subsystem {
 		} 
 	}
 
-	private void assumeThePosition(int cobraPosition){
+	private void setShoulderPosition(int cobraPosition){
 		ArmMotor.set(ControlMode.Position, cobraPosition);
 	}
 

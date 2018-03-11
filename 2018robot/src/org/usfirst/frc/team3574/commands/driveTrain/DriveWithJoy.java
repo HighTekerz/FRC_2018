@@ -26,16 +26,12 @@ public class DriveWithJoy extends Command
 	// Called just before this Command runs the first time
 	protected void initialize()
 	{
-
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute()
 	{
-		Robot.driveTrain.driveByArcadeWithModifiers(Robot.OperatorInput.getRightStickY(), Robot.OperatorInput.getLeftStickX(), 0.0);
-		
-		//		Robot.driveTrain.driveByArcadeWithModifiers(Robot.OperatorInput.getRightStickY(), -Robot.OperatorInput.getLeftStickX(), .75);
-		//		Robot.driveTrain.driveByArcadeWithModifiers(Robot.OperatorInput.getRightTrigger()-Robot.OperatorInput.getLeftTrigger(), Robot.OperatorInput.getRightStickX(), (Robot.OperatorInput.getDialAxis()+1)/2);
+		Robot.driveTrain.driveByArcadeWithModifiers(-Robot.OperatorInput.getRightStickY(), Robot.OperatorInput.getLeftStickX(), 0.0);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -54,6 +50,4 @@ public class DriveWithJoy extends Command
 	protected void interrupted()
 	{
 	}
-
-
 }

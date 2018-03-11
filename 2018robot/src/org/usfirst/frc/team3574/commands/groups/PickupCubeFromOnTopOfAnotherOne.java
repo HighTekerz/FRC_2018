@@ -1,6 +1,6 @@
 package org.usfirst.frc.team3574.commands.groups;
 
-import org.usfirst.frc.team3574.commands.arm.SetCobraPosition;
+import org.usfirst.frc.team3574.commands.arm.SetArmPosition;
 import org.usfirst.frc.team3574.commands.arm.SetWristParallel;
 import org.usfirst.frc.team3574.commands.sensors.UntilBothSensorsAreTripped;
 import org.usfirst.frc.team3574.subsystems.Arm;
@@ -36,9 +36,9 @@ public class PickupCubeFromOnTopOfAnotherOne extends CommandGroup {
     	addSequential(new UntilBothSensorsAreTripped());
 //    	addParallel(new SetClawOpen(true));
     	addSequential(new SetWristParallel(false));
-    	addSequential(new SetCobraPosition(Arm.DepressedCobra));
+    	addSequential(new SetArmPosition(Arm.RelaxedCobra));
 //    	addSequential(new SetClawOpen(false));
-    	addParallel(new SetCobraPosition(Arm.AttentiveCobra));
+    	addParallel(new SetArmPosition(Arm.PreparedCobra));
     	addSequential(new SetWristParallel(true));
     }
 }

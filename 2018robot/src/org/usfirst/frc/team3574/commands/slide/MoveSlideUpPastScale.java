@@ -25,14 +25,14 @@ public class MoveSlideUpPastScale extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {	
 		Robot.slide.setSlideSpeed(0.2);
-		if (Robot.slide.isScaleDetectorTripped()) {
+		if (Robot.claw.isScaleDetectorTripped()) {
 			_hasSeenScale = true;
 		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		if (_hasSeenScale && !Robot.slide.isScaleDetectorTripped()) {
+		if (_hasSeenScale && !Robot.claw.isScaleDetectorTripped()) {
 			return true;
 		}
 		else {

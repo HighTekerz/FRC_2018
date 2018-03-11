@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class ForkLifter extends Subsystem {
 
     
-	public void setForksPosition() {
+	public void setForksDown() {
 	}
 	
     public void initDefaultCommand() {

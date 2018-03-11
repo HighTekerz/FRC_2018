@@ -1,6 +1,6 @@
 package org.usfirst.frc.team3574.commands.groups;
 
-import org.usfirst.frc.team3574.commands.arm.SetCobraPosition;
+import org.usfirst.frc.team3574.commands.arm.SetArmPosition;
 import org.usfirst.frc.team3574.commands.claw.SetClawPosition;
 import org.usfirst.frc.team3574.commands.slide.SetSlidePosition;
 import org.usfirst.frc.team3574.robot.Robot;
@@ -38,10 +38,10 @@ public class PutCubeInScaleLow extends CommandGroup {
     	requires(Robot.arm);
     	requires (Robot.slide);
     	
-    	addParallel(new SetCobraPosition(Arm.AggressiveCobra));
+    	addParallel(new SetArmPosition(Arm.AggressiveCobra));
     	addSequential(new SetSlidePosition(Slide.scaleLow));
     	addSequential(new SetClawPosition(ClawPosition.OPEN));
-    	addSequential(new SetCobraPosition(Arm.AttentiveCobra));
+    	addSequential(new SetArmPosition(Arm.PreparedCobra));
     	addSequential(new SetClawPosition(ClawPosition.CLOSED)); //TODO: do we really need to do this????
     	
     }

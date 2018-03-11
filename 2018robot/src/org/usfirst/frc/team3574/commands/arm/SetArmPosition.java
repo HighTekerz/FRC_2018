@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class SetCobraPosition extends Command {
+public class SetArmPosition extends Command {
 
 	private int _cobraPosition; 
 	
@@ -16,7 +16,7 @@ public class SetCobraPosition extends Command {
      * 
      * @param cobraPosition Denotes which arm position you want to go to. Pull your number from the arm subsystem (e.g. Robot.arm.AggressiveCobra)
      */
-	public SetCobraPosition(int cobraPosition) {
+	public SetArmPosition(int cobraPosition) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
 		requires(Robot.arm);
