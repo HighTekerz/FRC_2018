@@ -17,6 +17,7 @@ import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Sendable;
 
@@ -37,13 +38,14 @@ public class DriveTrain extends Subsystem {
 	TalonSRX motorLeft2 = new TalonSRX(RobotMap.DriveTrainLeftTalon2);
 	TalonSRX motorRight1 = new TalonSRX(RobotMap.DriveTrainRightTalon1);
 	TalonSRX motorRight2 = new TalonSRX(RobotMap.DriveTrainRightTalon2);
-	Solenoid shifter = new Solenoid(RobotMap.ShifterSolenoid);
+
+	DoubleSolenoid shifter = new DoubleSolenoid(RobotMap.ShifterSolenoid, RobotMap.ShifterSolenoid2);
 
 	PigeonIMU pid_geon = new PigeonIMU(motorLeft2);
 
 	DigitalInput leftFrontCubeSensor = new DigitalInput(RobotMap.IRR1);
 	DigitalInput RightFrontCubeSensor = new DigitalInput(RobotMap.IRR2);
-	
+
 	MotionProfileRight mPRIGHT = new MotionProfileRight(motorRight1);
 	MotionProfileRight mPLeft = new MotionProfileRight(motorLeft1);
 	StringBuilder _sb = new StringBuilder();
@@ -106,11 +108,11 @@ public class DriveTrain extends Subsystem {
 		//		Value reversed for clarity
 		return -motorRight1.getSensorCollection().getPulseWidthPosition();
 	}
-	
+
 	public void initDefaultCommand() {
 		setDefaultCommand(new DriveWithJoy());
 	}
-	
+
 	/** 
 	 * Drives the robot using seperate inputs for the left and right side motors.
 	 * Inputs are percentages of maximum motor output.
@@ -145,18 +147,18 @@ public class DriveTrain extends Subsystem {
 	 * @param percentThrottle Denotes how fast you want to go foreward/backwards
 	 * @param percentRotationOutput Denotes how fast you want to turn (+ is left, - is right)
 	 * @param scalingValue Slows the change in motor speed near maximum and minimum speed. Raise this value to make it slower
- 	 */
+	 */
 	public void driveByArcadeWithModifiers (double percentThrottle, double percentRotationOutput, double scalingValue )
 	{
 		percentThrottle = valueAfterDeadzoned(percentThrottle);
 		percentRotationOutput = valueAfterDeadzoned(percentRotationOutput);
-		
+
 		percentThrottle = scalingSpeed(percentThrottle, scalingValue);
 		percentRotationOutput = scalingSpeed(percentRotationOutput, scalingValue);
-		
+
 		SmartDashboard.putNumber("ACTUAL Percent Throttle", percentThrottle);
 		SmartDashboard.putNumber("ACTUAL Percent Rotation", percentRotationOutput);
-		
+
 		this.driveByArcade(-percentThrottle, percentRotationOutput);
 	}
 
@@ -174,7 +176,7 @@ public class DriveTrain extends Subsystem {
 		motorRight1.set(ControlMode.PercentOutput, (-percentThrottle + percentRotationOutput) * -1.0);
 		motorRight2.set(ControlMode.PercentOutput, (-percentThrottle + percentRotationOutput) * -1.0);		
 	}
-	
+
 	/**
 	 * Autonomous driving mechanism that attempts to keep the same angle
 	 * 
@@ -200,19 +202,19 @@ public class DriveTrain extends Subsystem {
 	public double scalingSpeed (double joystickValue,double scalingCutoff) {
 		/**		TODO: Find better scaling system
 				Here's a simple algorithm to add sensitivity adjustment to your joystick:
-		
+
 				x' = a * x^3 + (1-a) * x
-		
+
 				x is a joystick output ranging from -1 to +1
-		
+
 				x' is the sensitivity-adjusted output (also will be -1 to +1)
-		
+
 				"a" is a variable ranging from 0 to +1
-		
+
 				When a=0, you get x' = x
-		
+
 				When a=1, you get x' = x^3 which gives very fine control of small outputs
-		
+
 				When a is between 0 and 1, you get something in between.
 
 				joystickValue is "x"
@@ -220,7 +222,7 @@ public class DriveTrain extends Subsystem {
 				below is "a", wait, no.
 
 				below is "x^3"
-		*/
+		 */
 		double joystickValueToTheThird = Math.pow(joystickValue, 3);
 
 		//		x'   = a             * x^3                     +  (1-a)             * x
@@ -287,6 +289,24 @@ public class DriveTrain extends Subsystem {
 		return forwardThrot;
 	}
 
+	/**
+	 * Command to shift gears on the drivetrain
+	 * 
+	 * @param lowOrHigh send 1 for low gear, 2 for high. 0 for off.
+	 */
+	private void ShiftGear(int lowOrHigh) {
+		switch (lowOrHigh) {
+		case 0:
+			shifter.set(DoubleSolenoid.Value.kOff);
+		case 1:
+			shifter.set(DoubleSolenoid.Value.kForward);
+			break;
+		case 2:
+			shifter.set(DoubleSolenoid.Value.kReverse);
+			break;
+		}
+	}
+
 	public void log() {
 		PigeonIMU.GeneralStatus genStatus = new PigeonIMU.GeneralStatus();
 		PigeonIMU.FusionStatus fusionStatus = new PigeonIMU.FusionStatus();
@@ -320,10 +340,10 @@ public class DriveTrain extends Subsystem {
 
 
 
-//		System.out.println("{" + motorLeft1.getSensorCollection().getQuadraturePosition() + ",\t" + 
-//				motorLeft1.getSensorCollection().getQuadratureVelocity() + ",\t"  + (int)((currentT - lastT) * 1000 + 5) + "},\t" +
-//				"{" + motorRight1.getSensorCollection().getQuadraturePosition() + ",\t" + 
-//				motorRight1.getSensorCollection().getQuadratureVelocity() + ",\t"  + (int)((currentT - lastT) * 1000 + 5) + "}," );
+		//		System.out.println("{" + motorLeft1.getSensorCollection().getQuadraturePosition() + ",\t" + 
+		//				motorLeft1.getSensorCollection().getQuadratureVelocity() + ",\t"  + (int)((currentT - lastT) * 1000 + 5) + "},\t" +
+		//				"{" + motorRight1.getSensorCollection().getQuadraturePosition() + ",\t" + 
+		//				motorRight1.getSensorCollection().getQuadratureVelocity() + ",\t"  + (int)((currentT - lastT) * 1000 + 5) + "}," );
 
 		lastT = currentT;
 	}
@@ -457,23 +477,23 @@ public class DriveTrain extends Subsystem {
 	public boolean areBothFrontSensorsTripped() {
 		return (leftFrontCubeSensor.get() && RightFrontCubeSensor.get());
 	}
-	
+
 	public void MPInit() {
 		mPLeft.startMotionProfile();
 		mPRIGHT.startMotionProfile();
 
 	}
-	
+
 	public void MPExec() {
 		SetValueMotionProfile setOutputLeft = mPLeft.getSetValue();
 		SetValueMotionProfile setOutputRight = mPRIGHT.getSetValue();
 		motorLeft1.set(ControlMode.MotionProfile, setOutputLeft.value);
 		motorRight1.set(ControlMode.MotionProfile, setOutputRight.value);
 	}
-	
+
 	public void MPEnd() {
 		mPLeft.reset();
 		mPRIGHT.reset();
 	}
-	
+
 }

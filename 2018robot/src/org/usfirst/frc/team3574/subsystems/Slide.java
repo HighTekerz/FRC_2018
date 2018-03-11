@@ -33,12 +33,12 @@ public class Slide extends Subsystem {
 
 	private static final int SPEED_TO_TOP = 87;
 	private static final int TICKS_TO_TOP = 16732;
-	private static final int TICKS_PER_REV = 1023;   //or 1024 or 4096
+	private static final int TICKS_PER_REV = 4096;   //or 1024 or 4096
 	
-	private static final double P = ((SPEED_TO_TOP * TICKS_PER_REV) / TICKS_TO_TOP) * 2; //5.3192087
-	private static final double I = 1;
+	private static final double P = 10;//((SPEED_TO_TOP * TICKS_PER_REV) / TICKS_TO_TOP) * 2; //5.3192087
+	private static final double I = .0000001;
 	private static final double D = 0;
-	private static final double F = 0;
+	private static final double F = 1;
 	
 	/**
 	 * Which PID slot to pull gains from. Starting 2018, you can choose from
@@ -62,7 +62,7 @@ public class Slide extends Subsystem {
 //	I2C iTooCanSee = new I2C(Port.kOnboard, 0x13);
 
 	public Slide() {
-		slideSim.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, kPIDLoopIdx, kTimeoutMs);
+		slideSim.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, kPIDLoopIdx, kTimeoutMs);
 		
 		slideSim.setSensorPhase(kSensorPhase);
 
@@ -139,7 +139,7 @@ public class Slide extends Subsystem {
 		SmartDashboard.putNumber("Slide Encoder", getEncPos());
 		SmartDashboard.putBoolean("Top Slide Limit Switch", getTopStopSwitchIsPressed());
 		SmartDashboard.putBoolean("Bottom Slide Limit Switch", getBottomStopSwitchIsPressed());
-		SmartDashboard.putNumber("Absolute Position", slideSim.getSensorCollection().getPulseWidthPosition()/1000000.0);
+//		SmartDashboard.putNumber("Absolute Position", slideSim.getSensorCollection().getPulseWidthPosition()/1000000.0);
 		
 		SmartDashboard.putNumber("setpoint", set);
 	}

@@ -11,6 +11,7 @@ package org.usfirst.frc.team3574.robot;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveByInches;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveByPID;
 import org.usfirst.frc.team3574.commands.driveTrain.MakeMotionProflileGo;
+import org.usfirst.frc.team3574.commands.driveTrain.ShiftGear;
 import org.usfirst.frc.team3574.commands.groups.PutCubeInSwitch;
 import org.usfirst.frc.team3574.commands.slide.NewSlidePositionDown;
 import org.usfirst.frc.team3574.commands.slide.NewSlidePositionUp;
@@ -85,14 +86,15 @@ public class OI {
 
 		Button button1 = new JoystickButton(driverXbox360Controller, A_BUTTON);
 		button1.whenPressed(new SetSlidePosition(-100000));
-		
 		Button button2 = new JoystickButton(driverXbox360Controller, B_BUTTON);
 		button2.whenPressed(new SetSlidePosition(100000));
-		
 		Button button3 = new JoystickButton(driverXbox360Controller, X_BUTTON);
 		button3.whenPressed(new TestSlide());
 		Button button4 = new JoystickButton(driverXbox360Controller, Y_BUTTON);
 		button4.whenPressed(new TestSlide2());
+		
+		Button shiftHighGear = new POVTopRange(driverXbox360Controller, pov);
+		shiftHighGear.whenPressed(new ShiftGear());
 		
 		SmartDashboard.putData(new SlideByInches(2));
 		
