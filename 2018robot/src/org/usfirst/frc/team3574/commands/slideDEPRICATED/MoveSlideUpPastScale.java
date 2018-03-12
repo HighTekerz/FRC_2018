@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3574.commands.slide;
+package org.usfirst.frc.team3574.commands.slideDEPRICATED;
 
 import org.usfirst.frc.team3574.robot.Robot;
 
@@ -24,7 +24,7 @@ public class MoveSlideUpPastScale extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {	
-		Robot.slide.setSlideSpeed(0.2);
+		Robot.slide.setSlideSpeedPercent(0.2);
 		if (Robot.claw.isScaleDetectorTripped()) {
 			_hasSeenScale = true;
 		}
@@ -42,7 +42,7 @@ public class MoveSlideUpPastScale extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
-		Robot.slide.setSlideSpeed(0.0);
+		Robot.slide.setSlideSpeedPercent(0.0);
 	}
 
 	// Called when another command which requires one or more of the same

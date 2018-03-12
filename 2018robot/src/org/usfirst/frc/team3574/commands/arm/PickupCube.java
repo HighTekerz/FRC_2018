@@ -4,6 +4,7 @@ import org.usfirst.frc.team3574.commands.claw.SetClawPosition;
 import org.usfirst.frc.team3574.commands.sensors.UntilBothSensorsAreTripped;
 import org.usfirst.frc.team3574.subsystems.Arm;
 import org.usfirst.frc.team3574.subsystems.ClawPosition;
+import org.usfirst.frc.team3574.subsystems.WristPosition;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -21,10 +22,10 @@ public class PickupCube extends CommandGroup {
 		 */
 		addSequential(new UntilBothSensorsAreTripped());
 		addParallel(new SetClawPosition(ClawPosition.OPEN));
-		addSequential(new SetWristParallel(false));
+		addSequential(new SetWristPosition(WristPosition.ANGLED));
 		addSequential(new SetArmPosition(Arm.DeadCobra));
 		addSequential(new SetClawPosition(ClawPosition.CLOSED));
 		addParallel(new SetArmPosition(Arm.PreparedCobra));
-		addSequential(new SetWristParallel(true));
+		addSequential(new SetWristPosition(WristPosition.STRAIGHT));
 	}
 }

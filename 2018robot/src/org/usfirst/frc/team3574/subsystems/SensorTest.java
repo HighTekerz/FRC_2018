@@ -23,7 +23,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class SensorTest extends Subsystem {
 
 //	Ultrasonic ultraHedgehog = new Ultrasonic(0, 1, Unit.kInches);
-	I2C iTooCanSee = new I2C(Port.kOnboard, 0x13);
+//	DigitalInput iTooCanSee = new DigitalInput(Port.kOnboard);
 	DigitalInput proximitySensor = new DigitalInput(9);
 	DigitalInput anotherProximitySensor = new DigitalInput(8);
 	
@@ -40,8 +40,6 @@ public class SensorTest extends Subsystem {
 	}
 	public void log () {
 //		SmartDashboard.putNumber("UltraHedgehog thing", ultraHedgehog.getRangeInches());
-        SmartDashboard.putBoolean("andanothersensor", !proximitySensor.get());
-		SmartDashboard.getBoolean("Even Another Sensor Like How Many Of These Do We Need?", anotherProximitySensor.get());
 	}
 	public void initDefaultCommand() {
 	}

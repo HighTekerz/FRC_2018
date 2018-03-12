@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3574.commands.slide;
+package org.usfirst.frc.team3574.commands.slideDEPRICATED;
 
 import org.usfirst.frc.team3574.robot.Robot;
 
@@ -8,7 +8,8 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class NewSlidePositionDown extends Command {
-
+	
+	@Deprecated
     public NewSlidePositionDown() {
     	requires(Robot.slide);
 // Use requires() here to declare subsystem dependencies
@@ -17,7 +18,7 @@ public class NewSlidePositionDown extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.slide.setSlidePosition(-1000);
+//    	Robot.slide.setSlidePosition(-1000);
     }
 
     // Called repeatedly when this Command is scheduled to run

@@ -294,7 +294,7 @@ public class DriveTrain extends Subsystem {
 	 * 
 	 * @param lowOrHigh send 1 for low gear, 2 for high. 0 for off.
 	 */
-	private void ShiftGear(int lowOrHigh) {
+	public void ShiftGear(int lowOrHigh) {
 		switch (lowOrHigh) {
 		case 0:
 			shifter.set(DoubleSolenoid.Value.kOff);

@@ -20,7 +20,7 @@ public final class RobotMap {
 	public static int ShifterSolenoid2 = 1;
 	public static int ClawSolenoid = 2;
 	public static int WristSolenoid = 3;
-	public static int BreakSolenoid = 4;
+	public static int BrakeSolenoid = 4;
 	public static int LeftLifterSolenoid = 5;
 	public static int RightLifterSolenoid = 6;
 	

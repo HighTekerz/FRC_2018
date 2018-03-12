@@ -15,7 +15,9 @@ import org.usfirst.frc.team3574.commands.driveTrain.DoNothing;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveByInches;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveWithJoy;
 import org.usfirst.frc.team3574.commands.groups.autopidtestone;
-import org.usfirst.frc.team3574.commands.slide.ResetEncIfAtLowestPoint;
+import org.usfirst.frc.team3574.commands.slideDEPRICATED.ResetEncIfAtLowestPoint;
+import org.usfirst.frc.team3574.commands.slideDEPRICATED.ResetSlideEnc;
+import org.usfirst.frc.team3574.commands.slideDEPRICATED.UpdateSlideEncoder;
 import org.usfirst.frc.team3574.commands.util.RumbleASide;
 import org.usfirst.frc.team3574.subsystems.Arm;
 import org.usfirst.frc.team3574.subsystems.Claw;
@@ -75,6 +77,9 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putData("Auto mode", autoChooserForLosers);
 		
 		SmartDashboard.putData(Scheduler.getInstance());
+	
+		new ResetSlideEnc().start();
+	
 	}
 
 	/**
@@ -166,6 +171,8 @@ public class Robot extends TimedRobot {
 	
 	public void runAlways() {
 		new ResetEncIfAtLowestPoint().start();
+		new UpdateSlideEncoder().start();
+		
 		this.log();
 	}
 

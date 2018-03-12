@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3574.commands.slide;
+package org.usfirst.frc.team3574.commands.slideDEPRICATED;
 
 import org.usfirst.frc.team3574.robot.Robot;
 
@@ -28,7 +28,7 @@ public class ManualSlide extends Command {
     	
     	
     	
-    	Robot.slide.setSlideSpeed(speed);
+    	Robot.slide.setSlideSpeedPercent(speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()

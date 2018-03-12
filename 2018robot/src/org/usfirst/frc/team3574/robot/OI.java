@@ -8,17 +8,21 @@
 package org.usfirst.frc.team3574.robot;
 
 
+import org.usfirst.frc.team3574.commands.arm.SetWristPosition;
+import org.usfirst.frc.team3574.commands.claw.SetClawPosition;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveByInches;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveByPID;
 import org.usfirst.frc.team3574.commands.driveTrain.MakeMotionProflileGo;
 import org.usfirst.frc.team3574.commands.driveTrain.ShiftGear;
 import org.usfirst.frc.team3574.commands.groups.PutCubeInSwitch;
-import org.usfirst.frc.team3574.commands.slide.NewSlidePositionDown;
-import org.usfirst.frc.team3574.commands.slide.NewSlidePositionUp;
-import org.usfirst.frc.team3574.commands.slide.SetSlidePosition;
-import org.usfirst.frc.team3574.commands.slide.SlideByInches;
-import org.usfirst.frc.team3574.commands.slide.TestSlide;
-import org.usfirst.frc.team3574.commands.slide.TestSlide2;
+import org.usfirst.frc.team3574.commands.slide.SetSlidePositionMakeshift;
+import org.usfirst.frc.team3574.commands.slideDEPRICATED.NewSlidePositionDown;
+import org.usfirst.frc.team3574.commands.slideDEPRICATED.NewSlidePositionUp;
+import org.usfirst.frc.team3574.commands.slideDEPRICATED.ResetSlideEnc;
+import org.usfirst.frc.team3574.commands.slideDEPRICATED.SetSlidePosition;
+import org.usfirst.frc.team3574.commands.slideDEPRICATED.SlideByInches;
+import org.usfirst.frc.team3574.subsystems.ClawPosition;
+import org.usfirst.frc.team3574.subsystems.WristPosition;
 import org.usfirst.frc.team3574.triggers.POVBottomRange;
 import org.usfirst.frc.team3574.triggers.POVTopRange;
 
@@ -33,39 +37,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-	//// CREATING BUTTONS
-	// One type of button is a joystick button which is any button on a
-	//// joystick.
-	// You create one by telling it which joystick it's on and which button
-	// number it is.
-	// Joystick stick = new Joystick(port);
-	// Button button = new JoystickButton(stick, buttonNumber);
-
-	// There are a few additional built in buttons you can use. Additionally,
-	// by subclassing Button you can create custom triggers and bind those to
-	// commands the same as any other Button.
-
-	//// TRIGGERING COMMANDS WITH BUTTONS
-	// Once you have a button, it's trivial to bind it to a button in one of
-	// three ways:
-
-	// Start the command when the button is pressed and let it run the command
-	// until it is finished as determined by it's isFinished method.
-	// button.whenPressed(new ExampleCommand());
-
-	// Run the command while the button is being held down and interrupt it once
-	// the button is released.
-	// button.whileHeld(new ExampleCommand());
-
-	// Start the command when the button is released and let it run the command
-	// until it is finished as determined by its isFinished method.
-	// button.whenReleased(new ExampleCommand());
-
 	XboxController driverXbox360Controller = new XboxController(0);
 	XboxController coPilotxbox360Controller = new XboxController(1);
 	//	Joystick logitechAttack = new Joystick(3);
-
-	//	Joystick driverXbox360Controller = new Joystick(0);
+	
 	static final int A_BUTTON = 1;
 	static final int B_BUTTON = 2;
 	static final int X_BUTTON = 3;
@@ -85,18 +60,28 @@ public class OI {
 	public OI() {
 
 		Button button1 = new JoystickButton(driverXbox360Controller, A_BUTTON);
-		button1.whenPressed(new SetSlidePosition(-100000));
+		button1.whenPressed(new SlideByInches(5));
+		
 		Button button2 = new JoystickButton(driverXbox360Controller, B_BUTTON);
-		button2.whenPressed(new SetSlidePosition(100000));
-		Button button3 = new JoystickButton(driverXbox360Controller, X_BUTTON);
-		button3.whenPressed(new TestSlide());
-		Button button4 = new JoystickButton(driverXbox360Controller, Y_BUTTON);
-		button4.whenPressed(new TestSlide2());
+		button2.whenPressed(new SlideByInches(1));
 		
+		Button tiltClaw = new JoystickButton(driverXbox360Controller, X_BUTTON);
+		tiltClaw.whenPressed(new SetWristPosition(WristPosition.ANGLED));
+		
+		Button openClaw = new JoystickButton(driverXbox360Controller, START);
+		openClaw.whenPressed(new SetClawPosition(ClawPosition.OPEN));
+
+		Button closeClaw = new JoystickButton(driverXbox360Controller, BACK);
+		closeClaw.whenPressed(new SetClawPosition(ClawPosition.CLOSED));
+
 		Button shiftHighGear = new POVTopRange(driverXbox360Controller, pov);
-		shiftHighGear.whenPressed(new ShiftGear());
+		shiftHighGear.whenPressed(new ShiftGear(2));
 		
-		SmartDashboard.putData(new SlideByInches(2));
+		Button shiftLowGear = new POVBottomRange(driverXbox360Controller, pov);
+		shiftLowGear.whenPressed(new ShiftGear(1));
+		
+		SmartDashboard.putData(new SetSlidePositionMakeshift(24));
+		SmartDashboard.putData(new ResetSlideEnc());
 		
 //		SmartDashboard.putData(new DriveByPID(20000));
 //		

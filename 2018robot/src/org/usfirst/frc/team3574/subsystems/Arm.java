@@ -19,6 +19,7 @@ public class Arm extends Subsystem {
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 	Solenoid Wrist = new Solenoid(RobotMap.WristSolenoid);
+	Solenoid Brake = new Solenoid(RobotMap.BrakeSolenoid);
 	TalonSRX ArmMotor = new TalonSRX(RobotMap.ArmMotor);
 
 	public static final int PreparedCobra = 1;
@@ -87,9 +88,28 @@ public class Arm extends Subsystem {
 	public void initDefaultCommand() {
 	}
 
+	public void setBrakePosition(BrakePosition pos) {
+		if(pos == BrakePosition.OPEN) {
+			Brake.set(true);
+		}
+		else if(pos == BrakePosition.CLOSED){
+			Brake.set(false);
+		}
+		else {
+			System.out.println("Invalid SetWristParallel Entry");
+		}
+	}
 
-	public void setWristParallel(boolean Value) {
-		Wrist.set(Value);
+	public void setWristPosition(WristPosition pos) {
+		if(pos == WristPosition.STRAIGHT) {
+			Wrist.set(true);
+		}
+		else if(pos == WristPosition.ANGLED){
+			Wrist.set(false);
+		}
+		else {
+			System.out.println("Invalid SetWristParallel Entry");
+		}
 	}
 
 	public void putTheArmSomewhere(int cobraForm) {
