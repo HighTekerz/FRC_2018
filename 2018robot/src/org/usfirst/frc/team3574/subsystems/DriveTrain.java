@@ -5,6 +5,7 @@ import java.util.concurrent.TimeUnit;
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane.SystemMenuBar;
 import org.omg.CORBA.SetOverrideType;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveWithJoy;
+import org.usfirst.frc.team3574.enums.ShifterPosition;
 import org.usfirst.frc.team3574.motionProfile.MotionProfileRight;
 import org.usfirst.frc.team3574.robot.Robot;
 import org.usfirst.frc.team3574.robot.RobotMap;
@@ -39,17 +40,21 @@ public class DriveTrain extends Subsystem {
 	TalonSRX motorRight1 = new TalonSRX(RobotMap.DriveTrainRightTalon1);
 	TalonSRX motorRight2 = new TalonSRX(RobotMap.DriveTrainRightTalon2);
 
-	DoubleSolenoid shifter = new DoubleSolenoid(RobotMap.ShifterSolenoid, RobotMap.ShifterSolenoid2);
+	DoubleSolenoid shifter = new DoubleSolenoid(RobotMap.ShifterSolenoid0, RobotMap.ShifterSolenoid1);
 
 	PigeonIMU pid_geon = new PigeonIMU(motorLeft2);
 
-	DigitalInput leftFrontCubeSensor = new DigitalInput(RobotMap.IRR1);
-	DigitalInput RightFrontCubeSensor = new DigitalInput(RobotMap.IRR2);
+	DigitalInput leftFrontCubeSensor = new DigitalInput(RobotMap.FloorCubeSensorLeft);
+	DigitalInput rightFrontCubeSensor = new DigitalInput(RobotMap.FloorCubeSensorRight);
 
 	MotionProfileRight mPRIGHT = new MotionProfileRight(motorRight1);
 	MotionProfileRight mPLeft = new MotionProfileRight(motorLeft1);
 	StringBuilder _sb = new StringBuilder();
 
+	public double backupDistancePickup = -3;
+	public double backupDistanceSwitch = -3;
+	public double backupDistanceScale = -12;
+	
 	double targetPos = 0;
 
 	Timer t = new Timer();
@@ -190,13 +195,9 @@ public class DriveTrain extends Subsystem {
 		percentRotationOutput = valueAfterDeadzoned(percentRotationOutput);
 
 		if (percentRotationOutput == 0) {
-			percentRotationOutput += driveStraight(percentThrottle, targetAngle);
+			percentRotationOutput -= driveStraight(percentThrottle, targetAngle);
 		}
-		motorLeft1.set(ControlMode.PercentOutput, percentThrottle - percentRotationOutput);
-		motorLeft2.set(ControlMode.PercentOutput, percentThrottle - percentRotationOutput);
-
-		motorRight1.set(ControlMode.PercentOutput, (percentThrottle + percentRotationOutput) * -1.0);
-		motorRight2.set(ControlMode.PercentOutput, (percentThrottle + percentRotationOutput) * -1.0);		
+		driveByArcade(percentThrottle, percentRotationOutput);
 	}
 
 	public double scalingSpeed (double joystickValue,double scalingCutoff) {
@@ -289,19 +290,23 @@ public class DriveTrain extends Subsystem {
 		return forwardThrot;
 	}
 
+	public boolean areBothFrontSensorsTripped() {
+		return (!leftFrontCubeSensor.get() && !rightFrontCubeSensor.get());
+	}
+
 	/**
 	 * Command to shift gears on the drivetrain
 	 * 
 	 * @param lowOrHigh send 1 for low gear, 2 for high. 0 for off.
 	 */
-	public void ShiftGear(int lowOrHigh) {
+	public void ShiftGear(ShifterPosition lowOrHigh) {
 		switch (lowOrHigh) {
-		case 0:
+		case OFF:
 			shifter.set(DoubleSolenoid.Value.kOff);
-		case 1:
+		case LOW_GEAR:
 			shifter.set(DoubleSolenoid.Value.kForward);
 			break;
-		case 2:
+		case HIGH_GEAR:
 			shifter.set(DoubleSolenoid.Value.kReverse);
 			break;
 		}
@@ -328,6 +333,7 @@ public class DriveTrain extends Subsystem {
 		SmartDashboard.putNumber("Accelerometer2", accelerometer[2]);
 		SmartDashboard.putNumberArray("_6dQuaternion", _6dquaternion);
 		SmartDashboard.putNumber("Angle", currentAngle);
+		
 		SmartDashboard.putNumber("Encoder Right", this.getEncoderRight());
 		SmartDashboard.putNumber("Encoder Left", this.getEncoderLeft());
 
@@ -336,9 +342,10 @@ public class DriveTrain extends Subsystem {
 		SmartDashboard.putNumber("Motor Right 1 Voltage", motorRight1.getMotorOutputVoltage());
 		SmartDashboard.putNumber("Motor Right 2 Voltage", motorRight2.getMotorOutputVoltage());
 
+		SmartDashboard.putBoolean("Left Floor Cube Sensor", leftFrontCubeSensor.get());
+		SmartDashboard.putBoolean("Right Floor Cube Sensor", rightFrontCubeSensor.get());
+		
 		currentT = t.get();
-
-
 
 		//		System.out.println("{" + motorLeft1.getSensorCollection().getQuadraturePosition() + ",\t" + 
 		//				motorLeft1.getSensorCollection().getQuadratureVelocity() + ",\t"  + (int)((currentT - lastT) * 1000 + 5) + "},\t" +
@@ -473,11 +480,7 @@ public class DriveTrain extends Subsystem {
 		/* clear line cache */
 		sb.setLength(0);
 	}
-
-	public boolean areBothFrontSensorsTripped() {
-		return (leftFrontCubeSensor.get() && RightFrontCubeSensor.get());
-	}
-
+	
 	public void MPInit() {
 		mPLeft.startMotionProfile();
 		mPRIGHT.startMotionProfile();

@@ -1,55 +1,152 @@
 package org.usfirst.frc.team3574.commands.arm;
 
+import org.usfirst.frc.team3574.commands.util.L;
+import org.usfirst.frc.team3574.enums.BrakePosition;
 import org.usfirst.frc.team3574.robot.Robot;
+import org.usfirst.frc.team3574.subsystems.Arm;
+import org.usfirst.frc.team3574.subsystems.Slide;
+import org.usfirst.frc.team3574.utilities.ISpeedSettings;
+import org.usfirst.frc.team3574.utilities.SpeedSettingsWithCube;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
 public class SetArmPosition extends Command {
+	Timer time = new Timer();
+	private boolean log = false;
+	private double enc = 0;
 
-	private int _cobraPosition; 
-	
-    /**
-     * Command to move the Arm to different locations
-     * 
-     * @param cobraPosition Denotes which arm position you want to go to. Pull your number from the arm subsystem (e.g. Robot.arm.AggressiveCobra)
-     */
-	public SetArmPosition(int cobraPosition) {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+	ISpeedSettings _ISpeedSetting;
+
+	private double _tickTarget;
+	private double _targetPositionInDegrees;
+	public double error;
+	private double allowableError = 2 * Arm.TICKS_PER_DEGREE;
+	private double slowPoint = 7 * Arm.TICKS_PER_DEGREE;
+
+	private double _timeout;
+
+	private double motorStop = 0.0;
+
+	private boolean isFinished = false;
+
+	/**
+	 * Command to move the Arm to different locations
+	 * 
+	 * @param degreesTarget Denotes . Pull your number from the arm subsystem (e.g. Robot.arm.AggressiveCobra)
+	 */
+	public SetArmPosition(double degreesTarget, ISpeedSettings ISpeedSetting) {
 		requires(Robot.arm);
-		int g = Robot.arm.AggressiveCobra;
-    	_cobraPosition = cobraPosition;
-    }
+		_targetPositionInDegrees = degreesTarget;
+		_ISpeedSetting = ISpeedSetting;
+		_timeout = 20;
+	}
 
-    // Called just before this Command runs the first time
-    protected void initialize() {
-    	System.out.println("SetCobraPosition Initialized");
-    	Robot.arm.putTheArmSomewhere(_cobraPosition);
-    }
+	public SetArmPosition(double degreesTarget, ISpeedSettings ISpeedSetting, double timeout) {
+		requires(Robot.arm);
+		_targetPositionInDegrees = degreesTarget;
+		_ISpeedSetting = ISpeedSetting;
+		_timeout = timeout;
+	}
+	
+	// Called just before this Command runs the first time
+	protected void initialize() {
+		L.ogInit(this);
 
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    	System.out.println("bleep boop COBRA STRIKKKKEEEEE");
-    }
+		time.reset();
+		time.start();
 
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-    	System.out.println("Cobra done");
-        return true;
-    }
+		Robot.arm.setSpeed(_ISpeedSetting.brakeSpeed);
+		Robot.arm.setBrakePosition(BrakePosition.OPEN);
+		_tickTarget = Arm.ARM_MOTOR_ZERO_POINT - (_targetPositionInDegrees * Arm.TICKS_PER_DEGREE);
+		isFinished = false;
+	}
 
-    // Called once after isFinished returns true
-    protected void end() {
-    	System.out.println("now its really done. cobra movement completed at " + timeSinceInitialized());
-    	
-    }
+	// Called repeatedly when this Command is scheduled to run
+	protected void execute() {
+//		if(Robot.arm.getEncPos() == enc) { 
+//			log = false;
+//		} else {
+//			log = true;
+//			enc = Robot.arm.getEncPos();
+//		}
+//		if(log) { 
+		System.out.println("Tick Target " + _tickTarget + " -- Encoder Value " + Robot.arm.getEncPos() + " ---- Time: " + time.get()); 
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    	System.out.println("cobra has been interrupted...");
-    }
+		error = Robot.arm.getEncPos() - _tickTarget;
+
+		if(Math.abs(error) < allowableError) {
+			isFinished = true;
+			System.out.println("isFinished = true. error = " + error);
+		} 
+		else if(Math.abs(error) < slowPoint) {
+			checkDirection(1);
+		} 
+		else {        	
+			checkDirection(2);
+		}
+	}
+
+	double xSpeed;
+	boolean DriveUp;
+	private void checkDirection(int step) { 
+		if(error > 0) {
+			DriveUp = true;
+		}
+		else {
+			DriveUp = false;
+		}
+
+		if(step == 1) {  //Going to Slow Speed
+			if (DriveUp) {
+				if(log)System.out.println("Running Slowed Speed UP");
+				xSpeed = _ISpeedSetting.slowedSpeed;
+			}
+			else {
+				if(log)System.out.println("Running Slowed Speed DOWN");
+				xSpeed = _ISpeedSetting.slowedSpeedDown;
+			}
+		}
+		else {
+			if (DriveUp) {
+				if(log)System.out.println("Running Max Speed UP");
+				xSpeed = _ISpeedSetting.maxSpeed;
+			}
+			else {
+				if(log)System.out.println("Running Max Speed DOWN");
+				xSpeed = _ISpeedSetting.maxSpeedDown;
+			}
+
+		}
+
+		Robot.arm.setSpeed(xSpeed);
+	}
+
+	// Make this return true when this Command no longer needs to run execute()
+	protected boolean isFinished() {
+		if (this.timeSinceInitialized() >= _timeout) {
+			return true;
+		}
+		return isFinished;
+	}
+
+	// Called once after isFinished returns true
+	protected void end() {
+		L.ogEnd(this);
+
+		System.out.println("Hit Target");
+		Robot.arm.setBrakePosition(BrakePosition.CLOSED);
+		Robot.arm.setSpeed(motorStop);
+	}
+
+	// Called when another command which requires one or more of the same
+	// subsystems is scheduled to run
+	protected void interrupted() {
+		System.out.println("SetArmPosition Interrupted");
+		Robot.arm.setBrakePosition(BrakePosition.CLOSED);
+		Robot.arm.setSpeed(motorStop);
+	}
 }

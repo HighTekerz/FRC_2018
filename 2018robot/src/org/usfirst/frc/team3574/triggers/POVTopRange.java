@@ -11,9 +11,9 @@ public class POVTopRange extends Button {
 	GenericHID m_joystick;
 	int m_POV;
 
-	public POVTopRange(GenericHID joystick, int POV) {
+	public POVTopRange(GenericHID joystick, int pov) {
        m_joystick = joystick;
-       m_POV = POV;
+       m_POV = pov;
 	}
 	
     public boolean get() {

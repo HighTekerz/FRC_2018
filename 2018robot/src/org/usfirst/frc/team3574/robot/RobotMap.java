@@ -16,8 +16,8 @@ package org.usfirst.frc.team3574.robot;
 public final class RobotMap {
 	
 		//Solenoids
-	public static int ShifterSolenoid = 0;
-	public static int ShifterSolenoid2 = 1;
+	public static int ShifterSolenoid0 = 0;
+	public static int ShifterSolenoid1 = 1;
 	public static int ClawSolenoid = 2;
 	public static int WristSolenoid = 3;
 	public static int BrakeSolenoid = 4;
@@ -38,15 +38,10 @@ public final class RobotMap {
 	
 		//Sensors\
 	
-	public static int SlideLimitSwitchTop = 1;
-	public static int SlideLimitSwitchBottom = 0;
-//	public static int ToF = 0;
-	public static int IRR1 = 3;
-	public static int IRR2 = 2;
-//	public static int Sonic1 = 3;
-//	public static int Sonic2 = 4;
-//	public static int ColorSensor = 5;
-//	public static int ClawLimitSwitch1 = 6;
-//	public static int ClawLimitSwitch2 = 7;
+	public static int FloorCubeSensorLeft = 0;
+	public static int FloorCubeSensorRight = 1;
+	public static int ClawCubeSensorLeft = 2;
+	public static int ClawCubeSensorRight = 3;
+	public static int ArmLimitSwitch = 4;
 	
 }

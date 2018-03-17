@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3574.commands.driveTrain;
 
+import org.usfirst.frc.team3574.enums.ShifterPosition;
 import org.usfirst.frc.team3574.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -9,34 +10,39 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class ShiftGear extends Command {
 
-	int _lowOrHigh;
+	ShifterPosition _shifterPosition;
 	
-    public ShiftGear(int lowOrHigh) {
+    public ShiftGear(ShifterPosition ShifterPosition) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	_lowOrHigh = lowOrHigh;
+    	_shifterPosition = ShifterPosition;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.driveTrain.ShiftGear(_lowOrHigh);
+    	System.out.println("ShiftGear Initialized");
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	System.out.println("ShiftGear executes. going to: " + _shifterPosition);
+    	Robot.driveTrain.ShiftGear(_shifterPosition);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+    	System.out.println("ShiftGear IsFinished");
+    	return true;
     }
 
     // Called once after isFinished returns true
     protected void end() {
+    	System.out.println("ShiftGear ends. Time Since Initialized" + timeSinceInitialized());
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	System.out.println("ShiftGear Interrupted");
     }
 }

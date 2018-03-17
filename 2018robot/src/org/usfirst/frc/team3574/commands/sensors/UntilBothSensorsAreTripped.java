@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3574.commands.sensors;
 
+import org.usfirst.frc.team3574.commands.util.L;
 import org.usfirst.frc.team3574.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -10,12 +11,11 @@ import edu.wpi.first.wpilibj.command.Command;
 public class UntilBothSensorsAreTripped extends Command {
 
     public UntilBothSensorsAreTripped() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	System.out.println(">>>>UntilBothSensorsAreTripped Initializes");
     }
 
     // Called repeatedly when this Command is scheduled to run

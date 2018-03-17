@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3574.subsystems;
 
+import org.usfirst.frc.team3574.enums.ClawPosition;
 import org.usfirst.frc.team3574.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -16,7 +17,7 @@ public class Claw extends Subsystem {
 
 	Solenoid clawSolenoid = new Solenoid(RobotMap.ClawSolenoid);
 
-	DigitalInput scaleDetector = new DigitalInput(4);
+	
 
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
@@ -25,17 +26,14 @@ public class Claw extends Subsystem {
 
 	public void setClawPosition(ClawPosition position) {
 		switch(position) {
-		case OPEN:
-			clawSolenoid.set(true);
-			break;
-		case CLOSED:
+		case GRIP:
 			clawSolenoid.set(false);
+			break;
+		case RELEASE:
+			clawSolenoid.set(true);
 			break;
 		}
 		
-	}
-	public boolean isScaleDetectorTripped() {
-		return scaleDetector.get();
 	}
 }
 

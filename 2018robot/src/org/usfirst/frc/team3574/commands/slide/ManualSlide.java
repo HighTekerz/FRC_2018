@@ -24,11 +24,6 @@ public class ManualSlide extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	speed = Robot.OperatorInput.CoPilotRightStickY();
-    	
-    	
-    	
-    	Robot.slide.setSlideSpeedPercent(speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()

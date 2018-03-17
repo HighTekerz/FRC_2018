@@ -30,10 +30,10 @@ public class AutonomousSelectorForSwitch extends Command {
     protected void execute() {
     	// Testing if command functions correctly
     	if (ourSwitchSide.contains("Left")) {
-    			_command = new AutoPutCubeInSwitch(-1);
+    			_command = new AutoPutCubeInSwitchIsaac(-1);
     	}
     	else{
-			_command = new AutoPutCubeInSwitch(1);
+			_command = new AutoPutCubeInSwitchIsaac(1);
     	}
     	_command.start();
     	_isFinished = true;

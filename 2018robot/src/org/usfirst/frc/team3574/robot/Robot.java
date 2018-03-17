@@ -7,23 +7,26 @@
 
 package org.usfirst.frc.team3574.robot;
 
-import org.usfirst.frc.team3574.autonomous.AutoPutCubeInSwitch;
+import org.usfirst.frc.team3574.autonomous.AutoPutCubeInSwitchIsaac;
 import org.usfirst.frc.team3574.autonomous.AutonomousSelectorForScale;
 import org.usfirst.frc.team3574.autonomous.AutonomousSelectorForSwitch;
 import org.usfirst.frc.team3574.autonomous.DriveForwardAutonomous;
+import org.usfirst.frc.team3574.commands.arm.CalibrateArmEnc;
+import org.usfirst.frc.team3574.commands.claw.SetClawPosition;
 import org.usfirst.frc.team3574.commands.driveTrain.DoNothing;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveByInches;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveWithJoy;
 import org.usfirst.frc.team3574.commands.groups.autopidtestone;
-import org.usfirst.frc.team3574.commands.slideDEPRICATED.ResetEncIfAtLowestPoint;
-import org.usfirst.frc.team3574.commands.slideDEPRICATED.ResetSlideEnc;
-import org.usfirst.frc.team3574.commands.slideDEPRICATED.UpdateSlideEncoder;
+import org.usfirst.frc.team3574.commands.slide.ResetEncIfAtLowestPoint;
+import org.usfirst.frc.team3574.commands.slide.ResetSlideEnc;
 import org.usfirst.frc.team3574.commands.util.RumbleASide;
+import org.usfirst.frc.team3574.enums.ClawPosition;
 import org.usfirst.frc.team3574.subsystems.Arm;
 import org.usfirst.frc.team3574.subsystems.Claw;
 import org.usfirst.frc.team3574.subsystems.DriveTrain;
 import org.usfirst.frc.team3574.subsystems.ForkLifter;
 import org.usfirst.frc.team3574.subsystems.Slide;
+import org.usfirst.frc.team3574.subsystems.UtilitySubsystem;
 import org.usfirst.frc.team3574.subsystems.SensorTest;
 import org.usfirst.frc.team3574.subsystems.JackWings;
 
@@ -53,7 +56,7 @@ public class Robot extends TimedRobot {
 	public static final Claw        claw = new Claw();
 	public static final Arm 	    arm = new Arm();
 	public static final ForkLifter  forkLifter = new ForkLifter();
-	
+	public static final UtilitySubsystem utilitySubsystem = new UtilitySubsystem();
  	Command m_autonomousCommand;
 	public static OI OperatorInput;
 	SendableChooser<Command> autoChooserForLosers = new SendableChooser<>();
@@ -67,6 +70,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
+		new SetClawPosition(ClawPosition.RELEASE);
 		OperatorInput = new OI();
 		autoChooserForLosers.addDefault("Do Nothing", new DoNothing());
 		autoChooserForLosers.addObject("Drive Across Line", new DriveForwardAutonomous());
@@ -78,8 +82,19 @@ public class Robot extends TimedRobot {
 		
 		SmartDashboard.putData(Scheduler.getInstance());
 	
+		
+		SmartDashboard.putData(new ResetSlideEnc());
+		SmartDashboard.putData(new CalibrateArmEnc());
+		
+//		SmartDashboard.putData(new DriveByPID(20000));
+//		
+//		SmartDashboard.putData(new PutCubeInSwitch());
+//		SmartDashboard.putData(new MakeMotionProflileGo());
+
+		
 		new ResetSlideEnc().start();
 	
+    	Robot.slide.setCurrent(0.0);
 	}
 
 	/**
@@ -166,12 +181,10 @@ public class Robot extends TimedRobot {
 	@Override
 	public void testPeriodic() {
 		LiveWindow.run();
-		this.runAlways();
 	}
 	
 	public void runAlways() {
 		new ResetEncIfAtLowestPoint().start();
-		new UpdateSlideEncoder().start();
 		
 		this.log();
 	}
@@ -190,5 +203,7 @@ public class Robot extends TimedRobot {
 		Robot.driveTrain.log();
 		Robot.sensorTest.log();
 		Robot.slide.log();
+		Robot.arm.log();
+		Robot.utilitySubsystem.log();
 	}
 }

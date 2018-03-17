@@ -1,8 +1,5 @@
 package org.usfirst.frc.team3574.subsystems;
 
-import org.usfirst.frc.team3574.commands.slideDEPRICATED.HoldPosition;
-import org.usfirst.frc.team3574.commands.slideDEPRICATED.ManualSlide;
-import org.usfirst.frc.team3574.commands.slideDEPRICATED.ResetEncIfAtLowestPoint;
 import org.usfirst.frc.team3574.robot.Robot;
 import org.usfirst.frc.team3574.robot.RobotMap;
 
@@ -28,20 +25,24 @@ public class Slide extends Subsystem {
 
 	public TalonSRX slideSim = new TalonSRX(RobotMap.SlideMotor); 
 
-	public static int scaleLow = 54;
-	public static int scaleMed = 64;
-	public static int scaleHigh = 75;
-	public static int scaleHighWithCube = 85;
-	public static int switchHeight = 5347;
+	public static double SLIDE_ZERO_POINT;
+	
+	public static int SLIDE_BOTTOM = 0;
+	public static int SLIDE_HIGHER_INCREMENT = 4;
+	public static int SLIDE_HIGHER_INCREMENT_SCALE = 11;
+	public static int SLIDE_CARRY = 0;
+	public static int SLIDE_SWITCH_DELIVERY = 6;
+	public static int SLIDE_SCALE_LOW = 6;
+	public static int SLIDE_START = 0;
 	
 	public static final double TicksPerRevolution = 4096;
 	public static final double InchesPerRevolution = 5.875;
 	public static final double TicksPerInch = (TicksPerRevolution / InchesPerRevolution); //697
-//
+
 	private static final int SPEED_TO_TOP = 87;
 	private static final int TICKS_TO_TOP = 16732;
 	private static final int TICKS_PER_REV = 4096;   //or 1024 or 4096
-//	
+	
 //	private static final double P = 0.05;//((SPEED_TO_TOP * TICKS_PER_REV) / TICKS_TO_TOP) * 2; //5.3192087
 //	private static final double I = 0.000000001;
 //	private static final double D = 0.0;
@@ -137,7 +138,6 @@ public class Slide extends Subsystem {
 	
 	@Override
 	protected void initDefaultCommand() {
-//		setDefaultCommand(new HoldPosition());
 	}
 
 	public boolean getTopStopSwitchIsPressed() {
@@ -150,19 +150,18 @@ public class Slide extends Subsystem {
 
 	public int getEncPos() {
 		return slideSim.getSensorCollection().getPulseWidthPosition();
-//		return slideSim.getSensorCollection().getAnalogInRaw();
 	}
 	
 	public void resetEnc() {
-		slideSim.getSensorCollection().setPulseWidthPosition(0, 100);;
+		SLIDE_ZERO_POINT = Robot.slide.getEncPos();
 	}
 
 	public void log () {
 		SmartDashboard.putNumber("Slide Encoder", getEncPos());
 		SmartDashboard.putBoolean("Top Slide Limit Switch", getTopStopSwitchIsPressed());
 		SmartDashboard.putBoolean("Bottom Slide Limit Switch", getBottomStopSwitchIsPressed());
-	
 		
+		SmartDashboard.putNumber("Slide Zero Point (Not Really 0)", SLIDE_ZERO_POINT);
 		
 //		SmartDashboard.putNumber("ACTUAL ClosedLoopError", Math.round(1 * TicksPerInch));
 //		SmartDashboard.putNumber("ACTUAL ClosedLoopError INTEGER", (int)(Math.round(1 * TicksPerInch)));
