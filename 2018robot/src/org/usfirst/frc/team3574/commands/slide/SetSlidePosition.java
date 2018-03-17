@@ -17,12 +17,6 @@ public class SetSlidePosition extends Command {
 	private double allowableError = 88;
 	private double slowPoint = 2096;
 	
-	private double maxSpeed = -9.0;
-	private double slowedSpeed = -1.25;
-	private double downmaxSpeed = .25;
-	private double downslowedSpeed = -.1;
-	private double brakeSpeed = -0.5;
-	
 	private boolean isFinished;
 	
     public SetSlidePosition(double setPositionInInches) {
@@ -56,7 +50,7 @@ public class SetSlidePosition extends Command {
     	error = Robot.slide.getEncPos() - _targetPosition;
     	
     	if(Math.abs(error) < allowableError) {
-    		Robot.slide.setCurrent(brakeSpeed);
+    		Robot.slide.setCurrent(Robot.slide.brakeSpeed);
     		System.out.println("Running At: Brake Speed. error: " + error);
     		isFinished = true;
     	} 
@@ -83,26 +77,27 @@ public class SetSlidePosition extends Command {
         if(step == 1) {  //Going to Slow Speed
         	if (DriveUp) {
         		System.out.println("Running Slowed Speed UP");
-        		xSpeed = slowedSpeed;
+        		xSpeed = Robot.slide.slowedSpeed;
         	}
         	else {
         		System.out.println("Running Slowed Speed DOWN");
-        		xSpeed = downslowedSpeed;
+        		xSpeed = Robot.slide.downslowedSpeed;
         	}
         }
         else {
         	if (DriveUp) {
         		System.out.println("Running Max Speed UP");
-        		xSpeed = maxSpeed;
+        		xSpeed = Robot.slide.maxSpeed;
         	}
         	else {
         		System.out.println("Running Max Speed DOWN");
-        		xSpeed = downmaxSpeed;
+        		xSpeed = Robot.slide.downmaxSpeed;
         	}
        	
         }
 
-    	Robot.slide.setCurrent(xSpeed);
+        Robot.slide.setSlideSpeedPercent(xSpeed);
+//    	Robot.slide.setCurrent(xSpeed);
     }
     
     

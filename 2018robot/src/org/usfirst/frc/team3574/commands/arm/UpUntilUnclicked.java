@@ -3,7 +3,7 @@ package org.usfirst.frc.team3574.commands.arm;
 import org.usfirst.frc.team3574.commands.util.L;
 import org.usfirst.frc.team3574.enums.BrakePosition;
 import org.usfirst.frc.team3574.robot.Robot;
-import org.usfirst.frc.team3574.utilities.ISpeedSettings;
+import org.usfirst.frc.team3574.utilities.IArmSpeedSettings;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -12,12 +12,12 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class UpUntilUnclicked extends Command {
 	
-	ISpeedSettings _iSpeedSetting;
+	IArmSpeedSettings _iSpeedSetting;
 //	private double timeout = 2;
 	private double _timeout;
 	
 	
-	public UpUntilUnclicked(ISpeedSettings iSpeedSetting, double timeout) {
+	public UpUntilUnclicked(IArmSpeedSettings iSpeedSetting, double timeout) {
 		requires(Robot.arm); //added Friday before first districts
 		_iSpeedSetting = iSpeedSetting;
 		_timeout = timeout;

@@ -25,11 +25,17 @@ public class Slide extends Subsystem {
 
 	public TalonSRX slideSim = new TalonSRX(RobotMap.SlideMotor); 
 
+	public double maxSpeed = -.75; //TODO: This was -9.0
+	public double slowedSpeed = -.25;
+	public double brakeSpeed = -0.2;
+	public double downmaxSpeed = .025;
+	public double downslowedSpeed = -.01;
+
 	public static double SLIDE_ZERO_POINT;
 	
 	public static int SLIDE_BOTTOM = 0;
 	public static int SLIDE_HIGHER_INCREMENT = 4;
-	public static int SLIDE_HIGHER_INCREMENT_SCALE = 11;
+	public static int SLIDE_HIGHER_INCREMENT_SCALE = 6;
 	public static int SLIDE_CARRY = 0;
 	public static int SLIDE_SWITCH_DELIVERY = 6;
 	public static int SLIDE_SCALE_LOW = 6;

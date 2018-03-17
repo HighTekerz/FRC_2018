@@ -5,8 +5,8 @@ import org.usfirst.frc.team3574.enums.BrakePosition;
 import org.usfirst.frc.team3574.robot.Robot;
 import org.usfirst.frc.team3574.subsystems.Arm;
 import org.usfirst.frc.team3574.subsystems.Slide;
-import org.usfirst.frc.team3574.utilities.ISpeedSettings;
-import org.usfirst.frc.team3574.utilities.SpeedSettingsWithCube;
+import org.usfirst.frc.team3574.utilities.IArmSpeedSettings;
+import org.usfirst.frc.team3574.utilities.ArmSpeedSettingsWithCube;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
@@ -19,7 +19,7 @@ public class SetArmPosition extends Command {
 	private boolean log = false;
 	private double enc = 0;
 
-	ISpeedSettings _ISpeedSetting;
+	IArmSpeedSettings _ISpeedSetting;
 
 	private double _tickTarget;
 	private double _targetPositionInDegrees;
@@ -38,14 +38,14 @@ public class SetArmPosition extends Command {
 	 * 
 	 * @param degreesTarget Denotes . Pull your number from the arm subsystem (e.g. Robot.arm.AggressiveCobra)
 	 */
-	public SetArmPosition(double degreesTarget, ISpeedSettings ISpeedSetting) {
+	public SetArmPosition(double degreesTarget, IArmSpeedSettings ISpeedSetting) {
 		requires(Robot.arm);
 		_targetPositionInDegrees = degreesTarget;
 		_ISpeedSetting = ISpeedSetting;
 		_timeout = 20;
 	}
 
-	public SetArmPosition(double degreesTarget, ISpeedSettings ISpeedSetting, double timeout) {
+	public SetArmPosition(double degreesTarget, IArmSpeedSettings ISpeedSetting, double timeout) {
 		requires(Robot.arm);
 		_targetPositionInDegrees = degreesTarget;
 		_ISpeedSetting = ISpeedSetting;

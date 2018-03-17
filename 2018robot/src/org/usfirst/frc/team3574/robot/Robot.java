@@ -70,13 +70,14 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
-		new SetClawPosition(ClawPosition.RELEASE);
 		OperatorInput = new OI();
 		autoChooserForLosers.addDefault("Do Nothing", new DoNothing());
 		autoChooserForLosers.addObject("Drive Across Line", new DriveForwardAutonomous());
 		autoChooserForLosers.addObject("Cube in Switch from Middle", new AutonomousSelectorForSwitch());
 		autoChooserForLosers.addObject("Cube in Scale from Left", new AutonomousSelectorForScale(true));
 		autoChooserForLosers.addObject("Cube in Scale from Right", new AutonomousSelectorForScale(false));
+		
+		SmartDashboard.putData("Scheduler", Scheduler.getInstance());
 		
 		SmartDashboard.putData("Auto mode", autoChooserForLosers);
 		

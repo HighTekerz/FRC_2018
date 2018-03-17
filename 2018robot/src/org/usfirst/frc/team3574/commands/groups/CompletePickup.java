@@ -9,7 +9,7 @@ import org.usfirst.frc.team3574.enums.ClawPosition;
 import org.usfirst.frc.team3574.robot.Robot;
 import org.usfirst.frc.team3574.subsystems.Arm;
 import org.usfirst.frc.team3574.subsystems.Slide;
-import org.usfirst.frc.team3574.utilities.SpeedSettingsWithCube;
+import org.usfirst.frc.team3574.utilities.ArmSpeedSettingsWithCube;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -23,6 +23,6 @@ public class CompletePickup extends CommandGroup {
 		addSequential(new DoNothing(.2));
 		addSequential(new DriveByInches(-Robot.driveTrain.backupDistancePickup, 0.4));
 		addSequential(new SetSlidePosition(Slide.SLIDE_CARRY));
-		addSequential(new SetArmPosition(Arm.CARRY_ANGLE, new SpeedSettingsWithCube()));
+		addSequential(new SetArmPosition(Arm.CARRY_ANGLE, new ArmSpeedSettingsWithCube()));
     }
 }

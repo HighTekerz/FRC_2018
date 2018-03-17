@@ -1,6 +1,6 @@
 package org.usfirst.frc.team3574.utilities;
 
-public abstract class ISpeedSettings {
+public abstract class IArmSpeedSettings {
 	public double maxSpeed;
 	public double slowedSpeed;
 	public double brakeSpeed;

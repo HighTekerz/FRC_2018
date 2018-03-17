@@ -9,6 +9,9 @@
 package org.usfirst.frc.team3574.robot;
 
 
+import org.usfirst.frc.team3574.commands.arm.HoldArmPosition;
+import org.usfirst.frc.team3574.commands.arm.ManualArm;
+import org.usfirst.frc.team3574.commands.arm.OpenBrake;
 import org.usfirst.frc.team3574.commands.arm.SetArmPosition;
 import org.usfirst.frc.team3574.commands.arm.SetWristPosition;
 import org.usfirst.frc.team3574.commands.claw.SetClawPosition;
@@ -17,11 +20,14 @@ import org.usfirst.frc.team3574.commands.driveTrain.ShiftGear;
 import org.usfirst.frc.team3574.commands.groups.CalibratePickup;
 import org.usfirst.frc.team3574.commands.groups.DropCubeInScale;
 import org.usfirst.frc.team3574.commands.groups.DropCubeInSwitch;
+import org.usfirst.frc.team3574.commands.groups.MoveToStartingPosition;
 import org.usfirst.frc.team3574.commands.groups.PickupBlind;
 import org.usfirst.frc.team3574.commands.groups.PrepareForScaleDelivery;
 import org.usfirst.frc.team3574.commands.groups.StartPickup;
 import org.usfirst.frc.team3574.commands.groups.StartPickupFixed;
 import org.usfirst.frc.team3574.commands.groups.PrepareForSwitchDelivery;
+import org.usfirst.frc.team3574.commands.slide.HoldSlidePosition;
+import org.usfirst.frc.team3574.commands.slide.ManualSlide;
 import org.usfirst.frc.team3574.commands.slide.SetSlidePosition;
 import org.usfirst.frc.team3574.enums.ClawPosition;
 import org.usfirst.frc.team3574.enums.ShifterPosition;
@@ -34,7 +40,7 @@ import org.usfirst.frc.team3574.triggers.POVRight;
 import org.usfirst.frc.team3574.triggers.POVTopRange;
 import org.usfirst.frc.team3574.triggers.POVUp;
 import org.usfirst.frc.team3574.triggers.TriggerButton;
-import org.usfirst.frc.team3574.utilities.SpeedSettingsWithCube;
+import org.usfirst.frc.team3574.utilities.ArmSpeedSettingsWithCube;
 
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.XboxController; 
@@ -99,6 +105,9 @@ public class OI {
 		Button dropOffInScale = new TriggerButton(coPilotxbox360Controller, RIGHT_TRIGGER);
 		dropOffInScale.whenPressed(new DropCubeInScale());
 		
+		Button startingPosition = new JoystickButton(coPilotxbox360Controller, START);
+		startingPosition.whenPressed(new MoveToStartingPosition());
+		
 		Button angleWrist = new POVDown(coPilotxbox360Controller, pov);
 		angleWrist.whenPressed(new SetWristPosition(WristPosition.ANGLED));
 		
@@ -111,11 +120,14 @@ public class OI {
 		Button closeClaw = new POVRight(coPilotxbox360Controller, pov);
 		closeClaw.whenPressed(new SetClawPosition(ClawPosition.GRIP));
 		
-		
-		
 		Button manualArm = new JoystickButton(coPilotxbox360Controller, A_BUTTON);
-//		manualArm.whenPressed(new Open);
-//		manualArm.whileHeld();
+		manualArm.whileHeld(new ManualArm());
+		manualArm.whenPressed(new HoldArmPosition());
+		
+		Button manualSlide = new JoystickButton(coPilotxbox360Controller, B_BUTTON);
+		manualSlide.whileHeld(new ManualSlide());
+		manualSlide.whenReleased(new HoldSlidePosition());
+
 //		Button downUpTest12 = new JoystickButton(driverXbox360Controller, X_BUTTON);
 //		downUpTest12.whenPressed(new SetSlidePosition(12));
 //
@@ -159,7 +171,7 @@ public class OI {
 //		dropOffCube.whenPressed(new DropCubeInSwitch());
 	}
 
-	public double getLeftStickY ()
+	public double getLeftStickY()
 	{
 		return driverXbox360Controller.getY(Hand.kLeft);
 	}
@@ -202,9 +214,12 @@ public class OI {
 
 
 	public double CoPilotRightStickY() {
-		return coPilotxbox360Controller.getRawAxis(5);
+		return coPilotxbox360Controller.getX(Hand.kLeft);
 	}
 	
+	public double CoPilotLeftStickY() {
+		return coPilotxbox360Controller.getY(Hand.kLeft);
+	}
 	
 	
 	

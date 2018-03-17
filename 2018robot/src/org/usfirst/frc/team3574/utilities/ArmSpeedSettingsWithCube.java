@@ -1,8 +1,8 @@
 package org.usfirst.frc.team3574.utilities;
 
-public class SpeedSettingsWithCube extends ISpeedSettings {{
+public class ArmSpeedSettingsWithCube extends IArmSpeedSettings {{
 	maxSpeed = .45;
-	slowedSpeed = .35;
+	slowedSpeed = .37;
 	brakeSpeed = 0.2;
 	slowedSpeedDown = 0.03;
 	maxSpeedDown = -0.02;

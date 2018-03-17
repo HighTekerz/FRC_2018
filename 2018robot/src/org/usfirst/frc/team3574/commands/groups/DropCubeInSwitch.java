@@ -13,8 +13,8 @@ import org.usfirst.frc.team3574.enums.WristPosition;
 import org.usfirst.frc.team3574.robot.Robot;
 import org.usfirst.frc.team3574.subsystems.Arm;
 import org.usfirst.frc.team3574.subsystems.Slide;
-import org.usfirst.frc.team3574.utilities.SpeedSettingsWithCube;
-import org.usfirst.frc.team3574.utilities.SpeedSettingsWithoutCube;
+import org.usfirst.frc.team3574.utilities.ArmSpeedSettingsWithCube;
+import org.usfirst.frc.team3574.utilities.ArmSpeedSettingsWithoutCube;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -36,7 +36,7 @@ public class DropCubeInSwitch extends CommandGroup {
 //    	Backup 3 inches
     	addSequential(new DriveByInches(Robot.driveTrain.backupDistanceSwitch, 0.4));
 //    	Move SHOULDER to carry angle
-    	addSequential(new SetArmPosition(Arm.CARRY_ANGLE, new SpeedSettingsWithoutCube()));
+    	addSequential(new SetArmPosition(Arm.CARRY_ANGLE, new ArmSpeedSettingsWithoutCube()));
 //    	Move SLIDE to Carry position
     	addSequential(new SetSlidePosition(Slide.SLIDE_CARRY));
 //		Set preparation variable back to 0

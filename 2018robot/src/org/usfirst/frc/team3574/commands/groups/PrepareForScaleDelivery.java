@@ -6,8 +6,8 @@ import org.usfirst.frc.team3574.commands.slide.MoveSlideBasedOnTarget;
 import org.usfirst.frc.team3574.commands.util.ResetPreparationInt;
 import org.usfirst.frc.team3574.enums.WristPosition;
 import org.usfirst.frc.team3574.subsystems.Arm;
-import org.usfirst.frc.team3574.utilities.SpeedSettingsWithCube;
-import org.usfirst.frc.team3574.utilities.SpeedSettingsWithoutCube;
+import org.usfirst.frc.team3574.utilities.ArmSpeedSettingsWithCube;
+import org.usfirst.frc.team3574.utilities.ArmSpeedSettingsWithoutCube;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -20,7 +20,7 @@ public class PrepareForScaleDelivery extends CommandGroup {
 //	Tilt WRIST to straight position
     	addSequential(new SetWristPosition(WristPosition.ANGLED));
 //	Move SHOULDER to switch deliver angle
-    	addSequential(new SetArmPosition(Arm.SCALE_DELIVERY, new SpeedSettingsWithCube()));
+    	addSequential(new SetArmPosition(Arm.SCALE_DELIVERY, new ArmSpeedSettingsWithCube()));
     	//    	If button pressed and slide at pos 1 already, move to pos 2
     	//    	If button pressed and slide at pos 2 already, move to pos 3
 //	Move SLIDE to switch position 1

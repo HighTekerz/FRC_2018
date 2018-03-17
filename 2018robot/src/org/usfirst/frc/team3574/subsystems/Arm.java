@@ -33,10 +33,10 @@ public class Arm extends Subsystem {
 	
 	public static final double TICKS_PER_DEGREE = TICKS_PER_REVOLUTION  / 360;
 	
-	public static final int STARTING_POSITION = 94;
-	public static final int CARRY_ANGLE = 80;
+	public static final int STARTING_POSITION = 93;
+	public static final int CARRY_ANGLE = 82;
 	public static final int SCALE_DELIVERY = 90; //degrees
-	public static final int SWITCH_DELIVERY = 19; //degrees
+	public static final int SWITCH_DELIVERY = 21; //degrees
 	public static final int CUBE_PICKUP = 0; //degrees
 	
 	public final int timeoutMs = 50;

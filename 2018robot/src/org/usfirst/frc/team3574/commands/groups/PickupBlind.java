@@ -13,7 +13,7 @@ import org.usfirst.frc.team3574.enums.ClawPosition;
 import org.usfirst.frc.team3574.enums.WristPosition;
 import org.usfirst.frc.team3574.subsystems.Arm;
 import org.usfirst.frc.team3574.subsystems.Slide;
-import org.usfirst.frc.team3574.utilities.SpeedSettingsWithoutCube;
+import org.usfirst.frc.team3574.utilities.ArmSpeedSettingsWithoutCube;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -26,9 +26,9 @@ public class PickupBlind extends CommandGroup {
 		addSequential(new SetClawPosition(ClawPosition.RELEASE));
 		addSequential(new SetWristPosition(WristPosition.ANGLED));
 		addSequential(new SetSlidePosition(Slide.SLIDE_BOTTOM));
-		addSequential(new DownUntilClicked(new SpeedSettingsWithoutCube(), 1, true));
-		addSequential(new UpUntilUnclicked(new SpeedSettingsWithoutCube(), 1));
-		addSequential(new DownUntilClicked(new SpeedSettingsWithoutCube(), 1, false));
+		addSequential(new DownUntilClicked(new ArmSpeedSettingsWithoutCube(), 1, true));
+		addSequential(new UpUntilUnclicked(new ArmSpeedSettingsWithoutCube(), 1));
+		addSequential(new DownUntilClicked(new ArmSpeedSettingsWithoutCube(), 1, false));
 		addSequential(new CalibrateArmEnc());
 		addSequential(new CompletePickup());
     }
