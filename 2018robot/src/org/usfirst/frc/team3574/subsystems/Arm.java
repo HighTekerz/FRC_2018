@@ -120,13 +120,12 @@ public class Arm extends Subsystem {
 		ArmMotor.set(ControlMode.PercentOutput, motorSpeed);
 	}
 	
-	@Deprecated
-	public double getEnc() {
-		return ArmMotor.getSensorCollection().getPulseWidthPosition();
-	}
-	
 	public void calibrateArmEncoder() {
 		ARM_MOTOR_ZERO_POINT = getEncPos();
+	}
+	
+	public void calibrateArmEncoderFromStarting() {
+		ARM_MOTOR_ZERO_POINT = getEncPos() + (STARTING_POSITION * TICKS_PER_DEGREE);
 	}
 	
 	public boolean getLimitSwitch() {

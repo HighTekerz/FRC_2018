@@ -24,7 +24,6 @@ import org.usfirst.frc.team3574.commands.groups.MoveToStartingPosition;
 import org.usfirst.frc.team3574.commands.groups.PickupBlind;
 import org.usfirst.frc.team3574.commands.groups.PrepareForScaleDelivery;
 import org.usfirst.frc.team3574.commands.groups.StartPickup;
-import org.usfirst.frc.team3574.commands.groups.StartPickupFixed;
 import org.usfirst.frc.team3574.commands.groups.PrepareForSwitchDelivery;
 import org.usfirst.frc.team3574.commands.slide.HoldSlidePosition;
 import org.usfirst.frc.team3574.commands.slide.ManualSlide;
@@ -122,7 +121,7 @@ public class OI {
 		
 		Button manualArm = new JoystickButton(coPilotxbox360Controller, A_BUTTON);
 		manualArm.whileHeld(new ManualArm());
-		manualArm.whenPressed(new HoldArmPosition());
+		manualArm.whenReleased(new HoldArmPosition());
 		
 		Button manualSlide = new JoystickButton(coPilotxbox360Controller, B_BUTTON);
 		manualSlide.whileHeld(new ManualSlide());

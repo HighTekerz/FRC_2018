@@ -10,22 +10,23 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class AutoPutCubeInSwitchIsaac extends CommandGroup {
+public class AutoPutCubeInSwitchStraighten extends CommandGroup {
 	
 	private int _inchesAwayFromAllianceWall = 7;
 	private double _movementSpeed = 0.4;
-	private int _inchesToSwitchSide = 110; //VERY rough estimate, fix later
-	private int _degreeToTurnTo = 32;
+	private double _inchesToSwitchSide = 105.1487; //VERY rough estimate, fix later
+	private double _degreeToTurnTo = 44.7076;
 	/**
 	 * 
 	 * @param leftOrRight send -1 for left, 1 for right
 	 */
-    public AutoPutCubeInSwitchIsaac(int leftOrRight) {
+    public AutoPutCubeInSwitchStraighten(int leftOrRight) {
 //    	addSequential(new DriveByInches(degreeToTurnTo, _movementSpeed)); //For Testing Purposes
     	addSequential(new DriveByInches(_inchesAwayFromAllianceWall, _movementSpeed, ShifterPosition.LOW_GEAR));
     	addSequential(new TurnToDegree(_degreeToTurnTo * leftOrRight, _movementSpeed));
     	addSequential(new DriveByInches(_inchesToSwitchSide, _movementSpeed));
     	addSequential(new TurnToDegree(_degreeToTurnTo * -leftOrRight, _movementSpeed));
-    	addSequential(new DropCubeInSwitch());
+    	addSequential(new DriveByInches(_inchesAwayFromAllianceWall, _movementSpeed));
+    	//PutCubeInSwitch
     }
 }

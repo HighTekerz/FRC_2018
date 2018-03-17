@@ -51,7 +51,8 @@ public class DriveTrain extends Subsystem {
 	MotionProfileRight mPLeft = new MotionProfileRight(motorLeft1);
 	StringBuilder _sb = new StringBuilder();
 
-	public double backupDistancePickup = -3;
+	public double backupDistancePickupStart = -1;
+	public double backupDistancePickupEnd = -3;
 	public double backupDistanceSwitch = -3;
 	public double backupDistanceScale = -12;
 	
@@ -200,7 +201,7 @@ public class DriveTrain extends Subsystem {
 		driveByArcade(percentThrottle, percentRotationOutput);
 	}
 
-	public double scalingSpeed (double joystickValue,double scalingCutoff) {
+	public double scalingSpeed (double joystickValue, double scalingCutoff) {
 		/**		TODO: Find better scaling system
 				Here's a simple algorithm to add sensitivity adjustment to your joystick:
 

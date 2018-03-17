@@ -7,11 +7,14 @@
 
 package org.usfirst.frc.team3574.robot;
 
-import org.usfirst.frc.team3574.autonomous.AutoPutCubeInSwitchIsaac;
+import org.usfirst.frc.team3574.autonomous.AutoPutCubeInSwitchAhead;
+import org.usfirst.frc.team3574.autonomous.AutoPutCubeInSwitchDiagonal;
+import org.usfirst.frc.team3574.autonomous.AutoPutCubeInSwitchStraighten;
 import org.usfirst.frc.team3574.autonomous.AutonomousSelectorForScale;
 import org.usfirst.frc.team3574.autonomous.AutonomousSelectorForSwitch;
 import org.usfirst.frc.team3574.autonomous.DriveForwardAutonomous;
 import org.usfirst.frc.team3574.commands.arm.CalibrateArmEnc;
+import org.usfirst.frc.team3574.commands.arm.CalibrateArmEncStartingPosition;
 import org.usfirst.frc.team3574.commands.claw.SetClawPosition;
 import org.usfirst.frc.team3574.commands.driveTrain.DoNothing;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveByInches;
@@ -71,11 +74,9 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		OperatorInput = new OI();
-		autoChooserForLosers.addDefault("Do Nothing", new DoNothing());
-		autoChooserForLosers.addObject("Drive Across Line", new DriveForwardAutonomous());
-		autoChooserForLosers.addObject("Cube in Switch from Middle", new AutonomousSelectorForSwitch());
-		autoChooserForLosers.addObject("Cube in Scale from Left", new AutonomousSelectorForScale(true));
-		autoChooserForLosers.addObject("Cube in Scale from Right", new AutonomousSelectorForScale(false));
+		autoChooserForLosers.addObject("Do Nothing", new DoNothing());
+		autoChooserForLosers.addDefault("Drive Across Line", new DriveForwardAutonomous());
+		autoChooserForLosers.addObject("Cube in switch from middle", new AutonomousSelectorForSwitch());
 		
 		SmartDashboard.putData("Scheduler", Scheduler.getInstance());
 		
@@ -126,7 +127,8 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		m_autonomousCommand = autoChooserForLosers.getSelected();
+    	new CalibrateArmEncStartingPosition().start();
+    	m_autonomousCommand = autoChooserForLosers.getSelected();
 		
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",

@@ -23,17 +23,17 @@ public class AutonomousSelectorForSwitch extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	_isFinished = false;
-    	ourSwitchSide = FieldFunctions.getOurSide(FieldElementToCheck.THEIRSWITCH);
+    	ourSwitchSide = FieldFunctions.getOurSide(FieldElementToCheck.OURSWITCH);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	// Testing if command functions correctly
     	if (ourSwitchSide.contains("Left")) {
-    			_command = new AutoPutCubeInSwitchIsaac(-1);
+    			_command = new AutoPutCubeInSwitchStraighten(-1);
     	}
     	else{
-			_command = new AutoPutCubeInSwitchIsaac(1);
+			_command = new AutoPutCubeInSwitchStraighten(1);
     	}
     	_command.start();
     	_isFinished = true;

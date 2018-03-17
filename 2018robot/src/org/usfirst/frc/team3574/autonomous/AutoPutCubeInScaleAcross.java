@@ -11,7 +11,6 @@ public class AutoPutCubeInScaleAcross extends CommandGroup {
 	
 	public double movementSpeed = 0.5;
 	
-	@Deprecated
 	/**
 	 *Autonomous command to place a cube in the scale plate on the other side of the field from the robot
 	 *

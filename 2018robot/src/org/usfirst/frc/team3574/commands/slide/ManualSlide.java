@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class ManualSlide extends Command {
-	double speed = 0.0;
 	
     public ManualSlide() {
         requires(Robot.slide);
@@ -23,7 +22,7 @@ public class ManualSlide extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.slide.setSlideSpeedPercent(Robot.OperatorInput.CoPilotLeftStickY());
+    	Robot.slide.setSlideSpeedPercent(Robot.driveTrain.scalingSpeed(Robot.OperatorInput.CoPilotLeftStickY(), 0.25));
     }
 
     // Make this return true when this Command no longer needs to run execute()
