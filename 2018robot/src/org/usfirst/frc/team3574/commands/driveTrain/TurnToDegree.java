@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3574.commands.driveTrain;
 
+import org.usfirst.frc.team3574.commands.util.L;
 import org.usfirst.frc.team3574.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -27,7 +28,8 @@ public class TurnToDegree extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		
+    	L.ogInit(this);
+
 		_currentAngle = Robot.driveTrain._currentAngleToPass;
 		
 		_degreeToReach = _oGDegreeToReach + _currentAngle;
@@ -69,5 +71,6 @@ public class TurnToDegree extends Command {
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted() {
+    	L.ogInterrupt(this);
 	}
 }

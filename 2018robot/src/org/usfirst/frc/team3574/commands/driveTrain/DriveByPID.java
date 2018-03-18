@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3574.commands.driveTrain;
 
+import org.usfirst.frc.team3574.commands.util.L;
 import org.usfirst.frc.team3574.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -59,10 +60,12 @@ public class DriveByPID extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
+    	L.ogEnd(this);
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted() {
+    	L.ogInterrupt(this);
 	}
 }

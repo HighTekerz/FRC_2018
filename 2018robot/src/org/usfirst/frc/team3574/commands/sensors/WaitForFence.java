@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3574.commands.sensors;
 
+import org.usfirst.frc.team3574.commands.util.L;
 import org.usfirst.frc.team3574.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -15,11 +16,10 @@ public class WaitForFence extends Command {
     }
 
     protected void initialize() {
-    	
+    	L.ogInit(this);
     }
 
-    protected void execute() {
-    	
+    protected void execute() {    	
     }
 
     protected boolean isFinished() {
@@ -27,10 +27,12 @@ public class WaitForFence extends Command {
     }
 
     protected void end() {
+    	L.ogEnd(this);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	L.ogInterrupt(this);
     }
 }

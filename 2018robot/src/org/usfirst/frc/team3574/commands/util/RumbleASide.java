@@ -29,6 +29,7 @@ public class RumbleASide extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
+		L.ogInit(this);
 		_timesRumbled = 0;
 	}
 
@@ -51,11 +52,13 @@ public class RumbleASide extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
+		L.ogEnd(this);
 		_xboxControllerToRumble.setRumble(_rumbleSide, 0);
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted() {
+		L.ogInterrupt(this);
 	}
 }

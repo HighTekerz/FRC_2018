@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3574.commands.slide;
 
+import org.usfirst.frc.team3574.commands.util.L;
 import org.usfirst.frc.team3574.robot.Robot;
 //import org.usfirst.frc.team3574.subsystems.Slide.LifterHeights;
 import org.usfirst.frc.team3574.subsystems.Slide;
@@ -21,28 +22,13 @@ public class SetSlidePosition extends Command {
 	
     public SetSlidePosition(double setPositionInInches) {
     	requires(Robot.slide);
-    	
-//    	System.out.println("Set Slide COnstructor");
-//    	System.out.println(Robot.slide.getEncPos());
-//    	System.out.println(setPositionInInches);
-    	
     	_targetPositionInInches = setPositionInInches;
-    	
-//    	System.out.println(Robot.slide.getEncPos());
-//    	System.out.println(_targetPosition);
     }
 
     protected void initialize() {
-//    	System.out.println("Set Slide Initialize");
-//    	System.out.println("encoder position: " + Robot.slide.getEncPos());
-//    	System.out.println("setPositionInches: " + _targetPositionInInches);
-    	
-    	isFinished = false;
-    	
-//    	_targetPosition = Robot.slide.getEncPos() - (_targetPositionInInches * Slide.TicksPerInch); //sets position above 0
-    	_targetPosition = Slide.SLIDE_ZERO_POINT - (_targetPositionInInches * Slide.TicksPerInch);
-    	
-//    	System.out.println("SetPosition: " +_targetPosition);
+		L.ogInit(this);
+    	isFinished = false;    	
+    	_targetPosition = Slide.SLIDE_ZERO_POINT - (_targetPositionInInches * Slide.TicksPerInch);    	
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -101,17 +87,18 @@ public class SetSlidePosition extends Command {
     
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-//    	System.out.println(Robot.slide.getEncPos());
 		return isFinished;
     }
 
     // Called once after isFinished returns true
     protected void end() {
+		L.ogEnd(this);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+		L.ogInterrupt(this);
     	Robot.slide.setCurrent(0.0);	
     }
 }

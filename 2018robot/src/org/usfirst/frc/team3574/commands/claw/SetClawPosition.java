@@ -25,15 +25,15 @@ public class SetClawPosition extends Command {
 	}
 
 	// Called repeatedly when this Command is scheduled to run
-	protected void execute() {    
-		UtilitySubsystem.armPositionPlacementForDropoff = 0;
+	protected void execute() {
+		if (pos == ClawPosition.RELEASE) UtilitySubsystem.armPositionPlacementForDropoff = 0;
 		Robot.claw.setClawPosition(pos);
 		System.out.println("SetClawPosition executes. going to: " + pos);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		System.out.println("SetClawPosition IsFinished");
+    	L.ogisFinished(this);
 		return true;
 	}
 
@@ -45,6 +45,6 @@ public class SetClawPosition extends Command {
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted() {
-		System.out.println("SetClawPosition Interrupted");
+    	L.ogInterrupt(this);
 	}
 }

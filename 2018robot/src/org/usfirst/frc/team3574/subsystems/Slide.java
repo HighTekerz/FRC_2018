@@ -39,6 +39,7 @@ public class Slide extends Subsystem {
 	public static int SLIDE_CARRY = 0;
 	public static int SLIDE_SWITCH_DELIVERY = 6;
 	public static int SLIDE_SCALE_LOW = 6;
+	public static int SLIDE_SCALE_HIGH = 24;
 	public static int SLIDE_START = 0;
 	
 	public static final double TicksPerRevolution = 4096;
@@ -135,7 +136,7 @@ public class Slide extends Subsystem {
 //	}
 
 	public void setSlideSpeedPercent(double speed) {
-		slideSim.set(ControlMode.PercentOutput, speed);
+		slideSim.set(ControlMode.PercentOutput, speed * 1);
 	}
 	
 	public void setCurrent(double current) {
@@ -168,6 +169,8 @@ public class Slide extends Subsystem {
 		SmartDashboard.putBoolean("Bottom Slide Limit Switch", getBottomStopSwitchIsPressed());
 		
 		SmartDashboard.putNumber("Slide Zero Point (Not Really 0)", SLIDE_ZERO_POINT);
+		
+		SmartDashboard.putNumber("Slide Motor Power Percentage", slideSim.getMotorOutputPercent());
 		
 //		SmartDashboard.putNumber("ACTUAL ClosedLoopError", Math.round(1 * TicksPerInch));
 //		SmartDashboard.putNumber("ACTUAL ClosedLoopError INTEGER", (int)(Math.round(1 * TicksPerInch)));

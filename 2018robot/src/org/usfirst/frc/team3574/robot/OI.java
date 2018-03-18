@@ -34,6 +34,7 @@ import org.usfirst.frc.team3574.enums.ClawPosition;
 import org.usfirst.frc.team3574.enums.ShifterPosition;
 import org.usfirst.frc.team3574.enums.WristPosition;
 import org.usfirst.frc.team3574.subsystems.Arm;
+import org.usfirst.frc.team3574.subsystems.Slide;
 import org.usfirst.frc.team3574.triggers.POVBottomRange;
 import org.usfirst.frc.team3574.triggers.POVDown;
 import org.usfirst.frc.team3574.triggers.POVLeft;

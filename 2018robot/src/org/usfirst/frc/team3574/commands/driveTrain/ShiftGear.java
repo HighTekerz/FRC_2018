@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3574.commands.driveTrain;
 
+import org.usfirst.frc.team3574.commands.util.L;
 import org.usfirst.frc.team3574.enums.ShifterPosition;
 import org.usfirst.frc.team3574.robot.Robot;
 
@@ -13,14 +14,12 @@ public class ShiftGear extends Command {
 	ShifterPosition _shifterPosition;
 	
     public ShiftGear(ShifterPosition ShifterPosition) {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
     	_shifterPosition = ShifterPosition;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	System.out.println("ShiftGear Initialized");
+    	L.ogInit(this);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -43,6 +42,6 @@ public class ShiftGear extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	System.out.println("ShiftGear Interrupted");
+    	L.ogInterrupt(this);
     }
 }

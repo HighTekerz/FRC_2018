@@ -35,7 +35,10 @@ public class MoveSlideBasedOnTarget extends Command {
 			if(UtilitySubsystem.armPositionPlacementForDropoff < 5) {
 				UtilitySubsystem.armPositionPlacementForDropoff++;
 			}
-			_command = new SetSlidePosition(Slide.SLIDE_SCALE_LOW +((UtilitySubsystem.armPositionPlacementForDropoff - 1) * Slide.SLIDE_HIGHER_INCREMENT_SCALE));
+//			else {
+//				UtilitySubsystem.armPositionPlacementForDropoff = 1;
+//			}
+			_command = new SetSlidePosition(Slide.SLIDE_SCALE_LOW + ((UtilitySubsystem.armPositionPlacementForDropoff - 1) * Slide.SLIDE_HIGHER_INCREMENT_SCALE));
 		}
 	}
 	// Make this return true when this Command no longer needs to run execute()
@@ -45,11 +48,13 @@ public class MoveSlideBasedOnTarget extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
+		L.ogEnd(this);
 		_command.start();
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted() {
+		L.ogInterrupt(this);
 	}
 }

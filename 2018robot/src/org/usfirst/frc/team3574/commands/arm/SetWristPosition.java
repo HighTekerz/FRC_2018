@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3574.commands.arm;
 
+import org.usfirst.frc.team3574.commands.util.L;
 import org.usfirst.frc.team3574.enums.WristPosition;
 import org.usfirst.frc.team3574.robot.Robot;
 import org.usfirst.frc.team3574.subsystems.Arm;
@@ -22,7 +23,7 @@ public class SetWristPosition extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	System.out.println("SetWristPosition Initialized");
+    	L.ogInit(this);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -33,18 +34,18 @@ public class SetWristPosition extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	System.out.println("SetWristPosition IsFinished");
         return true;
     }
 
     // Called once after isFinished returns true
     protected void end() {
+		L.ogEnd(this);
     	System.out.println("SetWristPosition ends. time since initialized: " + timeSinceInitialized());
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	System.out.println("SetWristPosition Interrupted.");
+    	L.ogInterrupt(this);
     }
 }

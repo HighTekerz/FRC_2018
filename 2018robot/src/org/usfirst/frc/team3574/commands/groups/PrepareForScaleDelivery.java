@@ -21,9 +21,6 @@ public class PrepareForScaleDelivery extends CommandGroup {
     	addSequential(new SetWristPosition(WristPosition.ANGLED));
 //	Move SHOULDER to switch deliver angle
     	addSequential(new SetArmPosition(Arm.SCALE_DELIVERY, new ArmSpeedSettingsWithCube()));
-    	//    	If button pressed and slide at pos 1 already, move to pos 2
-    	//    	If button pressed and slide at pos 2 already, move to pos 3
-//	Move SLIDE to switch position 1
     	addSequential(new MoveSlideBasedOnTarget(false));
     }
 }

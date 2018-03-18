@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3574.commands.driveTrain;
 
+import org.usfirst.frc.team3574.commands.util.L;
 import org.usfirst.frc.team3574.enums.ShifterPosition;
 import org.usfirst.frc.team3574.robot.Robot;
 //import org.usfirst.frc.team3574.subsystems.DriveTrain;
@@ -71,7 +72,8 @@ public class DriveByInches extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	targetAngleToKeep = Robot.driveTrain._currentAngleToPass;
-    	System.out.println("DriveByInches _speed: " + _speed);
+    	L.ogInit(this);
+    	System.out.println("DriveByInches speed: " + _speed);
     	if (_speed < 0) {
     		_finalTickTargetLeft = Robot.driveTrain.getEncoderLeft() + _ticksToTravel;
     		_finalTickTargetRight = Robot.driveTrain.getEncoderRight() + _ticksToTravel;
@@ -92,13 +94,11 @@ public class DriveByInches extends Command {
 //    	System.out.printf("_finalTickTargetLeft: %f  \t Robot.driveTrain.getEncoderLeft() : %d\n", _finalTickTargetLeft,  Robot.driveTrain.getEncoderLeft());
     	SmartDashboard.putNumber("Final Tick Target Right", _finalTickTargetRight);
     	SmartDashboard.putNumber("Final Tick Target Left", _finalTickTargetLeft);
-    	System.out.println("DriveByInches initialize");
 
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	System.out.println("DriveByInches Execute");
     	Robot.driveTrain.driveStraightByArcade(_speed, 0, targetAngleToKeep);
 	}
 

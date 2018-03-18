@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3574.commands.arm;
 
+import org.usfirst.frc.team3574.commands.util.L;
 import org.usfirst.frc.team3574.enums.BrakePosition;
 import org.usfirst.frc.team3574.robot.Robot;
 import org.usfirst.frc.team3574.utilities.ArmSpeedSettingsWithCube;
@@ -19,6 +20,7 @@ public class ManualArm extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
+    	L.ogInit(this);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -29,7 +31,7 @@ public class ManualArm extends Command {
 		}
 		else {
 			Robot.arm.setBrakePosition(BrakePosition.OPEN);
-			Robot.arm.setSpeed(Robot.driveTrain.scalingSpeed(Robot.OperatorInput.CoPilotLeftStickY(), 0.5) + new ArmSpeedSettingsWithCube().brakeSpeed);
+			Robot.arm.setSpeed(Robot.driveTrain.scalingSpeed(-Robot.OperatorInput.CoPilotLeftStickY(), 0.5) + new ArmSpeedSettingsWithCube().brakeSpeed);
 		}
 	}
 

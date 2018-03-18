@@ -43,8 +43,8 @@ public class UpUntilUnclicked extends Command {
 	}
 
 	// Called once after isFinished returns true
-	protected void end() {    
-		System.out.println("Clicks true at: " + Robot.arm.getEncPos());
+	protected void end() {
+		System.out.println("UpUntil Clicks true at: " + Robot.arm.getEncPos());
 		Robot.arm.setBrakePosition(BrakePosition.CLOSED);
 		Robot.arm.setSpeed(_iSpeedSetting.brakeSpeed);
 	}
@@ -52,6 +52,7 @@ public class UpUntilUnclicked extends Command {
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted() {
+		L.ogInterrupt(this);
 		Robot.arm.setBrakePosition(BrakePosition.CLOSED);
 		Robot.arm.setSpeed(_iSpeedSetting.brakeSpeed);
 	}

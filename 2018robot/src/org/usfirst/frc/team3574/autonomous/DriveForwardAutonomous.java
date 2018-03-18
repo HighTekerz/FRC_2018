@@ -35,7 +35,7 @@ public class DriveForwardAutonomous extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	addSequential(new CalibrateArmEncStartingPosition());
-    	addSequential(new DriveByInches(144, .4, ShifterPosition.HIGH_GEAR)); /* 120in from alliance wall to auto line
+    	addSequential(new DriveByInches(130, .4, ShifterPosition.HIGH_GEAR)); /* 120in from alliance wall to auto line
     												 - 40in long robot
     												 + 10in to make sure we get over the line */
     	addSequential(new DoNothing());

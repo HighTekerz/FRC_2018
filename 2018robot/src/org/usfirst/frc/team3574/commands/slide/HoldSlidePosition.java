@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3574.commands.slide;
 
+import org.usfirst.frc.team3574.commands.util.L;
 import org.usfirst.frc.team3574.robot.Robot;
 import org.usfirst.frc.team3574.utilities.ArmSpeedSettingsWithoutCube;
 
@@ -16,6 +17,7 @@ public class HoldSlidePosition extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+		L.ogInit(this);
     	Robot.slide.setSlideSpeedPercent(Robot.slide.brakeSpeed);
     }
 
@@ -30,10 +32,12 @@ public class HoldSlidePosition extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+		L.ogEnd(this);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+		L.ogInterrupt(this);
     }
 }

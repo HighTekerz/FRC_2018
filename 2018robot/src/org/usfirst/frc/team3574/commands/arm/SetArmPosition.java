@@ -34,6 +34,7 @@ public class SetArmPosition extends Command {
 	private boolean isFinished = false;
 
 	private boolean isNotFirstTime = false;
+
 	/**
 	 * Command to move the Arm to different locations
 	 * 
@@ -68,28 +69,30 @@ public class SetArmPosition extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		//		if(Robot.arm.getEncPos() == enc) { 
-		//			log = false;
-		//		} else {
-		//			log = true;
-		//			enc = Robot.arm.getEncPos();
-		//		}
-		//		if(log) { 
-		System.out.println("Tick Target " + _tickTarget + " -- Encoder Value " + Robot.arm.getEncPos() + " ---- Time: " + time.get()); 
+		if(Robot.arm.getEncPos() > enc - 2 && Robot.arm.getEncPos() < enc + 2) { 
+			log = false;
+		} else {
+			log = true;
+			enc = Robot.arm.getEncPos();
+		}
+		if(log) { 
+			System.out.println("Tick Target: " + _tickTarget + " -- Encoder Value " + Robot.arm.getEncPos()); 
 
-		error = Robot.arm.getEncPos() - _tickTarget;
+			error = Robot.arm.getEncPos() - _tickTarget;
 
-		if(Math.abs(error) < allowableError) {
-			isFinished = true;
-			System.out.println("isFinished = true. error = " + error);
-		} 
-		else if(Math.abs(error) < slowPoint) {
-			checkDirection(1);
-		} 
-		else {        	
-			checkDirection(2);
+			if(Math.abs(error) < allowableError) {
+				isFinished = true;
+				System.out.println("isFinished = true. error = " + error);
+			} 
+			else if(Math.abs(error) < slowPoint) {
+				checkDirection(1);
+			} 
+			else {        	
+				checkDirection(2);
+			}
 		}
 	}
+
 
 	double xSpeed;
 	boolean DriveUp;
@@ -136,25 +139,23 @@ public class SetArmPosition extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
-		L.ogEnd(this);
-
-		System.out.println("Hit Target");
+		System.out.println("SetArm Hit Target");
 		Robot.arm.setBrakePosition(BrakePosition.CLOSED);
 		Robot.arm.setSpeed(motorStop);
-//		if (!isNotFirstTime)
-//		{
-//			isNotFirstTime = true;
-//			this.start();
-//		}
-//		else {
-//			isNotFirstTime = false;
-//		}
+//				if (!isNotFirstTime)
+//				{
+//					isNotFirstTime = true;
+//					this.start();
+//				}
+//				else {
+//					isNotFirstTime = false;
+//				}
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted() {
-		System.out.println("SetArmPosition Interrupted");
+		L.ogInterrupt(this);
 		Robot.arm.setBrakePosition(BrakePosition.CLOSED);
 		Robot.arm.setSpeed(motorStop);
 	}
