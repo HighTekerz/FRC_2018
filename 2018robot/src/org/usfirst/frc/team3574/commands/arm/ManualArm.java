@@ -2,6 +2,7 @@ package org.usfirst.frc.team3574.commands.arm;
 
 import org.usfirst.frc.team3574.enums.BrakePosition;
 import org.usfirst.frc.team3574.robot.Robot;
+import org.usfirst.frc.team3574.utilities.ArmSpeedSettingsWithCube;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -10,10 +11,10 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class ManualArm extends Command {
 
-	private double deadzone = .15;
+	private double deadzone = .05;
 
 	public ManualArm() {
-	requires(Robot.arm);
+		requires(Robot.arm);
 	}
 
 	// Called just before this Command runs the first time
@@ -24,10 +25,11 @@ public class ManualArm extends Command {
 	protected void execute() { 
 		if (Math.abs(Robot.OperatorInput.CoPilotLeftStickY()) <= deadzone) {
 			Robot.arm.setBrakePosition(BrakePosition.CLOSED);
+			Robot.arm.setSpeed(0.2);
 		}
 		else {
 			Robot.arm.setBrakePosition(BrakePosition.OPEN);
-			Robot.arm.setSpeed(Robot.driveTrain.scalingSpeed(Robot.OperatorInput.CoPilotLeftStickY(), 0.5));
+			Robot.arm.setSpeed(Robot.driveTrain.scalingSpeed(Robot.OperatorInput.CoPilotLeftStickY(), 0.5) + new ArmSpeedSettingsWithCube().brakeSpeed);
 		}
 	}
 

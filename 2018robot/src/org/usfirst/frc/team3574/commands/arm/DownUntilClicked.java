@@ -33,7 +33,7 @@ public class DownUntilClicked extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		if(timeSinceInitialized() < 0.4 && _isFirstTime) {
+		if(timeSinceInitialized() < 0.35 && _isFirstTime) {
 			Robot.arm.setSpeed(_iSpeedSetting.calibrateSpeed);
 		}
 		else {

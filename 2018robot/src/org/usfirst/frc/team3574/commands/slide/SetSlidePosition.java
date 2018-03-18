@@ -51,16 +51,14 @@ public class SetSlidePosition extends Command {
     	
     	if(Math.abs(error) < allowableError) {
     		Robot.slide.setCurrent(Robot.slide.brakeSpeed);
-    		System.out.println("Running At: Brake Speed. error: " + error);
+    		System.out.println("Slide Running At: Brake Speed. error: " + error);
     		isFinished = true;
     	} 
     	else if(Math.abs(error) < slowPoint) {
     		setSpeedDirection(1);
-    		System.out.println("Running At: Slowed Speed. error: " + error);
     	} 
     	else {
         	setSpeedDirection(2);
-    		System.out.println("Running At: Max Speed. error: " + error);
     	}
     }
     
@@ -76,21 +74,21 @@ public class SetSlidePosition extends Command {
     	
         if(step == 1) {  //Going to Slow Speed
         	if (DriveUp) {
-        		System.out.println("Running Slowed Speed UP");
+        		System.out.println("Slide Running At: Slowed Speed UP. error: " + error);
         		xSpeed = Robot.slide.slowedSpeed;
         	}
         	else {
-        		System.out.println("Running Slowed Speed DOWN");
+        		System.out.println("Slide Running At: Slowed Speed DOWN. error: " + error);
         		xSpeed = Robot.slide.downslowedSpeed;
         	}
         }
         else {
         	if (DriveUp) {
-        		System.out.println("Running Max Speed UP");
+        		System.out.println("Slide Running At: Max Speed UP. error: " + error);
         		xSpeed = Robot.slide.maxSpeed;
         	}
         	else {
-        		System.out.println("Running Max Speed DOWN");
+        		System.out.println("Running Max Speed DOWN. error: " + error);
         		xSpeed = Robot.slide.downmaxSpeed;
         	}
        	

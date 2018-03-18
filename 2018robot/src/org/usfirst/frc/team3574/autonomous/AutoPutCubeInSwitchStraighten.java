@@ -27,6 +27,5 @@ public class AutoPutCubeInSwitchStraighten extends CommandGroup {
     	addSequential(new DriveByInches(_inchesToSwitchSide, _movementSpeed));
     	addSequential(new TurnToDegree(_degreeToTurnTo * -leftOrRight, _movementSpeed));
     	addSequential(new DriveByInches(_inchesAwayFromAllianceWall, _movementSpeed));
-    	//PutCubeInSwitch
     }
 }

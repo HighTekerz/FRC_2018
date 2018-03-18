@@ -34,7 +34,7 @@ public class Arm extends Subsystem {
 	public static final double TICKS_PER_DEGREE = TICKS_PER_REVOLUTION  / 360;
 	
 	public static final int STARTING_POSITION = 93;
-	public static final int CARRY_ANGLE = 82;
+	public static final int CARRY_ANGLE = 80;
 	public static final int SCALE_DELIVERY = 90; //degrees
 	public static final int SWITCH_DELIVERY = 21; //degrees
 	public static final int CUBE_PICKUP = 0; //degrees
@@ -128,6 +128,10 @@ public class Arm extends Subsystem {
 		ARM_MOTOR_ZERO_POINT = getEncPos() + (STARTING_POSITION * TICKS_PER_DEGREE);
 	}
 	
+	public void calibrateArmEncoderFromStartingYadda() {
+		ARM_MOTOR_ZERO_POINT = getEncPos() + ((STARTING_POSITION - 1) * TICKS_PER_DEGREE);
+	}
+
 	public boolean getLimitSwitch() {
 		return !zeroSwitch.get();
 	}

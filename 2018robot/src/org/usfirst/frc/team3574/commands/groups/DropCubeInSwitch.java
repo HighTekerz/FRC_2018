@@ -34,7 +34,7 @@ public class DropCubeInSwitch extends CommandGroup {
     	
     	addSequential(new DoNothing(0.5));
 //    	Backup 3 inches
-    	addSequential(new DriveByInches(Robot.driveTrain.backupDistanceSwitch, 0.4));
+    	addSequential(new DriveByInches(Robot.driveTrain.backupDistanceSwitch, 0.35));
 //    	Move SHOULDER to carry angle
     	addSequential(new SetArmPosition(Arm.CARRY_ANGLE, new ArmSpeedSettingsWithoutCube()));
 //    	Move SLIDE to Carry position

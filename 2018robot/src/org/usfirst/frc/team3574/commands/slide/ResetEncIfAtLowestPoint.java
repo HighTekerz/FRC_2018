@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class ResetEncIfAtLowestPoint extends Command {
 
+	private int loop  = 0;
     public ResetEncIfAtLowestPoint() {
     }
 
@@ -18,7 +19,8 @@ public class ResetEncIfAtLowestPoint extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if (Robot.slide.getBottomStopSwitchIsPressed()) {
+    	
+    	if (loop % 25 == 0 && Robot.slide.getBottomStopSwitchIsPressed()) {
     		Robot.slide.resetEnc();
     	}
     }

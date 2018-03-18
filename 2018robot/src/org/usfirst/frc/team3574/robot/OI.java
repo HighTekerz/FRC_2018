@@ -9,6 +9,8 @@
 package org.usfirst.frc.team3574.robot;
 
 
+import org.usfirst.frc.team3574.commands.arm.CalibrateArmEncStartingPosition;
+import org.usfirst.frc.team3574.commands.arm.CalibrateArmEncStartingPositionYadda;
 import org.usfirst.frc.team3574.commands.arm.HoldArmPosition;
 import org.usfirst.frc.team3574.commands.arm.ManualArm;
 import org.usfirst.frc.team3574.commands.arm.OpenBrake;
@@ -107,6 +109,9 @@ public class OI {
 		Button startingPosition = new JoystickButton(coPilotxbox360Controller, START);
 		startingPosition.whenPressed(new MoveToStartingPosition());
 		
+		Button calToStartingPosition = new JoystickButton(coPilotxbox360Controller, BACK);
+		calToStartingPosition.whenPressed(new CalibrateArmEncStartingPositionYadda());
+
 		Button angleWrist = new POVDown(coPilotxbox360Controller, pov);
 		angleWrist.whenPressed(new SetWristPosition(WristPosition.ANGLED));
 		
