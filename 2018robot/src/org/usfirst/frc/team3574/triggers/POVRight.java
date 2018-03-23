@@ -15,7 +15,7 @@ public class POVRight extends Button {
        m_joystick = joystick;
        m_POV = pov;
 	}
-	
+// Trainman: Wumpus	
 	public boolean get() {
        if (m_joystick.getPOV(m_POV) == 90) {
     	   System.out.println("POVRight pressed, 90 degrees");

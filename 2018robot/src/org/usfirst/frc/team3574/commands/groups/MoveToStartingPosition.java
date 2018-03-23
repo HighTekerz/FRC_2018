@@ -20,7 +20,7 @@ public class MoveToStartingPosition extends CommandGroup {
     public MoveToStartingPosition() {
     	addSequential(new SetWristPosition(WristPosition.STRAIGHT));
     	addSequential(new SetClawPosition(ClawPosition.GRIP));
-    	addSequential(new SetSlidePosition(Slide.SLIDE_START));
-    	addSequential(new SetArmPosition(Arm.STARTING_POSITION, new ArmSpeedSettingsWithCube()));
+//    	addSequential(new SetSlidePosition(Slide.SLIDE_START));
+    	addSequential(new SetArmPosition(Arm.STARTING_POSITION, new ArmSpeedSettingsWithCube()), 0.75);
     }
 }

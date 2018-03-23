@@ -1,6 +1,8 @@
 package org.usfirst.frc.team3574.subsystems;
 
 
+import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.util.concurrent.TimeUnit;
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane.SystemMenuBar;
 import org.omg.CORBA.SetOverrideType;
@@ -89,6 +91,9 @@ public class DriveTrain extends Subsystem {
 
 	public double _currentAngleToPass;
 
+	public static boolean runningPancake;
+	public String pancakeMAC = "00-80-2F-17-D7-A3";
+
 	public DriveTrain() {
 		// TODO Auto-generated constructor stub
 		motorLeft1.set(ControlMode.PercentOutput, 0.0);
@@ -99,6 +104,45 @@ public class DriveTrain extends Subsystem {
 		motorRight1.setNeutralMode(NeutralMode.Brake);
 		motorRight2.setNeutralMode(NeutralMode.Brake);
 		motorLeft2.setNeutralMode(NeutralMode.Brake);
+		
+		
+		
+		runningPancake = false;
+		InetAddress ip;
+		try {
+
+			ip = InetAddress.getLocalHost();
+			System.out.println("Current IP address : " + ip.getHostAddress());
+
+			NetworkInterface network = NetworkInterface.getByInetAddress(ip);
+
+			byte[] mac = network.getHardwareAddress();
+
+			System.out.print("Current MAC address : ");
+
+			StringBuilder sb = new StringBuilder();
+			for (int i = 0; i < mac.length; i++) {
+				sb.append(String.format("%02X%s", mac[i], (i < mac.length - 1) ? "-" : ""));		
+			}
+			System.out.println(sb.toString());
+			if (sb.toString().contains(pancakeMAC)) {
+				System.out.println("Hi Pancake!");
+				runningPancake = true;
+				System.out.println("Inverting motors, please wait");
+ 				motorLeft1.setInverted(true);
+				motorLeft2.setInverted(true);
+				motorRight1.setInverted(true);
+				motorRight2.setInverted(true);
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		
+		if (runningPancake) {
+		}
 
 		t.reset();
 		t.start();
@@ -106,13 +150,13 @@ public class DriveTrain extends Subsystem {
 	}
 	public int getEncoderLeft()
 	{
-		return motorLeft1.getSensorCollection().getPulseWidthPosition();
+		return -motorLeft1.getSensorCollection().getPulseWidthPosition();
 	}
 
 	public int getEncoderRight()
 	{
 		//		Value reversed for clarity
-		return -motorRight1.getSensorCollection().getPulseWidthPosition();
+		return motorRight1.getSensorCollection().getPulseWidthPosition();
 	}
 
 	public void initDefaultCommand() {

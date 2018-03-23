@@ -24,6 +24,6 @@ public class PrepareForSwitchDelivery extends CommandGroup {
     	//    	If button pressed and slide at pos 1 already, move to pos 2
     	//    	If button pressed and slide at pos 2 already, move to pos 3
 //	Move SLIDE to switch position 1
-    	addSequential(new MoveSlideBasedOnTarget(true));
+//    	addSequential(new MoveSlideBasedOnTarget(true));
     }
 }

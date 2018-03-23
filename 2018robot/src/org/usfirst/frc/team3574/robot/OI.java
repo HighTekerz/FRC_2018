@@ -19,6 +19,7 @@ import org.usfirst.frc.team3574.commands.arm.SetWristPosition;
 import org.usfirst.frc.team3574.commands.claw.SetClawPosition;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveByInches;
 import org.usfirst.frc.team3574.commands.driveTrain.ShiftGear;
+import org.usfirst.frc.team3574.commands.driveTrain.TurnToDegree;
 import org.usfirst.frc.team3574.commands.groups.CalibratePickup;
 import org.usfirst.frc.team3574.commands.groups.DropCubeInScale;
 import org.usfirst.frc.team3574.commands.groups.DropCubeInSwitch;
@@ -78,6 +79,9 @@ public class OI {
 	int pov = 0;
 
 	public OI() {
+	SmartDashboard.putData(new TurnToDegree(45, .5));
+		
+		
 		//<<DRIVER CONTROLLER>>
 		Button calibratePickup = new TriggerButton(driverXbox360Controller, LEFT_TRIGGER);
 		calibratePickup.whenPressed(new CalibratePickup());
@@ -132,48 +136,6 @@ public class OI {
 		Button manualSlide = new JoystickButton(coPilotxbox360Controller, B_BUTTON);
 		manualSlide.whileHeld(new ManualSlide());
 		manualSlide.whenReleased(new HoldSlidePosition());
-
-//		Button downUpTest12 = new JoystickButton(driverXbox360Controller, X_BUTTON);
-//		downUpTest12.whenPressed(new SetSlidePosition(12));
-//
-//		Button downUpTest6 = new JoystickButton(driverXbox360Controller, Y_BUTTON);
-//		downUpTest6.whenPressed(new SetSlidePosition(6));
-//		
-//		Button armTestPositive = new JoystickButton(driverXbox360Controller, A_BUTTON);
-//		armTestPositive.whenPressed(new SetArmPosition(Arm.CARRY_ANGLE, new SpeedSettingsWithCube()));
-//		
-//		Button armTestNegative = new JoystickButton(driverXbox360Controller, B_BUTTON);
-//		armTestNegative.whenPressed(new SetArmPosition(Arm.CUBE_PICKUP, new SpeedSettingsWithCube()));
-//		
-//		Button openClaw = new JoystickButton(driverXbox360Controller, START);
-//		openClaw.whenPressed(new SetClawPosition(ClawPosition.GRIP));
-//
-//		Button closeClaw = new JoystickButton(driverXbox360Controller, BACK);
-//		closeClaw.whenPressed(new SetClawPosition(ClawPosition.RELEASE));
-//		
-//		Button tiltWrist = new POVTopRange(driverXbox360Controller, pov);
-//		tiltWrist.whenPressed(new SetWristPosition(WristPosition.ANGLED));
-//		
-//		Button straightenWrist = new POVBottomRange(driverXbox360Controller, pov);
-//		straightenWrist.whenPressed(new SetWristPosition(WristPosition.STRAIGHT));
-//		
-//		Button shiftLow = new JoystickButton(driverXbox360Controller, LEFT_BUMPER);
-//		shiftLow.whenPressed(new ShiftGear(ShifterPosition.LOW_GEAR));
-//		
-//		Button shiftHigh = new JoystickButton(driverXbox360Controller, RIGHT_BUMPER);
-//		shiftHigh.whenPressed(new ShiftGear(ShifterPosition.HIGH_GEAR));
-//		
-//		Button pickUpCube = new JoystickButton(coPilotxbox360Controller, A_BUTTON);
-//		pickUpCube.whenPressed(new CalibratePickup());
-//
-//		Button pickUpCubeNoCal = new JoystickButton(coPilotxbox360Controller, B_BUTTON);
-//		pickUpCubeNoCal.whenPressed(new StartPickupFixed());
-//
-//		Button prepareForSwitchDelivery = new JoystickButton(coPilotxbox360Controller, X_BUTTON);
-//		prepareForSwitchDelivery.whenPressed(new PrepareForSwitchDelivery());
-//
-//		Button dropOffCube = new JoystickButton(coPilotxbox360Controller, Y_BUTTON);
-//		dropOffCube.whenPressed(new DropCubeInSwitch());
 	}
 
 	public double getLeftStickY()
@@ -214,22 +176,12 @@ public class OI {
 	{
 		return 0;
 	}
-
 	
-
-
 	public double CoPilotRightStickY() {
 		return coPilotxbox360Controller.getX(Hand.kLeft);
 	}
 	
 	public double CoPilotLeftStickY() {
 		return coPilotxbox360Controller.getY(Hand.kLeft);
-	}
-	
-	
-	
-	
-	
-	
-	
+	}	
 }

@@ -38,7 +38,7 @@ public class DropCubeInSwitch extends CommandGroup {
 //    	Move SHOULDER to carry angle
     	addSequential(new SetArmPosition(Arm.CARRY_ANGLE, new ArmSpeedSettingsWithoutCube()));
 //    	Move SLIDE to Carry position
-    	addSequential(new SetSlidePosition(Slide.SLIDE_CARRY));
+//    	addSequential(new SetSlidePosition(Slide.SLIDE_CARRY));
 //		Set preparation variable back to 0
     	addSequential(new ResetPreparationInt());
 //    	End Sequence and return control of robot.

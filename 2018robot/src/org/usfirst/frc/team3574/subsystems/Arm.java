@@ -25,7 +25,7 @@ public class Arm extends Subsystem {
 	Solenoid Wrist = new Solenoid(RobotMap.WristSolenoid);
 	Solenoid Brake = new Solenoid(RobotMap.BrakeSolenoid);
 	TalonSRX ArmMotor = new TalonSRX(RobotMap.ArmMotor);
-	DigitalInput zeroSwitch = new DigitalInput(4);
+	DigitalInput zeroSwitch = new DigitalInput(RobotMap.ArmLimitSwitch);
 	
 	public static double ARM_MOTOR_ZERO_POINT;
 	
@@ -37,6 +37,7 @@ public class Arm extends Subsystem {
 	public static final int CARRY_ANGLE = 80;
 	public static final int SCALE_DELIVERY = 90; //degrees
 	public static final int SWITCH_DELIVERY = 21; //degrees
+	public static final int AUTO_SWITCH_DELIVERY = 30; //degrees
 	public static final int CUBE_PICKUP = 0; //degrees
 	
 	public final int timeoutMs = 50;

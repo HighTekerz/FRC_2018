@@ -7,6 +7,9 @@
 
 package org.usfirst.frc.team3574.robot;
 
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+
 import org.usfirst.frc.team3574.autonomous.AutoPutCubeInSwitchAhead;
 import org.usfirst.frc.team3574.autonomous.AutoPutCubeInSwitchDiagonal;
 import org.usfirst.frc.team3574.autonomous.AutoPutCubeInSwitchStraighten;
@@ -60,43 +63,46 @@ public class Robot extends TimedRobot {
 	public static final Arm 	    arm = new Arm();
 	public static final ForkLifter  forkLifter = new ForkLifter();
 	public static final UtilitySubsystem utilitySubsystem = new UtilitySubsystem();
- 	Command m_autonomousCommand;
+	Command m_autonomousCommand;
 	public static OI OperatorInput;
 	SendableChooser<Command> autoChooserForLosers = new SendableChooser<>();
 	SendableChooser<Command> startPositionChooser = new SendableChooser<>();	
-	
+
 	public double _matchTime;
 
+	
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
 	@Override
 	public void robotInit() {
+
+
 		OperatorInput = new OI();
 		autoChooserForLosers.addObject("Do Nothing", new DoNothing());
 		autoChooserForLosers.addDefault("Drive Across Line", new DriveForwardAutonomous());
 		autoChooserForLosers.addObject("Cube in switch from middle", new AutonomousSelectorForSwitch());
-		
+
 		SmartDashboard.putData("Scheduler", Scheduler.getInstance());
-		
+
 		SmartDashboard.putData("Auto mode", autoChooserForLosers);
-		
+
 		SmartDashboard.putData(Scheduler.getInstance());
-	
-		
+
+
 		SmartDashboard.putData(new ResetSlideEnc());
 		SmartDashboard.putData(new CalibrateArmEnc());
-		
-//		SmartDashboard.putData(new DriveByPID(20000));
-//		
-//		SmartDashboard.putData(new PutCubeInSwitch());
-//		SmartDashboard.putData(new MakeMotionProflileGo());
 
-		
+		//		SmartDashboard.putData(new DriveByPID(20000));
+		//		
+		//		SmartDashboard.putData(new PutCubeInSwitch());
+		//		SmartDashboard.putData(new MakeMotionProflileGo());
+
+
 		new ResetSlideEnc().start();
-	
-    	Robot.slide.setCurrent(0.0);
+
+		Robot.slide.setCurrent(0.0);
 	}
 
 	/**
@@ -127,17 +133,17 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-    	new CalibrateArmEncStartingPosition().start();
-    	m_autonomousCommand = autoChooserForLosers.getSelected();
-		
+		new CalibrateArmEncStartingPosition().start();
+		m_autonomousCommand = autoChooserForLosers.getSelected();
+
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
 		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
 		 * = new MyAutoCommand(); break; case "Default Auto": default:
 		 * autonomousCommand = new ExampleCommand(); break; }
 		 */
-		
-		
+
+
 		// schedule the autonomous command (example)
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.start();
@@ -152,7 +158,7 @@ public class Robot extends TimedRobot {
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 		this.runAlways();
-		}
+	}
 
 	@Override
 	public void teleopInit() {
@@ -173,7 +179,7 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		_matchTime = DriverStation.getInstance().getMatchTime();
 		this.runAlways();
-//		Robot.driveTrain.driveStraight(0.5, 0);
+		//		Robot.driveTrain.driveStraight(0.5, 0);
 
 		Scheduler.getInstance().run();
 	}
@@ -185,10 +191,10 @@ public class Robot extends TimedRobot {
 	public void testPeriodic() {
 		LiveWindow.run();
 	}
-	
+
 	public void runAlways() {
 		new ResetEncIfAtLowestPoint().start();
-		
+
 		this.log();
 	}
 
@@ -202,7 +208,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("a", (OperatorInput.getDialAxis()+1)/2);
 		SmartDashboard.putString("Switch & Scale Colors", DriverStation.getInstance().getGameSpecificMessage());
 		SmartDashboard.putNumber("POV of driverXbox360Controller", OperatorInput.GetPOV(Robot.OperatorInput.driverXbox360Controller));
-		
+
 		Robot.driveTrain.log();
 		Robot.sensorTest.log();
 		Robot.slide.log();

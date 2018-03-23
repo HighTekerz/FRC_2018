@@ -14,6 +14,8 @@ public class AutonomousSelectorForSwitch extends Command {
 	Command _command;
 	String ourSwitchSide;
 	boolean _isFinished;
+	int left = 1;
+	int right = -1;
 	
     public AutonomousSelectorForSwitch() {
         // Use requires() here to declare subsystem dependencies
@@ -30,10 +32,10 @@ public class AutonomousSelectorForSwitch extends Command {
     protected void execute() {
     	// Testing if command functions correctly
     	if (ourSwitchSide.contains("Left")) {
-    			_command = new AutoPutCubeInSwitchStraighten(-1);
+    			_command = new AutoPutCubeInSwitchStraighten(left);
     	}
     	else{
-			_command = new AutoPutCubeInSwitchStraighten(1);
+			_command = new AutoPutCubeInSwitchStraighten(right);
     	}
     	_command.start();
     	_isFinished = true;

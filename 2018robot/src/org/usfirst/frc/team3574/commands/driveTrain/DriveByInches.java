@@ -115,9 +115,9 @@ public class DriveByInches extends Command {
     		return true;
     	}
     	else {
-        	if(timeSinceInitialized() >= timeout) {
-        		return true;	
-        	}
+//        	if(timeSinceInitialized() >= timeout) {
+//        		return true;	
+//        	}
     		System.out.println("3 DriveByInches Returns False at " + Robot.driveTrain.getEncoderLeft() + " Right = " + Robot.driveTrain.getEncoderRight() + " Tick Targets: " + _finalTickTargetLeft + " & " + _finalTickTargetRight);
     		return false;
     	}

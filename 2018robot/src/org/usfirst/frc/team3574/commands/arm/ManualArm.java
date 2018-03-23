@@ -31,7 +31,7 @@ public class ManualArm extends Command {
 		}
 		else {
 			Robot.arm.setBrakePosition(BrakePosition.OPEN);
-			Robot.arm.setSpeed(Robot.driveTrain.scalingSpeed(-Robot.OperatorInput.CoPilotLeftStickY(), 0.5) + new ArmSpeedSettingsWithCube().brakeSpeed);
+			Robot.arm.setSpeed(Robot.driveTrain.scalingSpeed(-Robot.OperatorInput.CoPilotLeftStickY(), 0.5));
 		}
 	}
 

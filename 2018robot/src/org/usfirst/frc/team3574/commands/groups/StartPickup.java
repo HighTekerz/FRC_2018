@@ -33,7 +33,7 @@ public class StartPickup extends CommandGroup {
 		addSequential(new DriveByInches(Robot.driveTrain.backupDistancePickupStart, 0.3));
     	addSequential(new SetClawPosition(ClawPosition.RELEASE));
 		addSequential(new SetWristPosition(WristPosition.ANGLED));
-		addSequential(new SetSlidePosition(Slide.SLIDE_BOTTOM));
+//		addSequential(new SetSlidePosition(Slide.SLIDE_BOTTOM));
 		addSequential(new SetArmPosition(Arm.CUBE_PICKUP, new ArmSpeedSettingsWithoutCube(), 2));
 		addSequential(new CompletePickup());
 	}

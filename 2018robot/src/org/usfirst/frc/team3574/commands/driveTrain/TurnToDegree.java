@@ -33,7 +33,7 @@ public class TurnToDegree extends Command {
 		_currentAngle = Robot.driveTrain._currentAngleToPass;
 		
 		_degreeToReach = _oGDegreeToReach + _currentAngle;
-		if (_degreeToReach < _currentAngle) {
+		if (_degreeToReach > _currentAngle) {
 			_speed = -Math.abs(_speed);
 		}
 	}

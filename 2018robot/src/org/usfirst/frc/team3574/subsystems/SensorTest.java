@@ -1,29 +1,12 @@
 package org.usfirst.frc.team3574.subsystems;
-
-//import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-
-import org.usfirst.frc.team3574.robot.RobotMap;
-
-import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-
-import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.I2C.Port;
-import edu.wpi.first.wpilibj.Ultrasonic;
-import edu.wpi.first.wpilibj.Ultrasonic.Unit;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
 public class SensorTest extends Subsystem {
 
-//	Ultrasonic ultraHedgehog = new Ultrasonic(0, 1, Unit.kInches);
-//	DigitalInput iTooCanSee = new DigitalInput(Port.kOnboard);
 	DigitalInput proximitySensor = new DigitalInput(9);
 	DigitalInput anotherProximitySensor = new DigitalInput(8);
 	

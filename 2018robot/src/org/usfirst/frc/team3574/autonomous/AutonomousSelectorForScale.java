@@ -1,6 +1,5 @@
 package org.usfirst.frc.team3574.autonomous;
 
-import org.usfirst.frc.team3574.commands.driveTrain.TurnToDegree;
 import org.usfirst.frc.team3574.robot.FieldFunctions;
 import org.usfirst.frc.team3574.robot.FieldFunctions.FieldElementToCheck;
 
@@ -25,7 +24,7 @@ public class AutonomousSelectorForScale extends Command {
 	// Called just before this Command runs the first time
 	protected void initialize() {
 		_isFinished = false;
-		ourSwitchSide = FieldFunctions.getOurSide(FieldElementToCheck.THEIRSWITCH);
+		ourSwitchSide = FieldFunctions.getOurSide(FieldElementToCheck.SCALE);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -38,7 +37,7 @@ public class AutonomousSelectorForScale extends Command {
 			else {
 				_command = new AutoPutCubeInScaleAcross(90);
 			}
-		}
+		} //Lol hey sup
 		else{
 			if (_startingOnLeft) {
 				_command = new AutoPutCubeInScaleAcross(-90);
