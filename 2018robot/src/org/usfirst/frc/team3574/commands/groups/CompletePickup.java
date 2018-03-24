@@ -19,11 +19,11 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class CompletePickup extends CommandGroup {
 
     public CompletePickup() {
-		addSequential(new DriveByInches(-Robot.driveTrain.backupDistancePickupStart, 0.3), .25);
+//		addSequential(new DriveByInches(-Robot.driveTrain.backupDistancePickupStart, 0.3), .25);
 		addSequential(new SetClawPosition(ClawPosition.GRIP));
 		addSequential(new DoNothing(.2));
 		addSequential(new DriveByInches(Robot.driveTrain.backupDistancePickupEnd, 0.3));
 //		addSequential(new SetSlidePosition(Slide.SLIDE_CARRY));
-		addSequential(new SetArmPosition(Arm.CARRY_ANGLE, new ArmSpeedSettingsWithCube()));
+		addSequential(new SetArmPosition(Arm.CARRY_ANGLE, new ArmSpeedSettingsWithCube()), 3);
     }
 }

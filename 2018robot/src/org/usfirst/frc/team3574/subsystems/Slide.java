@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3574.subsystems;
 
+import org.usfirst.frc.team3574.commands.slide.ManualSlide;
 import org.usfirst.frc.team3574.robot.Robot;
 import org.usfirst.frc.team3574.robot.RobotMap;
 
@@ -145,6 +146,7 @@ public class Slide extends Subsystem {
 	
 	@Override
 	protected void initDefaultCommand() {
+		setDefaultCommand(new ManualSlide());
 	}
 
 	public boolean getTopStopSwitchIsPressed() {

@@ -23,11 +23,28 @@ public class ManualSlide extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if (Math.abs(Robot.OperatorInput.CoPilotLeftStickY()) <= deadzone) {
-        	Robot.slide.setSlideSpeedPercent(Robot.slide.brakeSpeed);
+    	if(Robot.slide.getBottomStopSwitchIsPressed() && Math.abs(Robot.OperatorInput.CoPilotLeftStickY()) < deadzone ) {
+//    		L.og("should be doing more");
+    		if(Math.abs(Robot.OperatorInput.CoPilotLeftStickY()) < deadzone) {
+//    			L.og("Stop the motor");
+    			Robot.slide.setSlideSpeedPercent(0.0);
+    			
+    		}
+    		
     	} else {
-    		Robot.slide.setSlideSpeedPercent(Robot.driveTrain.scalingSpeed(Robot.OperatorInput.CoPilotLeftStickY(), 0.25) + Robot.slide.brakeSpeed);
+
+    		if (Math.abs(Robot.OperatorInput.CoPilotLeftStickY()) <= deadzone) {
+    			Robot.slide.setSlideSpeedPercent(Robot.slide.brakeSpeed);
+//    			L.og("brake speed");
+    		} else {
+
+    			Robot.slide.setSlideSpeedPercent(Robot.driveTrain.scalingSpeed(Robot.OperatorInput.CoPilotLeftStickY(), 0.25) + Robot.slide.brakeSpeed);	
+    		
+//    			L.og("normal drive");
+    		}
+
     	}
+    
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -37,7 +54,7 @@ public class ManualSlide extends Command {
 
     // Called once after isFinished returns true
     protected void end() {    	
-		L.ogInit(this);
+		L.ogEnd(this);
     }
 
     // Called when another command which requires one or more of the same

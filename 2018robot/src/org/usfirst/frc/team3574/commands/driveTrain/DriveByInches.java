@@ -27,6 +27,8 @@ public class DriveByInches extends Command {
 	private double timeout = 3;
 	//TODO: turn this ^^ into a calculation
 	
+	double startLoc;
+	
     public DriveByInches(double inchesToTravel, double speed, ShifterPosition ShifterPosition) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -70,9 +72,13 @@ public class DriveByInches extends Command {
     }
 
     // Called just before this Command runs the first time
+   
     protected void initialize() {
-    	targetAngleToKeep = Robot.driveTrain._currentAngleToPass;
+    	targetAngleToKeep = Robot.driveTrain.getYaw();
     	L.ogInit(this);
+    	
+    	startLoc = Robot.driveTrain.getEncoderLeft();
+    	
     	System.out.println("DriveByInches speed: " + _speed);
     	if (_speed < 0) {
     		_finalTickTargetLeft = Robot.driveTrain.getEncoderLeft() + _ticksToTravel;
@@ -99,19 +105,22 @@ public class DriveByInches extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	L.og("distance travelled: " + (Robot.driveTrain.getEncoderLeft() - startLoc) / 217.2995489 + " ---- Time: " + timeSinceInitialized());
+    	
     	Robot.driveTrain.driveStraightByArcade(_speed, 0, targetAngleToKeep);
-	}
+    	
+    }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	if (_speed < 0 && Robot.driveTrain.getEncoderLeft() >= _finalTickTargetLeft &&
     			Robot.driveTrain.getEncoderRight() >= _finalTickTargetRight) {
-    		System.out.println("Speed is positive DriveByInches Returns True at " + Robot.driveTrain.getEncoderLeft() + " Right = " + Robot.driveTrain.getEncoderRight() + " Tick Targets: " + _finalTickTargetLeft + " & " + _finalTickTargetRight);
+//    		System.out.println("Speed is positive DriveByInches Returns True at " + Robot.driveTrain.getEncoderLeft() + " Right = " + Robot.driveTrain.getEncoderRight() + " Tick Targets: " + _finalTickTargetLeft + " & " + _finalTickTargetRight);
     		return true;
     	}
     	else if (_speed > 0 && Robot.driveTrain.getEncoderLeft() <= _finalTickTargetLeft &&
     			Robot.driveTrain.getEncoderRight() <= _finalTickTargetRight) {
-    		System.out.println("Speed is negative DriveByInches Returns True at " + Robot.driveTrain.getEncoderLeft() + " Right = " + Robot.driveTrain.getEncoderRight() + " Tick Targets: " + _finalTickTargetLeft + " & " + _finalTickTargetRight);
+//    		System.out.println("Speed is negative DriveByInches Returns True at " + Robot.driveTrain.getEncoderLeft() + " Right = " + Robot.driveTrain.getEncoderRight() + " Tick Targets: " + _finalTickTargetLeft + " & " + _finalTickTargetRight);
     		return true;
     	}
     	else {
@@ -127,7 +136,7 @@ public class DriveByInches extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	Robot.driveTrain.driveByArcade(0, 0);
-    	}
+    }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run

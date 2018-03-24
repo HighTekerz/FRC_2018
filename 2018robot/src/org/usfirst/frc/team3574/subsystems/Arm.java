@@ -1,5 +1,7 @@
 package org.usfirst.frc.team3574.subsystems;
 
+import org.usfirst.frc.team3574.commands.arm.ManualArm;
+import org.usfirst.frc.team3574.commands.util.L;
 import org.usfirst.frc.team3574.enums.BrakePosition;
 import org.usfirst.frc.team3574.enums.WristPosition;
 import org.usfirst.frc.team3574.robot.Robot;
@@ -40,12 +42,15 @@ public class Arm extends Subsystem {
 	public static final int AUTO_SWITCH_DELIVERY = 30; //degrees
 	public static final int CUBE_PICKUP = 0; //degrees
 	
+	public double zeroEncoder;
+	
+	
 	public final int timeoutMs = 50;
 	public boolean armDoneMoving = false;
 	
 //	public static final int kSlotIdx = 0;
 //	public static final int kPIDLoopIdx = 0;
-//	public static final int kTimeoutMs = 10;
+	public static final int kTimeoutMs = 999999;
 //	public static boolean kSensorPhase = false;
 //	public static boolean kMotorInvert = false;
 
@@ -58,10 +63,10 @@ public class Arm extends Subsystem {
 //		ArmMotor.setInverted(kMotorInvert);
 //
 //		/* set the peak and nominal outputs, 12V means full */
-//		ArmMotor.configNominalOutputForward(0, kTimeoutMs);
-//		ArmMotor.configNominalOutputReverse(0, kTimeoutMs);
-//		ArmMotor.configPeakOutputForward(1, kTimeoutMs);
-//		ArmMotor.configPeakOutputReverse(-1, kTimeoutMs);
+		ArmMotor.configNominalOutputForward(0, kTimeoutMs);
+		ArmMotor.configNominalOutputReverse(0, kTimeoutMs);
+		ArmMotor.configPeakOutputForward(1, kTimeoutMs);
+		ArmMotor.configPeakOutputReverse(-1, kTimeoutMs);
 //		ArmMotor.configAllowableClosedloopError(0, kPIDLoopIdx, kTimeoutMs);
 //
 //
@@ -83,14 +88,22 @@ public class Arm extends Subsystem {
 //			absolutePosition *= -1;
 //		/* set the quadrature (relative) sensor to match absolute */
 //		ArmMotor.setSelectedSensorPosition(absolutePosition, kPIDLoopIdx, kTimeoutMs);
-
+		
+		zeroEncoder = getAngleOfArm();
 	}
 
 	public double getEncPos() {
 		return ArmMotor.getSensorCollection().getPulseWidthPosition();
 	}
+	public double getAngleOfArm() {
+		return ((ARM_MOTOR_ZERO_POINT - getEncPos()) / TICKS_PER_DEGREE);
+	}
+//	public void resetZeroEnc() {
+//		zeroEncoder = getEncPos();
+//	}
 
 	public void initDefaultCommand() {
+		setDefaultCommand(new ManualArm());
 	}
 
 	public void setBrakePosition(BrakePosition pos) {
@@ -136,14 +149,18 @@ public class Arm extends Subsystem {
 	public boolean getLimitSwitch() {
 		return !zeroSwitch.get();
 	}
-	
+
+
+	public void setCurrent(double current) {
+		ArmMotor.set(ControlMode.Current, current);
+	}
+
 	public void log() {
 		SmartDashboard.putNumber("Arm Encoder", getEncPos());
 		SmartDashboard.putBoolean("Arm zero switch", zeroSwitch.get());
 		SmartDashboard.putNumber("Arm Zero Point (Not Really 0)", ARM_MOTOR_ZERO_POINT);
-	}
 
-	public void setCurrent(double current) {
-		ArmMotor.set(ControlMode.Current, current);
+		L.ogSD("Motor 5 voltage", ArmMotor.getMotorOutputVoltage());
+		SmartDashboard.putNumber("Arm Angle", getAngleOfArm());
 	}
 }

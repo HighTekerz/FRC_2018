@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane.SystemMenuBar;
 import org.omg.CORBA.SetOverrideType;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveWithJoy;
+import org.usfirst.frc.team3574.commands.util.L;
 import org.usfirst.frc.team3574.enums.ShifterPosition;
 import org.usfirst.frc.team3574.motionProfile.MotionProfileRight;
 import org.usfirst.frc.team3574.robot.Robot;
@@ -53,7 +54,7 @@ public class DriveTrain extends Subsystem {
 	MotionProfileRight mPLeft = new MotionProfileRight(motorLeft1);
 	StringBuilder _sb = new StringBuilder();
 
-	public double backupDistancePickupStart = -1;
+	public double backupDistancePickupStart = -0.25;
 	public double backupDistancePickupEnd = -3;
 	public double backupDistanceSwitch = -3;
 	public double backupDistanceScale = -12;
@@ -89,7 +90,7 @@ public class DriveTrain extends Subsystem {
 	double kDgain = 0.0004; /* percent throttle per angular velocity dps */
 	double kMaxCorrectionRatio = 0.30; /* cap corrective turning throttle to 30 percent of forward throttle */
 
-	public double _currentAngleToPass;
+//	public double _currentAngle;
 
 	public static boolean runningPancake;
 	public String pancakeMAC = "00-80-2F-17-D7-A3";
@@ -107,39 +108,39 @@ public class DriveTrain extends Subsystem {
 		
 		
 		
-		runningPancake = false;
-		InetAddress ip;
-		try {
-
-			ip = InetAddress.getLocalHost();
-			System.out.println("Current IP address : " + ip.getHostAddress());
-
-			NetworkInterface network = NetworkInterface.getByInetAddress(ip);
-
-			byte[] mac = network.getHardwareAddress();
-
-			System.out.print("Current MAC address : ");
-
-			StringBuilder sb = new StringBuilder();
-			for (int i = 0; i < mac.length; i++) {
-				sb.append(String.format("%02X%s", mac[i], (i < mac.length - 1) ? "-" : ""));		
-			}
-			System.out.println(sb.toString());
-			if (sb.toString().contains(pancakeMAC)) {
-				System.out.println("Hi Pancake!");
-				runningPancake = true;
-				System.out.println("Inverting motors, please wait");
- 				motorLeft1.setInverted(true);
-				motorLeft2.setInverted(true);
-				motorRight1.setInverted(true);
-				motorRight2.setInverted(true);
-			}
-
-		} catch (Exception e) {
-
-			e.printStackTrace();
-
-		}
+//		runningPancake = false;
+//		InetAddress ip;
+//		try {
+//
+//			ip = InetAddress.getLocalHost();
+//			System.out.println("Current IP address : " + ip.getHostAddress());
+//
+//			NetworkInterface network = NetworkInterface.getByInetAddress(ip);
+//
+//			byte[] mac = network.getHardwareAddress();
+//
+//			System.out.print("Current MAC address : ");
+//
+//			StringBuilder sb = new StringBuilder();
+//			for (int i = 0; i < mac.length; i++) {
+//				sb.append(String.format("%02X%s", mac[i], (i < mac.length - 1) ? "-" : ""));		
+//			}
+//			System.out.println(sb.toString());
+//			if (sb.toString().contains(pancakeMAC)) {
+//				System.out.println("Hi Pancake!");
+//				runningPancake = true;
+//				System.out.println("Inverting motors, please wait");
+// 				motorLeft1.setInverted(true);
+//				motorLeft2.setInverted(true);
+//				motorRight1.setInverted(true);
+//				motorRight2.setInverted(true);
+//			}
+//
+//		} catch (Exception e) {
+//
+//			e.printStackTrace();
+//
+//		}
 		
 		if (runningPancake) {
 		}
@@ -150,13 +151,13 @@ public class DriveTrain extends Subsystem {
 	}
 	public int getEncoderLeft()
 	{
-		return -motorLeft1.getSensorCollection().getPulseWidthPosition();
+		return motorLeft1.getSensorCollection().getPulseWidthPosition();
 	}
 
 	public int getEncoderRight()
 	{
 		//		Value reversed for clarity
-		return motorRight1.getSensorCollection().getPulseWidthPosition();
+		return -motorRight1.getSensorCollection().getPulseWidthPosition();
 	}
 
 	public void initDefaultCommand() {
@@ -240,7 +241,7 @@ public class DriveTrain extends Subsystem {
 		percentRotationOutput = valueAfterDeadzoned(percentRotationOutput);
 
 		if (percentRotationOutput == 0) {
-			percentRotationOutput -= driveStraight(percentThrottle, targetAngle);
+			percentRotationOutput -= calculateDriveStraightTurnThrottle(percentThrottle, targetAngle);
 		}
 		driveByArcade(percentThrottle, percentRotationOutput);
 	}
@@ -294,26 +295,42 @@ public class DriveTrain extends Subsystem {
 		}
 	}
 
-	public double driveStraight(double forwardThrottle, double targetAngle) {
+	public double calculateDriveStraightTurnThrottle(double forwardThrottle, double targetAngle) {
 		//    	/* some temps for Pigeon API */
-		PigeonIMU.FusionStatus fusionStatus = new PigeonIMU.FusionStatus();
-		double [] xyz_dps = new double [3];
+//		PigeonIMU.FusionStatus fusionStatus = new PigeonIMU.FusionStatus();
+//		double [] xyz_dps = new double [3];
+//
+//		//		/* grab some input data from Pigeon */
+//		pid_geon.getFusedHeading(fusionStatus);
+//		double currentAngle = fusionStatus.heading;
+//		double currentAngularRate = xyz_dps[2];
 
-		//		/* grab some input data from Pigeon */
-		pid_geon.getFusedHeading(fusionStatus);
-		double currentAngle = fusionStatus.heading;
-		double currentAngularRate = xyz_dps[2];
-		double turnThrottle = (targetAngle - currentAngle) * kPgain - (currentAngularRate) * kDgain;
+		double turnThrottle = (targetAngle - getYaw()) * kPgain - (getYawRate()) * kDgain;
 
 		/* the max correction is the forward throttle times a scaler,
 		 * This can be done a number of ways but basically only apply small turning correction when we are moving slow
 		 * and larger correction the faster we move.  Otherwise you may need stiffer pgain at higher velocities. */
-		double maxThrot = getMaxCorrection(forwardThrottle, kMaxCorrectionRatio);
+		double maxThrottle = getMaxCorrection(forwardThrottle, kMaxCorrectionRatio);
 		//		System.out.println("Before Cap " + turnThrottle);
-		turnThrottle = cap(turnThrottle, maxThrot);
+		turnThrottle = cap(turnThrottle, maxThrottle);
 		//		System.out.println("After Cap " + turnThrottle);
 		return turnThrottle;
 	}
+	
+	public double getYaw() {
+		PigeonIMU.FusionStatus fusionStatus = new PigeonIMU.FusionStatus();
+		return pid_geon.getFusedHeading(fusionStatus);
+	}
+	
+	public double getYawRate() {
+		double [] xyz_dps = new double [3];
+		pid_geon.getRawGyro(xyz_dps);
+		
+		return xyz_dps[2];
+	}
+	
+	
+	
 
 	private double cap(double value, double peak) {
 		if (value < -peak)
@@ -357,49 +374,8 @@ public class DriveTrain extends Subsystem {
 		}
 	}
 
-	public void log() {
-		PigeonIMU.GeneralStatus genStatus = new PigeonIMU.GeneralStatus();
-		PigeonIMU.FusionStatus fusionStatus = new PigeonIMU.FusionStatus();
-		double [] xyz_dps = new double [3];
-		double[] accelerometer = new double [3];
-		double [] _6dquaternion = new double [4];
-		/* grab some input data from Pigeon and gamepad*/
-		pid_geon.getGeneralStatus(genStatus);
-		pid_geon.getRawGyro(xyz_dps);
-		pid_geon.getFusedHeading(fusionStatus);
-		pid_geon.getAccelerometerAngles(accelerometer);
-		pid_geon.get6dQuaternion(_6dquaternion);
-		double currentAngle = fusionStatus.heading;
-		_currentAngleToPass = currentAngle;
-		boolean angleIsGood = (pid_geon.getState() == PigeonIMU.PigeonState.Ready) ? true : false;
-		double currentAngularRate = xyz_dps[2];
-		SmartDashboard.putNumber("Accelerometer0", accelerometer[0]);
-		SmartDashboard.putNumber("Accelerometer1", accelerometer[1]);
-		SmartDashboard.putNumber("Accelerometer2", accelerometer[2]);
-		SmartDashboard.putNumberArray("_6dQuaternion", _6dquaternion);
-		SmartDashboard.putNumber("Angle", currentAngle);
-		
-		SmartDashboard.putNumber("Encoder Right", this.getEncoderRight());
-		SmartDashboard.putNumber("Encoder Left", this.getEncoderLeft());
-
-		SmartDashboard.putNumber("Motor Left 1 Voltage", motorLeft1.getMotorOutputVoltage());
-		SmartDashboard.putNumber("Motor Left 2 Voltage", motorLeft2.getMotorOutputVoltage());
-		SmartDashboard.putNumber("Motor Right 1 Voltage", motorRight1.getMotorOutputVoltage());
-		SmartDashboard.putNumber("Motor Right 2 Voltage", motorRight2.getMotorOutputVoltage());
-
-		SmartDashboard.putBoolean("Left Floor Cube Sensor", leftFrontCubeSensor.get());
-		SmartDashboard.putBoolean("Right Floor Cube Sensor", rightFrontCubeSensor.get());
-		
-		currentT = t.get();
-
-		//		System.out.println("{" + motorLeft1.getSensorCollection().getQuadraturePosition() + ",\t" + 
-		//				motorLeft1.getSensorCollection().getQuadratureVelocity() + ",\t"  + (int)((currentT - lastT) * 1000 + 5) + "},\t" +
-		//				"{" + motorRight1.getSensorCollection().getQuadraturePosition() + ",\t" + 
-		//				motorRight1.getSensorCollection().getQuadratureVelocity() + ",\t"  + (int)((currentT - lastT) * 1000 + 5) + "}," );
-
-		lastT = currentT;
-	}
-
+	
+	
 	public void prepareForMotionMagic() {
 
 		/* first choose the sensor */
@@ -544,4 +520,50 @@ public class DriveTrain extends Subsystem {
 		mPRIGHT.reset();
 	}
 
+
+	public void log() {
+//		PigeonIMU.GeneralStatus genStatus = new PigeonIMU.GeneralStatus();
+//		PigeonIMU.FusionStatus fusionStatus = new PigeonIMU.FusionStatus();
+//		double [] xyz_dps = new double [3];
+//		double[] accelerometer = new double [3];
+//		double [] _6dquaternion = new double [4];
+		/* grab some input data from Pigeon and gamepad*/
+//		pid_geon.getGeneralStatus(genStatus);
+//		pid_geon.getRawGyro(xyz_dps);
+//		pid_geon.getFusedHeading(fusionStatus);
+//		pid_geon.getAccelerometerAngles(accelerometer);
+//		pid_geon.get6dQuaternion(_6dquaternion);
+//		double currentAngle = fusionStatus.heading;
+//		_currentAngle = currentAngle;
+//		boolean angleIsGood = (pid_geon.getState() == PigeonIMU.PigeonState.Ready) ? true : false;
+//		SmartDashboard.putNumberArray("_6dQuaternion", _6dquaternion);
+		SmartDashboard.putNumber("Angle", getYaw());
+		SmartDashboard.putNumber("Yaw Rate", getYawRate());
+		
+		SmartDashboard.putNumber("Encoder Right", this.getEncoderRight());
+		SmartDashboard.putNumber("Encoder Left", this.getEncoderLeft());
+
+		SmartDashboard.putNumber("Motor Left 1 Voltage", motorLeft1.getMotorOutputVoltage());
+		SmartDashboard.putNumber("Motor Left 2 Voltage", motorLeft2.getMotorOutputVoltage());
+		SmartDashboard.putNumber("Motor Right 1 Voltage", motorRight1.getMotorOutputVoltage());
+		SmartDashboard.putNumber("Motor Right 2 Voltage", motorRight2.getMotorOutputVoltage());
+
+		SmartDashboard.putBoolean("Left Floor Cube Sensor", leftFrontCubeSensor.get());
+		SmartDashboard.putBoolean("Right Floor Cube Sensor", rightFrontCubeSensor.get());
+		
+//		L.og("LEFT enc: " + getEncoderLeft());
+//		L.og("RIGHT enc: " + getEncoderRight());
+		
+		currentT = t.get();
+
+		//		System.out.println("{" + motorLeft1.getSensorCollection().getQuadraturePosition() + ",\t" + 
+		//				motorLeft1.getSensorCollection().getQuadratureVelocity() + ",\t"  + (int)((currentT - lastT) * 1000 + 5) + "},\t" +
+		//				"{" + motorRight1.getSensorCollection().getQuadraturePosition() + ",\t" + 
+		//				motorRight1.getSensorCollection().getQuadratureVelocity() + ",\t"  + (int)((currentT - lastT) * 1000 + 5) + "}," );
+
+		lastT = currentT;
+	}
+
+	
+	
 }

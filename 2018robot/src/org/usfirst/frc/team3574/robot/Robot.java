@@ -78,7 +78,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 
-
+		
 		OperatorInput = new OI();
 		autoChooserForLosers.addObject("Do Nothing", new DoNothing());
 		autoChooserForLosers.addDefault("Drive Across Line", new DriveForwardAutonomous());
@@ -93,7 +93,10 @@ public class Robot extends TimedRobot {
 
 		SmartDashboard.putData(new ResetSlideEnc());
 		SmartDashboard.putData(new CalibrateArmEnc());
-
+		SmartDashboard.putData(new CalibrateArmEncStartingPosition());
+		
+		
+//		SmartDashboard.putData();
 		//		SmartDashboard.putData(new DriveByPID(20000));
 		//		
 		//		SmartDashboard.putData(new PutCubeInSwitch());

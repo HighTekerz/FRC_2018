@@ -5,6 +5,7 @@ import org.usfirst.frc.team3574.commands.arm.SetWristPosition;
 import org.usfirst.frc.team3574.commands.claw.SetClawPosition;
 import org.usfirst.frc.team3574.commands.driveTrain.DoNothing;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveByInches;
+import org.usfirst.frc.team3574.commands.driveTrain.DriveWithJoy;
 import org.usfirst.frc.team3574.commands.slide.HoldSlidePosition;
 import org.usfirst.frc.team3574.commands.slide.SetSlidePosition;
 import org.usfirst.frc.team3574.commands.util.ResetPreparationInt;
@@ -36,6 +37,7 @@ public class DropCubeInScale extends CommandGroup {
 //    	Backup 3 inches    	
     	addSequential(new DriveByInches(Robot.driveTrain.backupDistanceScale, 0.35));
 //    	Move SHOULDER to carry angle
+    	addParallel(new DriveWithJoy());
     	addSequential(new SetArmPosition(Arm.CARRY_ANGLE, new ArmSpeedSettingsWithoutCube()));
 //    	Move SLIDE to Carry position
 //    	addSequential(new SetSlidePosition(Slide.SLIDE_CARRY));

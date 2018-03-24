@@ -28,7 +28,7 @@ public class CalibratePickup extends CommandGroup {
     public CalibratePickup() {
 		addParallel(new DriveWithJoy());
 		addSequential(new UntilBothSensorsAreTripped());
-		addSequential(new DriveByInches(Robot.driveTrain.backupDistancePickupStart, 0.3));
+		addSequential(new DriveByInches(Robot.driveTrain.backupDistancePickupStart, 0.2));
 		addSequential(new SetClawPosition(ClawPosition.RELEASE));
 		addSequential(new SetWristPosition(WristPosition.ANGLED));
 //		addSequential(new SetSlidePosition(Slide.SLIDE_BOTTOM));

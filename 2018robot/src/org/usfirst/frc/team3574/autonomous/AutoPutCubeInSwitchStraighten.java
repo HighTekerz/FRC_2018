@@ -17,10 +17,10 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutoPutCubeInSwitchStraighten extends CommandGroup {
 	
 	private int _inchesAwayFromAllianceWall = 7;
-	private double _movementSpeed = 0.2;
-	private double _inchesToSwitchSide = 105.1487;
-	private double _degreeToTurnTo = 44.7076;
-	private double numberForHittingTheSwitch = 20;
+	private double _movementSpeed = 0.5;
+	private double _inchesToSwitchSide = 85;//101.54801;
+	private double _degreeToTurnTo = 32.125;
+//	private double numberForHittingTheSwitch = 20;
 	/**
 	 * 
 	 * @param leftOrRight send 1 for left, -1 for right
@@ -31,7 +31,7 @@ public class AutoPutCubeInSwitchStraighten extends CommandGroup {
     	addSequential(new TurnToDegree(_degreeToTurnTo * leftOrRight, _movementSpeed));
     	addSequential(new DriveByInches(_inchesToSwitchSide, _movementSpeed));
     	addSequential(new TurnToDegree(_degreeToTurnTo * -leftOrRight, _movementSpeed));
-//    	addSequential(new DriveByInches(numberForHittingTheSwitch, _movementSpeed), 1);
+    	addSequential(new DriveByInches(_inchesAwayFromAllianceWall, _movementSpeed));
 //    	addSequential(new SetArmPosition(Arm.AUTO_SWITCH_DELIVERY, new ArmSpeedSettingsWithCube()));
 //    	addSequential(new DropCubeInSwitch());
     }
