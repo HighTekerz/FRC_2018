@@ -8,6 +8,7 @@ import org.usfirst.frc.team3574.commands.arm.UpUntilUnclicked;
 import org.usfirst.frc.team3574.commands.claw.SetClawPosition;
 import org.usfirst.frc.team3574.commands.driveTrain.DoNothing;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveByInches;
+import org.usfirst.frc.team3574.commands.driveTrain.DriveWithJoy;
 import org.usfirst.frc.team3574.commands.sensors.UntilBothSensorsAreTripped;
 import org.usfirst.frc.team3574.commands.slide.SetSlidePosition;
 import org.usfirst.frc.team3574.enums.ClawPosition;
@@ -25,6 +26,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class PickupBlind extends CommandGroup {
 
     public PickupBlind() {
+    	addParallel(new DriveWithJoy());
 		addSequential(new DriveByInches(Robot.driveTrain.backupDistancePickupStart, 0.2));
 		addSequential(new SetClawPosition(ClawPosition.RELEASE));
 		addSequential(new SetWristPosition(WristPosition.ANGLED));

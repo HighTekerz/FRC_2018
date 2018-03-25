@@ -25,19 +25,18 @@ public final class RobotMap {
 	public static int RightLifterSolenoid = 6;
 	
 		//TalonSRX
-	public static int DriveTrainLeftTalon1 = 2; //2 on Coatl
-	public static int DriveTrainLeftTalon2 = 4; //4 on Coatl
-	public static int ArmMotor = 5; //5 on Coatl
-	public static int SlideMotor = 6; //6 on Coatl
-	public static int DriveTrainRightTalon1 = 1; //1 on Coatl
-	public static int DriveTrainRightTalon2 = 3; //3 on Coatl
+	public static int DriveTrainLeftTalon1 = 2; //2 on Frenzy
+	public static int DriveTrainLeftTalon2 = 4; //4 on Frenzy
+	public static int ArmMotor = 5; //5 on Frenzy
+	public static int SlideMotor = 6; //6 on Frenzy
+	public static int DriveTrainRightTalon1 = 1; //1 on Frenzy
+	public static int DriveTrainRightTalon2 = 3; //3 on Frenzy
 		
 		//Sparks
 	public static int LeftLifterReleaseSpark = 0;
 	public static int RightLifterReleaseSpark = 1;
 	
-		//Sensors\
-	
+		//SensorsS
 	public static int FloorCubeSensorLeft = 0;
 	public static int FloorCubeSensorRight = 1;
 	public static int ClawCubeSensorLeft = 2;

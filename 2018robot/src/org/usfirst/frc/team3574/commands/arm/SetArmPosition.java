@@ -125,7 +125,8 @@ public class SetArmPosition extends Command {
 			}
 
 		}
-
+		
+		L.og("Setting arm speed to: " + xSpeed);
 		Robot.arm.setSpeed(xSpeed);
 	}
 

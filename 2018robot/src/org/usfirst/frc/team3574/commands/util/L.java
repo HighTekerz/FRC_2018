@@ -73,6 +73,14 @@ public class L {
 		System.out.println(o);
 	}
 	
+	/**
+	 * Print to the Console with a label		
+	 * @param o
+	 */
+	public static void og(String label, Object o) {
+		System.out.println(label + ": " + o);
+	}
+	
 	
 	/**
 	 * For debugging purposes, place in 'initialize' within a command. 
@@ -143,6 +151,14 @@ public class L {
 	 */
 	public static void ogSD(String key, boolean data) {
 		SmartDashboard.putBoolean(key, data);
+	}
+/**
+	 * Put something on the SmartDashboard.
+	 * @param key
+	 * @param data
+	 */
+	public static void ogSD( Sendable data ) {
+		SmartDashboard.putData(data);
 	}
 
 }

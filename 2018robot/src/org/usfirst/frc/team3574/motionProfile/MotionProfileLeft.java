@@ -290,15 +290,15 @@ public class MotionProfileLeft {
 		_talon.clearMotionProfileTrajectories();
 
 		/* set the base trajectory period to zero, use the individual trajectory period below */
-		_talon.configMotionProfileTrajectoryPeriod(Constants.kBaseTrajPeriodMs, Constants.kTimeoutMs);
+		_talon.configMotionProfileTrajectoryPeriod(MPConstants.kBaseTrajPeriodMs, MPConstants.kTimeoutMs);
 		
 		/* This is fast since it's just into our TOP buffer */
 		for (int i = 0; i < totalCnt; ++i) {
 			double positionRot = profile[i][0];
 			double velocityRPM = profile[i][1];
 			/* for each point, fill our structure and pass it to API */
-			point.position = positionRot * Constants.kSensorUnitsPerRotation; //Convert Revolutions to Units
-			point.velocity = velocityRPM * Constants.kSensorUnitsPerRotation / 600.0; //Convert RPM to Units/100ms
+			point.position = positionRot * MPConstants.kSensorUnitsPerRotation; //Convert Revolutions to Units
+			point.velocity = velocityRPM * MPConstants.kSensorUnitsPerRotation / 600.0; //Convert RPM to Units/100ms
 			point.headingDeg = 0; /* future feature - not used in this example*/
 			point.profileSlotSelect0 = 0; /* which set of gains would you like to use [0,3]? */
 			point.profileSlotSelect1 = 0; /* future feature  - not used in this example - cascaded PID [0,1], leave zero */

@@ -1,6 +1,6 @@
 package org.usfirst.frc.team3574.motionProfile;
 
-public class Constants {
+public class MPConstants {
 
 	/** which Talon on CANBus */
 	public static final int kTalonID = 0;

@@ -34,18 +34,18 @@ public class ManualArm extends Command {
 				Robot.arm.setBrakePosition(BrakePosition.OPEN);
 				Robot.arm.setSpeed(Robot.driveTrain.scalingSpeed(-Robot.OperatorInput.CoPilotRightStickY(), 0.75) + 0.2);
 
-				L.og("Arm go up");
+//				L.og("Arm go up");
 				
 			} else if((Robot.OperatorInput.CoPilotRightStickY() > 0.0 &&
 					Robot.arm.getAngleOfArm() > Robot.arm.SWITCH_DELIVERY) || Robot.OperatorInput.CoPilotLeftBumper()) {
 				
-				L.og("Arm go down");
+//				L.og("Arm go down");
 				
 				Robot.arm.setBrakePosition(BrakePosition.OPEN);
 				Robot.arm.setSpeed(Robot.driveTrain.scalingSpeed(-Robot.OperatorInput.CoPilotRightStickY(), 0.75) + 0.2);
 
 			} else {
-				L.og("Arm Brake");
+//				L.og("Arm Brake");
 				Robot.arm.setBrakePosition(BrakePosition.CLOSED);
 				Robot.arm.setSpeed(0.0);
 
@@ -53,7 +53,7 @@ public class ManualArm extends Command {
 		
 		} else {
 			
-			L.og("Arm Dead");
+//			L.og("Arm Dead");
 			Robot.arm.setBrakePosition(BrakePosition.CLOSED);
 			Robot.arm.setSpeed(0.0);
 

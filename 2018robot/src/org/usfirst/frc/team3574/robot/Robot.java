@@ -18,13 +18,18 @@ import org.usfirst.frc.team3574.autonomous.AutonomousSelectorForSwitch;
 import org.usfirst.frc.team3574.autonomous.DriveForwardAutonomous;
 import org.usfirst.frc.team3574.commands.arm.CalibrateArmEnc;
 import org.usfirst.frc.team3574.commands.arm.CalibrateArmEncStartingPosition;
+import org.usfirst.frc.team3574.commands.arm.SetArmPosition;
 import org.usfirst.frc.team3574.commands.claw.SetClawPosition;
 import org.usfirst.frc.team3574.commands.driveTrain.DoNothing;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveByInches;
+import org.usfirst.frc.team3574.commands.driveTrain.DriveByPIDDistance;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveWithJoy;
+import org.usfirst.frc.team3574.commands.driveTrain.ResetDriveEnc;
+import org.usfirst.frc.team3574.commands.driveTrain.TurnToDegreeTwoPointOh;
 import org.usfirst.frc.team3574.commands.groups.autopidtestone;
 import org.usfirst.frc.team3574.commands.slide.ResetEncIfAtLowestPoint;
 import org.usfirst.frc.team3574.commands.slide.ResetSlideEnc;
+import org.usfirst.frc.team3574.commands.util.L;
 import org.usfirst.frc.team3574.commands.util.RumbleASide;
 import org.usfirst.frc.team3574.enums.ClawPosition;
 import org.usfirst.frc.team3574.subsystems.Arm;
@@ -33,12 +38,14 @@ import org.usfirst.frc.team3574.subsystems.DriveTrain;
 import org.usfirst.frc.team3574.subsystems.ForkLifter;
 import org.usfirst.frc.team3574.subsystems.Slide;
 import org.usfirst.frc.team3574.subsystems.UtilitySubsystem;
+import org.usfirst.frc.team3574.utilities.ArmSpeedSettingsWithCube;
 import org.usfirst.frc.team3574.subsystems.SensorTest;
 import org.usfirst.frc.team3574.subsystems.JackWings;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -69,6 +76,9 @@ public class Robot extends TimedRobot {
 	SendableChooser<Command> startPositionChooser = new SendableChooser<>();	
 
 	public double _matchTime;
+	
+	private Timer time = new Timer();
+	private double lastTime;
 
 	
 	/**
@@ -94,7 +104,15 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putData(new ResetSlideEnc());
 		SmartDashboard.putData(new CalibrateArmEnc());
 		SmartDashboard.putData(new CalibrateArmEncStartingPosition());
-		
+		L.ogSD(new DriveByPIDDistance(12));
+		L.ogSD(new ResetDriveEnc());
+		L.ogSD("Forward 12'", new DriveByInches(140, .5));
+		L.ogSD("TurnToDegreeTwoPointOh 0", new TurnToDegreeTwoPointOh(00.0, 0.3));
+		L.ogSD("TurnToDegreeTwoPointOh 90", new TurnToDegreeTwoPointOh(90.0, 0.3));
+		L.ogSD("TurnToDegreeTwoPointOh 180", new TurnToDegreeTwoPointOh(180, 0.3));
+		L.ogSD("TurnToDegreeTwoPointOh -90", new TurnToDegreeTwoPointOh(-90.0, 0.3));
+		L.ogSD("TurnToDegreeTwoPointOh -180", new TurnToDegreeTwoPointOh(-180, 0.3));
+		L.ogSD(new SetArmPosition(Arm.AUTO_SWITCH_DELIVERY, new ArmSpeedSettingsWithCube()));
 		
 //		SmartDashboard.putData();
 		//		SmartDashboard.putData(new DriveByPID(20000));
@@ -106,6 +124,9 @@ public class Robot extends TimedRobot {
 		new ResetSlideEnc().start();
 
 		Robot.slide.setCurrent(0.0);
+		
+		time.reset();
+		time.start();
 	}
 
 	/**
@@ -138,6 +159,8 @@ public class Robot extends TimedRobot {
 	public void autonomousInit() {
 		new CalibrateArmEncStartingPosition().start();
 		m_autonomousCommand = autoChooserForLosers.getSelected();
+		
+		setPeriod(0.015);
 
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -169,6 +192,7 @@ public class Robot extends TimedRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
+		setPeriod(.020);
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
@@ -197,6 +221,8 @@ public class Robot extends TimedRobot {
 
 	public void runAlways() {
 		new ResetEncIfAtLowestPoint().start();
+		
+		
 
 		this.log();
 	}
@@ -205,12 +231,18 @@ public class Robot extends TimedRobot {
 	 * Calls all log methods in subsystems, putting data on the smartdashboard and console
 	 */
 	public void log() {
-		SmartDashboard.putNumber("Percent Throttle", OperatorInput.getRightStickY());
-		SmartDashboard.putNumber("Percent Rotation", OperatorInput.getLeftStickX());
-		SmartDashboard.putNumber("Match Time", _matchTime);
-		SmartDashboard.putNumber("a", (OperatorInput.getDialAxis()+1)/2);
-		SmartDashboard.putString("Switch & Scale Colors", DriverStation.getInstance().getGameSpecificMessage());
-		SmartDashboard.putNumber("POV of driverXbox360Controller", OperatorInput.GetPOV(Robot.OperatorInput.driverXbox360Controller));
+//		SmartDashboard.putNumber("Percent Throttle", OperatorInput.getRightStickY());
+//		SmartDashboard.putNumber("Percent Rotation", OperatorInput.getLeftStickX());
+//		SmartDashboard.putNumber("Match Time", _matchTime);
+//		SmartDashboard.putNumber("a", (OperatorInput.getDialAxis()+1)/2);
+//		SmartDashboard.putString("Switch & Scale Colors", DriverStation.getInstance().getGameSpecificMessage());
+//		SmartDashboard.putNumber("POV of driverXbox360Controller", OperatorInput.GetPOV(Robot.OperatorInput.driverXbox360Controller));
+		
+		double currentTime = time.get();
+		
+		L.ogSD("loop time", currentTime - lastTime);
+		
+		lastTime = currentTime;
 
 		Robot.driveTrain.log();
 		Robot.sensorTest.log();

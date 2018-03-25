@@ -55,8 +55,7 @@ public class TurnToDegree extends Command {
 			Robot.driveTrain.driveByArcade(0, 0);
 			System.out.println("TurnToDegree Is Finished at: " + _currentAngle);
 			return true;
-		}
-		else {
+		} else {
 			System.out.println("TurnToDegree Is NOT Finished at: " + _currentAngle);
 			return false;
 		}

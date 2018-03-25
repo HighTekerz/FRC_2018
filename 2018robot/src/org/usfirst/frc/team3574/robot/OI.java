@@ -59,9 +59,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class OI {
 	XboxController driverXbox360Controller = new XboxController(0);
 	XboxController coPilotxbox360Controller = new XboxController(1);
-//	Joystick garrettDriver = new Joystick(4);
+	//	Joystick garrettDriver = new Joystick(4);
 	//	Joystick logitechAttack = new Joystick(3);
-	
+
 	static final int A_BUTTON = 1;
 	static final int B_BUTTON = 2;
 	static final int X_BUTTON = 3;
@@ -73,7 +73,7 @@ public class OI {
 	static final int RIGHT_THUMBSTICK_BUTTON = 9;
 	static final int LEFT_THUMBSTICK_BUTTON = 10;
 
-	
+
 	static final int LEFT_STICK_X = 0;
 	static final int LEFT_STICK_Y = 1;
 	static final int LEFT_TRIGGER = 2;
@@ -81,79 +81,79 @@ public class OI {
 	int pov = 0;
 
 	public OI() {
-	SmartDashboard.putData(new TurnToDegree(45, .5));
-		
-		
+		SmartDashboard.putData(new TurnToDegree(45, .5));
+
+
 		/**
 		 * <<DRIVER CONTROLLER>> (david)
 		 */
 		Button calibratePickup = new TriggerButton(driverXbox360Controller, LEFT_TRIGGER);
 		calibratePickup.whenPressed(new CalibratePickup());
-		
+
 		Button pickupNoCal = new TriggerButton(driverXbox360Controller, RIGHT_TRIGGER);
 		pickupNoCal.whenPressed(new StartPickup());
-		
+
 		Button pickupBlind = new JoystickButton(driverXbox360Controller, LEFT_BUMPER);
 		pickupBlind.whenPressed(new PickupBlind());
-		
+
 		Button shiftHigh = new POVUp(driverXbox360Controller, pov);
 		shiftHigh.whenPressed(new ShiftGear(ShifterPosition.HIGH_GEAR));
-		
+
 		Button shiftLow = new POVDown(driverXbox360Controller, pov);
 		shiftLow.whenPressed(new ShiftGear(ShifterPosition.LOW_GEAR));
-		
+
 		// <<CO-PILOT CONTROLLER>>
-//		Button prepareForSwitch = new JoystickButton(coPilotxbox360Controller, LEFT_BUMPER);
-//		prepareForSwitch.whenPressed(new SetSlidePosition(60));//PrepareForSwitchDelivery());
+		//		Button prepareForSwitch = new JoystickButton(coPilotxbox360Controller, LEFT_BUMPER);
+		//		prepareForSwitch.whenPressed(new SetSlidePosition(60));//PrepareForSwitchDelivery());
 
 		Button prepareForScale = new JoystickButton(coPilotxbox360Controller, RIGHT_BUMPER);
 		prepareForScale.whenPressed(new SetSlidePosition((12 * 8)));//PrepareForScaleDelivery());
-		
-//		Button dropOffInSwitch = new TriggerButton(coPilotxbox360Controller, LEFT_TRIGGER);
-//		dropOffInSwitch.whenPressed(new DropCubeInSwitch());
-		
+
+		//		Button dropOffInSwitch = new TriggerButton(coPilotxbox360Controller, LEFT_TRIGGER);
+		//		dropOffInSwitch.whenPressed(new DropCubeInSwitch());
+
 		Button dropOffInScale = new TriggerButton(coPilotxbox360Controller, RIGHT_TRIGGER);
 		dropOffInScale.whenPressed(new DropCubeInScale());
-		
+
 		Button calToStartingPosition = new JoystickButton(coPilotxbox360Controller, BACK);
 		calToStartingPosition.whenPressed(new CalibrateArmEncStartingPositionYadda());
 
 		Button readyToIntakePosition = new JoystickButton(coPilotxbox360Controller, START);
-//		startingPosition.whenPressed(new MoveToStartingPosition());
+		//		startingPosition.whenPressed(new MoveToStartingPosition());
 		/**
 		 * NEED TO PROGRAM   <-----  this worries me.  -John  :)
 		 */
 
 		Button startingPosition = new JoystickButton(coPilotxbox360Controller, Y_BUTTON);
 		startingPosition.whenPressed(new MoveToStartingPosition());
-		
+
 		Button angleWrist = new POVDown(coPilotxbox360Controller, pov);
 		angleWrist.whenPressed(new SetWristPosition(WristPosition.ANGLED));
-		
+
 		Button straightenWrist = new POVUp(coPilotxbox360Controller, pov);
 		straightenWrist.whenPressed(new SetWristPosition(WristPosition.STRAIGHT));
-		
+
 		Button openClaw = new POVLeft(coPilotxbox360Controller, pov);
 		openClaw.whenPressed(new SetClawPosition(ClawPosition.RELEASE));
 
 		Button closeClaw = new POVRight(coPilotxbox360Controller, pov);
 		closeClaw.whenPressed(new SetClawPosition(ClawPosition.GRIP));
-		
-//		Button manualArm = new JoystickButton(coPilotxbox360Controller, A_BUTTON);
-//		manualArm.whileHeld(new ManualArm());
-//		manualArm.whenReleased(new HoldArmPosition());
-//		
-//		Button manualSlide = new JoystickButton(coPilotxbox360Controller, B_BUTTON);
-//		manualSlide.whileHeld(new ManualSlide());
-//		manualSlide.whenReleased(new HoldSlidePosition());
-		
+
+		//		Button manualArm = new JoystickButton(coPilotxbox360Controller, A_BUTTON);
+		//		manualArm.whileHeld(new ManualArm());
+		//		manualArm.whenReleased(new HoldArmPosition());
+		//		
+		//		Button manualSlide = new JoystickButton(coPilotxbox360Controller, B_BUTTON);
+		//		manualSlide.whileHeld(new ManualSlide());
+		//		manualSlide.whenReleased(new HoldSlidePosition());
+
 	}
 
 	public double getLeftStickY()
 	{
 		return driverXbox360Controller.getY(Hand.kLeft);
 	}
-	
+
 	public double getRightStickY()
 	{
 		return driverXbox360Controller.getY(Hand.kRight);
@@ -163,12 +163,12 @@ public class OI {
 	{             
 		return driverXbox360Controller.getX(Hand.kLeft);
 	}
-	
+
 	public double getRightStickX()
 	{
 		return driverXbox360Controller.getX(Hand.kRight);
 	}
-	
+
 	public double getRightTrigger()
 	{
 		return driverXbox360Controller.getTriggerAxis(Hand.kRight);
@@ -177,35 +177,35 @@ public class OI {
 	public double GetPOV(XboxController stickToCheck) {
 		return stickToCheck.getPOV();
 	}
-	
+
 	public double getLeftTrigger()
 	{
 		return driverXbox360Controller.getTriggerAxis(Hand.kLeft);
 	}
-	
+
 	public double getDialAxis()
 	{
 		return 0;
 	}
-	
+
 	public double CoPilotRightStickY() {
 		return coPilotxbox360Controller.getY(Hand.kRight);
 	}
-	
+
 	public double CoPilotLeftStickY() {
 		return coPilotxbox360Controller.getY(Hand.kLeft);
 	}	
 	public boolean CoPilotLeftBumper() {
 		return coPilotxbox360Controller.getBumper(Hand.kLeft);
 	}
-	
+
 	/**
 	 * Garrett Methods
 	 */
-//	public double garrettDriverThrottle() {
-//		return 
-//	}
-	
-	
-	
+	//	public double garrettDriverThrottle() {
+	//		return 
+	//	}
+
+
+
 }

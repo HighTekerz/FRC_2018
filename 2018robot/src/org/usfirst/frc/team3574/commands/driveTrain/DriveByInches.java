@@ -4,6 +4,7 @@ import org.usfirst.frc.team3574.commands.util.L;
 import org.usfirst.frc.team3574.enums.ShifterPosition;
 import org.usfirst.frc.team3574.robot.Robot;
 //import org.usfirst.frc.team3574.subsystems.DriveTrain;
+import org.usfirst.frc.team3574.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
@@ -67,7 +68,7 @@ public class DriveByInches extends Command {
     	inchesToTravel = Math.abs(inchesToTravel);
 //    	217.2995489 is our ticks per inch
 	
-    	_ticksToTravel = inchesToTravel * 217.2995489;
+    	_ticksToTravel = inchesToTravel * DriveTrain.ticksToInch;
     	requires(Robot.driveTrain);
     }
 
@@ -141,5 +142,6 @@ public class DriveByInches extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	Robot.driveTrain.driveByArcade(0, 0);
     }
 }
