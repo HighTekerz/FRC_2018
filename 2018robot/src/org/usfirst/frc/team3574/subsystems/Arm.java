@@ -9,6 +9,7 @@ import org.usfirst.frc.team3574.robot.RobotMap;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -56,7 +57,10 @@ public class Arm extends Subsystem {
 
 	public Arm() {
 
+		
 		ArmMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, kPIDLoopIdx, kTimeoutMs);
+		
+		ArmMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_8_PulseWidth, 15, 0);
 		//
 		ArmMotor.setSensorPhase(kSensorPhase);
 		//

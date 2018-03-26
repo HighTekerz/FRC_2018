@@ -55,7 +55,7 @@ public class DriveTrain extends Subsystem {
 	MotionProfileRight mPLeft = new MotionProfileRight(motorLeft1);
 	StringBuilder _sb = new StringBuilder();
 
-	public double backupDistancePickupStart = -0.25;
+	public double backupDistancePickupStart = -0.75;
 	public double backupDistancePickupEnd = -3;
 	public double backupDistanceSwitch = -3;
 	public double backupDistanceScale = -12;
@@ -108,7 +108,8 @@ public class DriveTrain extends Subsystem {
 		motorRight2.setNeutralMode(NeutralMode.Brake);
 		motorLeft2.setNeutralMode(NeutralMode.Brake);
 
-
+		motorRight1.setStatusFramePeriod(StatusFrameEnhanced.Status_8_PulseWidth, 15, 0);
+		motorLeft1.setStatusFramePeriod(StatusFrameEnhanced.Status_8_PulseWidth, 15, 0);
 
 		//		runningPancake = false;
 		//		InetAddress ip;
@@ -150,6 +151,8 @@ public class DriveTrain extends Subsystem {
 
 		t.reset();
 		t.start();
+		
+		
 
 	}
 	public void setPIDDistance(int ticks) {
