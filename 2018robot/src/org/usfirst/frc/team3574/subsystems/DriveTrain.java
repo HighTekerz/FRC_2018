@@ -612,7 +612,9 @@ public class DriveTrain extends Subsystem {
 		//		_currentAngle = currentAngle;
 		//		boolean angleIsGood = (pid_geon.getState() == PigeonIMU.PigeonState.Ready) ? true : false;
 		//		SmartDashboard.putNumberArray("_6dQuaternion", _6dquaternion);
+		
 		SmartDashboard.putNumber("Angle", getYaw());
+		
 //		SmartDashboard.putNumber("Yaw Rate", getYawRate());
 
 //		SmartDashboard.putNumber("Encoder Right", this.getEncoderRight());
@@ -648,7 +650,4 @@ public class DriveTrain extends Subsystem {
 
 		lastT = currentT;
 	}
-
-
-
 }
