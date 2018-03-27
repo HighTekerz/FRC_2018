@@ -20,7 +20,6 @@ public class ResetEncIfAtLowestPoint extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	
     	if (loop % 15 == 0 && Robot.slide.getBottomStopSwitchIsPressed()) {
     		Robot.slide.resetEnc();
     	}
@@ -38,6 +37,5 @@ public class ResetEncIfAtLowestPoint extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-		L.ogInterrupt(this);
     }
 }

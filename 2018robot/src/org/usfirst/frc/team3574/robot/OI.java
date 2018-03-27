@@ -26,6 +26,7 @@ import org.usfirst.frc.team3574.commands.groups.MoveToStartingPosition;
 import org.usfirst.frc.team3574.commands.groups.PrepareForScaleDelivery;
 import org.usfirst.frc.team3574.commands.groups.pickup.CalibratePickup;
 import org.usfirst.frc.team3574.commands.groups.pickup.GoToPositionPickup;
+import org.usfirst.frc.team3574.commands.groups.pickup.OppositePickup;
 import org.usfirst.frc.team3574.commands.groups.pickup.BlindPickup;
 import org.usfirst.frc.team3574.commands.groups.pickup.StartPickup;
 import org.usfirst.frc.team3574.commands.groups.PrepareForSwitchDelivery;
@@ -94,6 +95,9 @@ public class OI {
 		Button pickupNoCal = new TriggerButton(driverXbox360Controller, RIGHT_TRIGGER);
 		pickupNoCal.whenPressed(new GoToPositionPickup());
 
+		Button oppositePickup = new JoystickButton(driverXbox360Controller, RIGHT_BUMPER);
+		oppositePickup.whenPressed(new OppositePickup());
+		
 		Button pickupBlind = new JoystickButton(driverXbox360Controller, LEFT_BUMPER);
 		pickupBlind.whenPressed(new BlindPickup());
 

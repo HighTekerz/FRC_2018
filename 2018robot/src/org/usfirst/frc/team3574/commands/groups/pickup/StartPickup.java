@@ -31,8 +31,8 @@ public class StartPickup extends CommandGroup {
 		 * The center of the shoulder (which makes the arm move in a circle) will be at 21.75 inches off the ground.  
 		 */
 		addSequential(new DriveByInches(Robot.driveTrain.backupDistancePickupStart, 0.2));
-		addParallel(new SetClawPosition(ClawPosition.RELEASE));
-		addParallel(new SetWristPosition(WristPosition.ANGLED));
+		addSequential(new SetClawPosition(ClawPosition.RELEASE));
+		addSequential(new SetWristPosition(WristPosition.ANGLED));
 //		addSequential(new SetSlidePosition(Slide.SLIDE_BOTTOM));
 		addSequential(new DownUntilClicked(new ArmSpeedSettingsWithoutCube(), 1, true));
 		addSequential(new UpUntilUnclicked(new ArmSpeedSettingsWithoutCube(), 1));

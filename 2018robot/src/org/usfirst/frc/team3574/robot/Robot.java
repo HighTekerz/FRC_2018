@@ -10,6 +10,10 @@ package org.usfirst.frc.team3574.robot;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 
+import org.opencv.core.Mat;
+import org.opencv.core.Point;
+import org.opencv.core.Scalar;
+import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team3574.autonomous.AutoPutCubeInSwitchAhead;
 import org.usfirst.frc.team3574.autonomous.AutoPutCubeInSwitchDiagonal;
 import org.usfirst.frc.team3574.autonomous.AutoPutCubeInSwitchStraighten;
@@ -42,6 +46,9 @@ import org.usfirst.frc.team3574.utilities.L;
 import org.usfirst.frc.team3574.subsystems.SensorTest;
 import org.usfirst.frc.team3574.subsystems.JackWings;
 
+import edu.wpi.cscore.CvSink;
+import edu.wpi.cscore.CvSource;
+import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
@@ -61,7 +68,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * project.
  */
 public class Robot extends TimedRobot {
-
+	Thread m_visionThread;
 	//subsystems 
 	public static final DriveTrain  driveTrain = new DriveTrain();
 	public static final SensorTest  sensorTest = new SensorTest();
@@ -88,12 +95,51 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
-		CameraServer.getInstance().startAutomaticCapture();
+		//This is the one, only, and singular line that makes the camera do it's thing
+		m_visionThread = new Thread(() -> {
+			// Get the UsbCamera from CameraServer
+			UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+			// Set the resolution
+			camera.setResolution(320, 240);
+
+			// Get a CvSink. This will capture Mats from the camera
+			CvSink cvSink = CameraServer.getInstance().getVideo();
+			// Setup a CvSource. This will send images back to the Dashboard
+			CvSource outputStream
+					= CameraServer.getInstance().putVideo("Rectangle", 320, 240);
+
+			// Mats are very memory expensive. Lets reuse this Mat.
+			Mat mat = new Mat();
+
+			// This cannot be 'true'. The program will never exit if it is. This
+			// lets the robot stop this thread when restarting robot code or
+			// deploying.
+			while (!Thread.interrupted()) {
+				// Tell the CvSink to grab a frame from the camera and put it
+				// in the source mat.  If there is an error notify the output.
+				if (cvSink.grabFrame(mat) == 0) {
+					// Send the output the error.
+					outputStream.notifyError(cvSink.getError());
+					// skip the rest of the current iteration
+					continue;
+				}
+				
+				// Put a rectangle on the image
+				Imgproc.rectangle(mat, new Point(100, 100), new Point(200, 200),
+						new Scalar(255, 255, 255), 5);
+				Imgproc.line(mat, new Point(5, 5),new Point(30, 50), new Scalar(255,0,255), 5);
+				// Give the output stream a new image to display
+				outputStream.putFrame(mat);				
+			}
+		});
+		m_visionThread.setDaemon(true);
+		m_visionThread.start();
+	
 		
 		OperatorInput = new OI();
 		autoChooserForLosers.addObject("Do Nothing", new DoNothing());
 		autoChooserForLosers.addDefault("Drive Across Line", new DriveForwardAutonomous());
-		autoChooserForLosers.addObject("Cube in switch from middle", new AutonomousSelectorForSwitch());
+		autoChooserForLosers.addObject("Cube in switch from middle", new AutonomousSelectorForSwitch()); 
 
 		SmartDashboard.putData("Scheduler", Scheduler.getInstance());
 
@@ -115,13 +161,6 @@ public class Robot extends TimedRobot {
 		L.ogSD("TurnToDegreeTwoPointOh -180", new TurnToDegreeTwoPointOh(-180, 0.3));
 		L.ogSD(new SetArmPosition(Arm.AUTO_SWITCH_DELIVERY, new ArmSpeedSettingsWithCube()));
 		
-//		SmartDashboard.putData();
-		//		SmartDashboard.putData(new DriveByPID(20000));
-		//		
-		//		SmartDashboard.putData(new PutCubeInSwitch());
-		//		SmartDashboard.putData(new MakeMotionProflileGo());
-
-
 		new ResetSlideEnc().start();
 
 		Robot.slide.setCurrent(0.0);
@@ -142,7 +181,6 @@ public class Robot extends TimedRobot {
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
-		this.runAlways();
 	}
 
 	/**
@@ -175,7 +213,6 @@ public class Robot extends TimedRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.start();
 		}
-		this.runAlways();
 	}
 
 	/**
@@ -184,7 +221,6 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		this.runAlways();
 	}
 
 	@Override
@@ -197,7 +233,6 @@ public class Robot extends TimedRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
-		this.runAlways();
 	}
 
 	/**
@@ -206,7 +241,6 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		_matchTime = DriverStation.getInstance().getMatchTime();
-		this.runAlways();
 		//		Robot.driveTrain.driveStraight(0.5, 0);
 
 		Scheduler.getInstance().run();
@@ -220,11 +254,9 @@ public class Robot extends TimedRobot {
 		LiveWindow.run();
 	}
 
-	public void runAlways() {
+	@Override
+	public void robotPeriodic() {
 		new ResetEncIfAtLowestPoint().start();
-		
-		
-
 		this.log();
 	}
 

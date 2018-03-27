@@ -6,6 +6,9 @@ import org.usfirst.frc.team3574.commands.driveTrain.DriveByInches;
 import org.usfirst.frc.team3574.commands.driveTrain.TurnToDegree;
 import org.usfirst.frc.team3574.commands.driveTrain.TurnToDegreeTwoPointOh;
 import org.usfirst.frc.team3574.commands.groups.DropCubeInSwitch;
+import org.usfirst.frc.team3574.commands.util.LogTimer;
+import org.usfirst.frc.team3574.commands.util.StartTimer;
+import org.usfirst.frc.team3574.commands.util.StopTimer;
 import org.usfirst.frc.team3574.enums.ShifterPosition;
 import org.usfirst.frc.team3574.subsystems.Arm;
 import org.usfirst.frc.team3574.utilities.ArmSpeedSettingsWithCube;
@@ -28,19 +31,25 @@ public class AutoPutCubeInSwitchStraighten extends CommandGroup {
 	 * @param leftOrRight send 1 for left, -1 for right
 	 */
     public AutoPutCubeInSwitchStraighten(double leftOrRight) {
+    	addParallel(new StartTimer());
     	addSequential(new CalibrateArmEncStartingPosition());
+    	addSequential(new LogTimer());
     	addSequential(new DriveByInches(_inchesAwayFromAllianceWall, _movementSpeed, ShifterPosition.LOW_GEAR));
-
+    	addSequential(new LogTimer());
 //    	addSequential(new TurnToDegree(_degreeToTurnTo * leftOrRight, _movementSpeed));
     	addSequential(new TurnToDegreeTwoPointOh(_degreeToTurnTo * leftOrRight, _turnSpeed));
+    	addSequential(new LogTimer());
     	addSequential(new DriveByInches(_inchesToSwitchSide, _movementSpeed), 5);
-    	
+    	addSequential(new LogTimer());
 //    	addSequential(new TurnToDegree(_degreeToTurnTo * -leftOrRight, _movementSpeed));
     	addSequential(new TurnToDegreeTwoPointOh(_degreeToTurnTo * -leftOrRight, _turnSpeed), 2);
-    	
+    	addSequential(new LogTimer());
     	addSequential(new DriveByInches(_inchesAwayFromAllianceWall, _movementSpeed), 3);
-    	
+    	addSequential(new LogTimer());
     	addSequential(new SetArmPosition(Arm.AUTO_SWITCH_DELIVERY, new ArmSpeedSettingsWithCube()));
+    	addSequential(new LogTimer());
     	addSequential(new DropCubeInSwitch());
+    	addSequential(new LogTimer());
+    	addSequential(new StopTimer());
     }
 }

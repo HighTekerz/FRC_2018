@@ -156,10 +156,12 @@ public class DriveTrain extends Subsystem {
 		
 
 	}
+	
 	public void setPIDDistance(int ticks) {
 		motorLeft1.set(ControlMode.Position,  getEncoderLeft() + ticks);
 		motorRight1.set(ControlMode.Position, getEncoderRight() - ticks);
 	}
+	
 //	public boolean isPIDDone() { 
 //		if(motorLeft1.getClosedLoopError(arg0)) {
 //			
@@ -168,6 +170,7 @@ public class DriveTrain extends Subsystem {
 //		
 //		return false;
 //	}
+	
 	public int getEncoderLeft() {
 		return motorLeft1.getSensorCollection().getPulseWidthPosition();
 	}
@@ -186,7 +189,7 @@ public class DriveTrain extends Subsystem {
 	}
 
 	/** 
-	 * Drives the robot using seperate inputs for the left and right side motors.
+	 * Drives the robot using separate inputs for the left and right side motors.
 	 * Inputs are percentages of maximum motor output.
 	 * 
 	 * @param leftSpeed Speed of the left wheels
@@ -349,9 +352,6 @@ public class DriveTrain extends Subsystem {
 
 		return xyz_dps[2];
 	}
-
-
-
 
 	private double cap(double value, double peak) {
 		if (value < -peak)

@@ -39,7 +39,6 @@ public class ManualSlide extends Command {
     		} else {
 
     			Robot.slide.setSlideSpeedPercent(Robot.driveTrain.scalingSpeed(Robot.OperatorInput.CoPilotLeftStickY(), 0.25) + Robot.slide.brakeSpeed);	
-    		
 //    			L.og("normal drive");
     		}
 
