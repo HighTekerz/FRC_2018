@@ -32,7 +32,7 @@ public class DropCubeInSwitch extends CommandGroup {
     	//    	Open CLAW
     	addSequential(new SetClawPosition(ClawPosition.RELEASE));    	
     	
-    	addSequential(new DoNothing(0.5));
+    	addSequential(new DoNothing(0.2));
 //    	Backup 3 inches
     	addSequential(new DriveByInches(Robot.driveTrain.backupDistanceSwitch, 0.35));
 //    	Move SHOULDER to carry angle

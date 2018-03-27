@@ -20,13 +20,14 @@ import org.usfirst.frc.team3574.commands.claw.SetClawPosition;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveByInches;
 import org.usfirst.frc.team3574.commands.driveTrain.ShiftGear;
 import org.usfirst.frc.team3574.commands.driveTrain.TurnToDegree;
-import org.usfirst.frc.team3574.commands.groups.CalibratePickup;
 import org.usfirst.frc.team3574.commands.groups.DropCubeInScale;
 import org.usfirst.frc.team3574.commands.groups.DropCubeInSwitch;
 import org.usfirst.frc.team3574.commands.groups.MoveToStartingPosition;
-import org.usfirst.frc.team3574.commands.groups.PickupBlind;
 import org.usfirst.frc.team3574.commands.groups.PrepareForScaleDelivery;
-import org.usfirst.frc.team3574.commands.groups.StartPickup;
+import org.usfirst.frc.team3574.commands.groups.pickup.CalibratePickup;
+import org.usfirst.frc.team3574.commands.groups.pickup.GoToPositionPickup;
+import org.usfirst.frc.team3574.commands.groups.pickup.BlindPickup;
+import org.usfirst.frc.team3574.commands.groups.pickup.StartPickup;
 import org.usfirst.frc.team3574.commands.groups.PrepareForSwitchDelivery;
 import org.usfirst.frc.team3574.commands.slide.HoldSlidePosition;
 import org.usfirst.frc.team3574.commands.slide.ManualSlide;
@@ -91,10 +92,10 @@ public class OI {
 		calibratePickup.whenPressed(new CalibratePickup());
 
 		Button pickupNoCal = new TriggerButton(driverXbox360Controller, RIGHT_TRIGGER);
-		pickupNoCal.whenPressed(new StartPickup());
+		pickupNoCal.whenPressed(new GoToPositionPickup());
 
 		Button pickupBlind = new JoystickButton(driverXbox360Controller, LEFT_BUMPER);
-		pickupBlind.whenPressed(new PickupBlind());
+		pickupBlind.whenPressed(new BlindPickup());
 
 		Button shiftHigh = new POVUp(driverXbox360Controller, pov);
 		shiftHigh.whenPressed(new ShiftGear(ShifterPosition.HIGH_GEAR));

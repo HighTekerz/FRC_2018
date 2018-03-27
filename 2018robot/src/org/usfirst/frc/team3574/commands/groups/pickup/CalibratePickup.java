@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3574.commands.groups;
+package org.usfirst.frc.team3574.commands.groups.pickup;
 
 import org.usfirst.frc.team3574.commands.arm.CalibrateArmEnc;
 import org.usfirst.frc.team3574.commands.arm.DownUntilClicked;
@@ -11,6 +11,8 @@ import org.usfirst.frc.team3574.commands.driveTrain.DriveByInches;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveWithJoy;
 import org.usfirst.frc.team3574.commands.sensors.UntilBothSensorsAreTripped;
 import org.usfirst.frc.team3574.commands.slide.SetSlidePosition;
+import org.usfirst.frc.team3574.commands.util.StartTimer;
+import org.usfirst.frc.team3574.commands.util.StopTimer;
 import org.usfirst.frc.team3574.enums.ClawPosition;
 import org.usfirst.frc.team3574.enums.WristPosition;
 import org.usfirst.frc.team3574.robot.Robot;
@@ -26,16 +28,12 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class CalibratePickup extends CommandGroup {
 
     public CalibratePickup() {
+    	addParallel(new StartTimer());
 		addParallel(new DriveWithJoy());
-		addSequential(new UntilBothSensorsAreTripped());
-		addSequential(new DriveByInches(Robot.driveTrain.backupDistancePickupStart, 0.2));
-		addParallel(new SetClawPosition(ClawPosition.RELEASE));
-		addParallel(new SetWristPosition(WristPosition.ANGLED));
-//		addSequential(new SetSlidePosition(Slide.SLIDE_BOTTOM));
-		addSequential(new DownUntilClicked(new ArmSpeedSettingsWithoutCube(), 1, true));
-		addSequential(new UpUntilUnclicked(new ArmSpeedSettingsWithoutCube(), 1));
-		addSequential(new DownUntilClicked(new ArmSpeedSettingsWithoutCube(), 1, false));
+		addSequential(new UntilBothSensorsAreTripped()); //floor sensors
+		addSequential(new StartPickup());
 		addSequential(new CalibrateArmEnc());
 		addSequential(new CompletePickup());
+		addSequential(new StopTimer());
     }
 }

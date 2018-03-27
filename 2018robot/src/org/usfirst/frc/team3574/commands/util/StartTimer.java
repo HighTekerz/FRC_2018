@@ -1,19 +1,25 @@
 package org.usfirst.frc.team3574.commands.util;
 
+import org.usfirst.frc.team3574.robot.Robot;
+import org.usfirst.frc.team3574.utilities.L;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class Timer extends Command {
+public class StartTimer extends Command {
 
-    public Timer() {
+    public StartTimer() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.utilitySubsystem.timeIsButAnIllusion.reset();
+    	Robot.utilitySubsystem.timeIsButAnIllusion.start();
+    	L.ogInit(this);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -22,7 +28,7 @@ public class Timer extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true

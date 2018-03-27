@@ -1,9 +1,9 @@
 package org.usfirst.frc.team3574.commands.claw;
 
-import org.usfirst.frc.team3574.commands.util.L;
 import org.usfirst.frc.team3574.enums.ClawPosition;
 import org.usfirst.frc.team3574.robot.Robot;
 import org.usfirst.frc.team3574.subsystems.UtilitySubsystem;
+import org.usfirst.frc.team3574.utilities.L;
 
 import edu.wpi.first.wpilibj.command.Command;
 

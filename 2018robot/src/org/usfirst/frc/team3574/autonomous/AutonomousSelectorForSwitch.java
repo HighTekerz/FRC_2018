@@ -14,8 +14,8 @@ public class AutonomousSelectorForSwitch extends Command {
 	Command _command;
 	String ourSwitchSide;
 	boolean _isFinished;
-	int left = 1;
-	int right = -1;
+	double left = 1.10;
+	double right = -1;
 	
     public AutonomousSelectorForSwitch() {
         // Use requires() here to declare subsystem dependencies

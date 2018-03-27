@@ -29,7 +29,6 @@ import org.usfirst.frc.team3574.commands.driveTrain.TurnToDegreeTwoPointOh;
 import org.usfirst.frc.team3574.commands.groups.autopidtestone;
 import org.usfirst.frc.team3574.commands.slide.ResetEncIfAtLowestPoint;
 import org.usfirst.frc.team3574.commands.slide.ResetSlideEnc;
-import org.usfirst.frc.team3574.commands.util.L;
 import org.usfirst.frc.team3574.commands.util.RumbleASide;
 import org.usfirst.frc.team3574.enums.ClawPosition;
 import org.usfirst.frc.team3574.subsystems.Arm;
@@ -39,9 +38,11 @@ import org.usfirst.frc.team3574.subsystems.ForkLifter;
 import org.usfirst.frc.team3574.subsystems.Slide;
 import org.usfirst.frc.team3574.subsystems.UtilitySubsystem;
 import org.usfirst.frc.team3574.utilities.ArmSpeedSettingsWithCube;
+import org.usfirst.frc.team3574.utilities.L;
 import org.usfirst.frc.team3574.subsystems.SensorTest;
 import org.usfirst.frc.team3574.subsystems.JackWings;
 
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -87,7 +88,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
-
+		CameraServer.getInstance().startAutomaticCapture();
 		
 		OperatorInput = new OI();
 		autoChooserForLosers.addObject("Do Nothing", new DoNothing());

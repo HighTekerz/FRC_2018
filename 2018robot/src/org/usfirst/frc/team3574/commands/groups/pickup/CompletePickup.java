@@ -1,10 +1,11 @@
-package org.usfirst.frc.team3574.commands.groups;
+package org.usfirst.frc.team3574.commands.groups.pickup;
 
 import org.usfirst.frc.team3574.commands.arm.SetArmPosition;
 import org.usfirst.frc.team3574.commands.claw.SetClawPosition;
 import org.usfirst.frc.team3574.commands.driveTrain.DoNothing;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveByInches;
 import org.usfirst.frc.team3574.commands.slide.SetSlidePosition;
+import org.usfirst.frc.team3574.commands.util.StopTimer;
 import org.usfirst.frc.team3574.enums.ClawPosition;
 import org.usfirst.frc.team3574.robot.Robot;
 import org.usfirst.frc.team3574.subsystems.Arm;
@@ -25,5 +26,7 @@ public class CompletePickup extends CommandGroup {
 		addParallel(new DriveByInches(Robot.driveTrain.backupDistancePickupEnd, 0.5));
 //		addSequential(new SetSlidePosition(Slide.SLIDE_CARRY));
 		addSequential(new SetArmPosition(Arm.CARRY_ANGLE, new ArmSpeedSettingsWithCube()), 3);
+		
     }
 }
+ 

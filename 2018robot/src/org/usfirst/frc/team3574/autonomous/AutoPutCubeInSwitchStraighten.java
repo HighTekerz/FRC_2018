@@ -18,24 +18,25 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutoPutCubeInSwitchStraighten extends CommandGroup {
 	
 	private int _inchesAwayFromAllianceWall = 7;
-	private double _movementSpeed = 0.5;
-	private double _inchesToSwitchSide = 85;//101.54801;
+	private double _movementSpeed = 0.65;
+	private double _turnSpeed = 0.5;
+	private double _inchesToSwitchSide = 88;//101.54801;
 	private double _degreeToTurnTo = 32.125;
 //	private double numberForHittingTheSwitch = 20;
 	/**
 	 * 
 	 * @param leftOrRight send 1 for left, -1 for right
 	 */
-    public AutoPutCubeInSwitchStraighten(int leftOrRight) {
+    public AutoPutCubeInSwitchStraighten(double leftOrRight) {
     	addSequential(new CalibrateArmEncStartingPosition());
     	addSequential(new DriveByInches(_inchesAwayFromAllianceWall, _movementSpeed, ShifterPosition.LOW_GEAR));
 
 //    	addSequential(new TurnToDegree(_degreeToTurnTo * leftOrRight, _movementSpeed));
-    	addSequential(new TurnToDegreeTwoPointOh(_degreeToTurnTo * leftOrRight, _movementSpeed));
-    	addSequential(new DriveByInches(_inchesToSwitchSide, _movementSpeed));
+    	addSequential(new TurnToDegreeTwoPointOh(_degreeToTurnTo * leftOrRight, _turnSpeed));
+    	addSequential(new DriveByInches(_inchesToSwitchSide, _movementSpeed), 5);
     	
 //    	addSequential(new TurnToDegree(_degreeToTurnTo * -leftOrRight, _movementSpeed));
-    	addSequential(new TurnToDegreeTwoPointOh(_degreeToTurnTo * -leftOrRight, _movementSpeed));
+    	addSequential(new TurnToDegreeTwoPointOh(_degreeToTurnTo * -leftOrRight, _turnSpeed), 2);
     	
     	addSequential(new DriveByInches(_inchesAwayFromAllianceWall, _movementSpeed), 3);
     	

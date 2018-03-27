@@ -1,8 +1,8 @@
 package org.usfirst.frc.team3574.commands.slide;
 
-import org.usfirst.frc.team3574.commands.util.L;
 import org.usfirst.frc.team3574.robot.Robot;
 import org.usfirst.frc.team3574.utilities.ArmSpeedSettingsWithoutCube;
+import org.usfirst.frc.team3574.utilities.L;
 
 import edu.wpi.first.wpilibj.command.Command;
 

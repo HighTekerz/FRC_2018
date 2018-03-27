@@ -5,6 +5,6 @@ public class ArmSpeedSettingsWithCube extends IArmSpeedSettings {{
 	slowedSpeed = .63;
 	brakeSpeed = 0.2;
 	slowedSpeedDown = 0.03;
-	maxSpeedDown = -0.02;
+	maxSpeedDown = -0.2;
 	calibrateSpeed = 0.0;
 }}

@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3574.subsystems;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -7,6 +8,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class UtilitySubsystem extends Subsystem {
+	
+	public Timer timeIsButAnIllusion = new Timer();
+	
+	
 	
 	public static int armPositionPlacementForDropoff;
 

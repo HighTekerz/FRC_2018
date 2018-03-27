@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3574.commands.driveTrain;
 
-import org.usfirst.frc.team3574.commands.util.L;
 import org.usfirst.frc.team3574.robot.Robot;
+import org.usfirst.frc.team3574.utilities.L;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -31,15 +31,19 @@ public class TurnToDegree extends Command {
     	L.ogInit(this);
 
 		relativeDegreeToReach = _oGDegreeToReach + Robot.driveTrain.getYaw();
-		if (relativeDegreeToReach > Robot.driveTrain.getYaw()) {
-			_speed = -Math.abs(_speed);
-		}
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {			
 		// TODO: fix this so that the current angle is being populated
 		
+		if (relativeDegreeToReach > Robot.driveTrain.getYaw()) {
+			_speed = -Math.abs(_speed);
+		}
+		else {
+			_speed = -_speed;
+		}
+
 		_currentAngle = Robot.driveTrain.getYaw();
 
 		Robot.driveTrain.driveByArcade(0, _speed);

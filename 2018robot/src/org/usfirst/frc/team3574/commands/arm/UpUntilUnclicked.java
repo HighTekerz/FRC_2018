@@ -1,9 +1,9 @@
 package org.usfirst.frc.team3574.commands.arm;
 
-import org.usfirst.frc.team3574.commands.util.L;
 import org.usfirst.frc.team3574.enums.BrakePosition;
 import org.usfirst.frc.team3574.robot.Robot;
 import org.usfirst.frc.team3574.utilities.IArmSpeedSettings;
+import org.usfirst.frc.team3574.utilities.L;
 
 import edu.wpi.first.wpilibj.command.Command;
 
