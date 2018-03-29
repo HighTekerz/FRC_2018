@@ -1,5 +1,6 @@
 /*----------------------------------------------------------------------------*/
 
+
 /* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
@@ -10,45 +11,27 @@ package org.usfirst.frc.team3574.robot;
 
 
 import org.usfirst.frc.team3574.commands.arm.CalibrateArmEncStartingPosition;
-import org.usfirst.frc.team3574.commands.arm.CalibrateArmEncStartingPositionYadda;
-import org.usfirst.frc.team3574.commands.arm.HoldArmPosition;
-import org.usfirst.frc.team3574.commands.arm.ManualArm;
-import org.usfirst.frc.team3574.commands.arm.OpenBrake;
-import org.usfirst.frc.team3574.commands.arm.SetArmPosition;
 import org.usfirst.frc.team3574.commands.arm.SetWristPosition;
 import org.usfirst.frc.team3574.commands.claw.SetClawPosition;
-import org.usfirst.frc.team3574.commands.driveTrain.DriveByInches;
 import org.usfirst.frc.team3574.commands.driveTrain.ShiftGear;
 import org.usfirst.frc.team3574.commands.driveTrain.TurnToDegree;
 import org.usfirst.frc.team3574.commands.groups.DropCubeInScale;
-import org.usfirst.frc.team3574.commands.groups.DropCubeInSwitch;
 import org.usfirst.frc.team3574.commands.groups.MoveToStartingPosition;
-import org.usfirst.frc.team3574.commands.groups.PrepareForScaleDelivery;
 import org.usfirst.frc.team3574.commands.groups.pickup.CalibratePickup;
 import org.usfirst.frc.team3574.commands.groups.pickup.GoToPositionPickup;
 import org.usfirst.frc.team3574.commands.groups.pickup.OppositePickup;
 import org.usfirst.frc.team3574.commands.groups.pickup.BlindPickup;
-import org.usfirst.frc.team3574.commands.groups.pickup.StartPickup;
-import org.usfirst.frc.team3574.commands.groups.PrepareForSwitchDelivery;
-import org.usfirst.frc.team3574.commands.slide.HoldSlidePosition;
-import org.usfirst.frc.team3574.commands.slide.ManualSlide;
 import org.usfirst.frc.team3574.commands.slide.SetSlidePosition;
+import org.usfirst.frc.team3574.commands.util.RumbleASide;
 import org.usfirst.frc.team3574.enums.ClawPosition;
 import org.usfirst.frc.team3574.enums.ShifterPosition;
 import org.usfirst.frc.team3574.enums.WristPosition;
-import org.usfirst.frc.team3574.subsystems.Arm;
-import org.usfirst.frc.team3574.subsystems.Slide;
-import org.usfirst.frc.team3574.triggers.POVBottomRange;
 import org.usfirst.frc.team3574.triggers.POVDown;
 import org.usfirst.frc.team3574.triggers.POVLeft;
 import org.usfirst.frc.team3574.triggers.POVRight;
-import org.usfirst.frc.team3574.triggers.POVTopRange;
 import org.usfirst.frc.team3574.triggers.POVUp;
 import org.usfirst.frc.team3574.triggers.TriggerButton;
-import org.usfirst.frc.team3574.utilities.ArmSpeedSettingsWithCube;
-
 import edu.wpi.first.wpilibj.GenericHID.Hand;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController; 
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -61,8 +44,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class OI {
 	XboxController driverXbox360Controller = new XboxController(0);
 	XboxController coPilotxbox360Controller = new XboxController(1);
-	//	Joystick garrettDriver = new Joystick(4);
-	//	Joystick logitechAttack = new Joystick(3);
 
 	static final int A_BUTTON = 1;
 	static final int B_BUTTON = 2;
@@ -83,12 +64,10 @@ public class OI {
 	int pov = 0;
 
 	public OI() {
-		SmartDashboard.putData(new TurnToDegree(45, .5));
-
-
 		/**
-		 * <<DRIVER CONTROLLER>> (david)
+		 * <<DRIVER CONTROLLER>>
 		 */
+		
 		Button calibratePickup = new TriggerButton(driverXbox360Controller, LEFT_TRIGGER);
 		calibratePickup.whenPressed(new CalibratePickup());
 
@@ -107,28 +86,29 @@ public class OI {
 		Button shiftLow = new POVDown(driverXbox360Controller, pov);
 		shiftLow.whenPressed(new ShiftGear(ShifterPosition.LOW_GEAR));
 
-		// <<CO-PILOT CONTROLLER>>
-		//		Button prepareForSwitch = new JoystickButton(coPilotxbox360Controller, LEFT_BUMPER);
-		//		prepareForSwitch.whenPressed(new SetSlidePosition(60));//PrepareForSwitchDelivery());
+		/**
+		* <<CO-PILOT CONTROLLER>>
+		*/
+		
+		//TODO: Fix angles in these commands		
+//		Button prepareForSwitch = new JoystickButton(coPilotxbox360Controller, LEFT_BUMPER);
+//		prepareForSwitch.whenPressed(new SetSlidePosition(60));//PrepareForSwitchDelivery());
+
+//		Button dropOffInSwitch = new TriggerButton(coPilotxbox360Controller, LEFT_TRIGGER);
+//		dropOffInSwitch.whenPressed(new DropCubeInSwitch());
 
 		Button prepareForScale = new JoystickButton(coPilotxbox360Controller, RIGHT_BUMPER);
-		prepareForScale.whenPressed(new SetSlidePosition((12 * 8)));//PrepareForScaleDelivery());
-
-		//		Button dropOffInSwitch = new TriggerButton(coPilotxbox360Controller, LEFT_TRIGGER);
-		//		dropOffInSwitch.whenPressed(new DropCubeInSwitch());
+		prepareForScale.whenPressed(new SetSlidePosition((12 * 8)));
 
 		Button dropOffInScale = new TriggerButton(coPilotxbox360Controller, RIGHT_TRIGGER);
 		dropOffInScale.whenPressed(new DropCubeInScale());
 
 		Button calToStartingPosition = new JoystickButton(coPilotxbox360Controller, BACK);
-		calToStartingPosition.whenPressed(new CalibrateArmEncStartingPositionYadda());
+		calToStartingPosition.whenPressed(new CalibrateArmEncStartingPosition());
 
-		Button readyToIntakePosition = new JoystickButton(coPilotxbox360Controller, START);
-		//		startingPosition.whenPressed(new MoveToStartingPosition());
-		/**
-		 * NEED TO PROGRAM   <-----  this worries me.  -John  :)
-		 */
-
+//		Button startButton = new JoystickButton(coPilotxbox360Controller, START);
+//		startButton.whenPressed(new StartButton());
+		
 		Button startingPosition = new JoystickButton(coPilotxbox360Controller, Y_BUTTON);
 		startingPosition.whenPressed(new MoveToStartingPosition());
 
@@ -143,15 +123,12 @@ public class OI {
 
 		Button closeClaw = new POVRight(coPilotxbox360Controller, pov);
 		closeClaw.whenPressed(new SetClawPosition(ClawPosition.GRIP));
-
-		//		Button manualArm = new JoystickButton(coPilotxbox360Controller, A_BUTTON);
-		//		manualArm.whileHeld(new ManualArm());
-		//		manualArm.whenReleased(new HoldArmPosition());
-		//		
-		//		Button manualSlide = new JoystickButton(coPilotxbox360Controller, B_BUTTON);
-		//		manualSlide.whileHeld(new ManualSlide());
-		//		manualSlide.whenReleased(new HoldSlidePosition());
-
+		
+		/**
+		 * <<SMARTDASHBOARD>>
+		 */
+		
+		SmartDashboard.putData(new TurnToDegree(45, .5));
 	}
 
 	public double getLeftStickY()
@@ -203,14 +180,4 @@ public class OI {
 	public boolean CoPilotLeftBumper() {
 		return coPilotxbox360Controller.getBumper(Hand.kLeft);
 	}
-
-	/**
-	 * Garrett Methods
-	 */
-	//	public double garrettDriverThrottle() {
-	//		return 
-	//	}
-
-
-
 }

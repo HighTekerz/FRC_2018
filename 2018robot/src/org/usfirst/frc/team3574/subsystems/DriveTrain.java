@@ -60,6 +60,7 @@ public class DriveTrain extends Subsystem {
 	public double backupDistancePickupEnd = -3;
 	public double backupDistanceSwitch = -3;
 	public double backupDistanceScale = -12;
+	public double autoBackupDistanceScale = -48;
 	public static final double ticksToInch = 217.2995489;
 
 	double targetPos = 0;
@@ -237,6 +238,21 @@ public class DriveTrain extends Subsystem {
 		this.driveByArcade(-percentThrottle, percentRotationOutput);
 	}
 
+	public void driveByArcadeWithModifiers (double percentThrottle, double percentRotationOutput, double scalingValue, double scalingTurnValue )
+	{
+		percentThrottle = valueAfterDeadzoned(percentThrottle);
+		percentRotationOutput = valueAfterDeadzoned(percentRotationOutput);
+
+		percentThrottle = scalingSpeed(percentThrottle, scalingValue);
+		percentRotationOutput = scalingSpeed(percentRotationOutput, scalingTurnValue);
+
+		SmartDashboard.putNumber("ACTUAL Percent Throttle", percentThrottle);
+		SmartDashboard.putNumber("ACTUAL Percent Rotation", percentRotationOutput);
+
+		this.driveByArcade(-percentThrottle, percentRotationOutput);
+	}
+	
+	
 	/**
 	 * Driving mechanism with throttle and turn
 	 * 

@@ -17,7 +17,7 @@ public class LogTimer extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	L.og(Robot.utilitySubsystem.timeIsButAnIllusion.get());
+    	L.og(Robot.utilitySubsystem.timerIsButAnIllusion.get());
     	L.ogInit(this);
     }
 

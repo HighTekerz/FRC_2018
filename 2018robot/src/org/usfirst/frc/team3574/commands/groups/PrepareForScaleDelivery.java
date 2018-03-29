@@ -17,9 +17,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class PrepareForScaleDelivery extends CommandGroup {
 
     public PrepareForScaleDelivery() {
-//	Tilt WRIST to straight position
     	addSequential(new SetWristPosition(WristPosition.ANGLED));
-//	Move SHOULDER to switch deliver angle
     	addSequential(new SetArmPosition(Arm.SCALE_DELIVERY, new ArmSpeedSettingsWithCube()));
     	addSequential(new MoveSlideBasedOnTarget(false));
     }

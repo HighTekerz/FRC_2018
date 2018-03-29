@@ -14,19 +14,26 @@ public class RumbleASide extends Command {
 
 	private XboxController _xboxControllerToRumble;
 	private double _rumbleValue;
-	private RumbleType _rumbleSide;
+	private RumbleType _rumbleType;
 	private int _timesRumbled;
 
-	public RumbleASide(XboxController xboxControllerToRumble, double rumbleValue, String rumbleSide) {
+	/***
+	 * Rumbles a joystick
+	 * 
+	 * @param xboxControllerToRumble self explanatory
+	 * @param rumbleValue How hard to rumble, between 0.0 and 1.0
+	 * @param rumbleType Which rumble mode to use. "Hard" makes firm, sequential rumbles
+	 */
+	public RumbleASide(XboxController xboxControllerToRumble, double rumbleValue, String rumbleType) {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 		_rumbleValue = rumbleValue;
 		_xboxControllerToRumble = xboxControllerToRumble;
-		if (rumbleSide == "Left") {
-			_rumbleSide = RumbleType.kLeftRumble;
+		if (rumbleType == "Hard") {
+			_rumbleType = RumbleType.kRightRumble;
 		}
 		else {
-			_rumbleSide = RumbleType.kRightRumble;
+			_rumbleType = RumbleType.kLeftRumble;
 		}
 	}
 
@@ -38,7 +45,7 @@ public class RumbleASide extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		_xboxControllerToRumble.setRumble(_rumbleSide, _rumbleValue);
+		_xboxControllerToRumble.setRumble(_rumbleType, _rumbleValue);
 		_timesRumbled++;
 		System.out.println("Rumbling " + _timesRumbled);
 	}
@@ -56,7 +63,7 @@ public class RumbleASide extends Command {
 	// Called once after isFinished returns true
 	protected void end() {
 		L.ogEnd(this);
-		_xboxControllerToRumble.setRumble(_rumbleSide, 0);
+		_xboxControllerToRumble.setRumble(_rumbleType, 0);
 	}
 
 	// Called when another command which requires one or more of the same

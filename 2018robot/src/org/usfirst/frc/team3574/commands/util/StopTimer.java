@@ -17,8 +17,8 @@ public class StopTimer extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	L.og(Robot.utilitySubsystem.timeIsButAnIllusion.get());
-    	Robot.utilitySubsystem.timeIsButAnIllusion.stop();
+    	L.og(Robot.utilitySubsystem.timerIsButAnIllusion.get());
+    	Robot.utilitySubsystem.timerIsButAnIllusion.stop();
     	L.ogInit(this);
     }
 

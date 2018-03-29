@@ -33,8 +33,6 @@ public class SetArmPosition extends Command {
 
 	private boolean isFinished = false;
 
-	private boolean isNotFirstTime = false;
-
 	/**
 	 * Command to move the Arm to different locations
 	 * 
@@ -143,14 +141,6 @@ public class SetArmPosition extends Command {
 		System.out.println("SetArm Hit Target");
 		Robot.arm.setBrakePosition(BrakePosition.CLOSED);
 		Robot.arm.setSpeed(motorStop);
-//				if (!isNotFirstTime)
-//				{
-//					isNotFirstTime = true;
-//					this.start();
-//				}
-//				else {
-//					isNotFirstTime = false;
-//				}
 	}
 
 	// Called when another command which requires one or more of the same

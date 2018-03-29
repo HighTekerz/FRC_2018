@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class TurnToDegreeTwoPointOh extends Command {
+public class TurnToDegree2 extends Command {
 	
 	private double relativeDegreeToReach;
 	private double _oGDegreeToReach;
@@ -21,7 +21,7 @@ public class TurnToDegreeTwoPointOh extends Command {
 	private boolean turnLeft;
 	private boolean isFinished = false;
 
-	public TurnToDegreeTwoPointOh(double targetDegree, double speed) {
+	public TurnToDegree2(double targetDegree, double speed) {
 		requires(Robot.driveTrain);
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);

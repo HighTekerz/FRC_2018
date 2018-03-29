@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3574.commands.driveTrain;
 
 import org.usfirst.frc.team3574.robot.Robot;
+import org.usfirst.frc.team3574.utilities.L;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -16,6 +17,7 @@ public class ResetDriveEnc extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	L.ogInit(this);
     	Robot.driveTrain.resetEncoders();
     }
 

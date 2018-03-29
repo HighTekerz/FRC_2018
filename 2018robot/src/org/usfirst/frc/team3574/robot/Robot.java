@@ -7,34 +7,23 @@
 
 package org.usfirst.frc.team3574.robot;
 
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
-import org.usfirst.frc.team3574.autonomous.AutoPutCubeInSwitchAhead;
-import org.usfirst.frc.team3574.autonomous.AutoPutCubeInSwitchDiagonal;
-import org.usfirst.frc.team3574.autonomous.AutoPutCubeInSwitchStraighten;
-import org.usfirst.frc.team3574.autonomous.AutonomousSelectorForScale;
+import org.usfirst.frc.team3574.autonomous.AutonomousSelectorForSide;
 import org.usfirst.frc.team3574.autonomous.AutonomousSelectorForSwitch;
 import org.usfirst.frc.team3574.autonomous.DriveForwardAutonomous;
 import org.usfirst.frc.team3574.commands.arm.CalibrateArmEnc;
 import org.usfirst.frc.team3574.commands.arm.CalibrateArmEncStartingPosition;
 import org.usfirst.frc.team3574.commands.arm.SetArmPosition;
-import org.usfirst.frc.team3574.commands.claw.SetClawPosition;
 import org.usfirst.frc.team3574.commands.driveTrain.DoNothing;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveByInches;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveByPIDDistance;
-import org.usfirst.frc.team3574.commands.driveTrain.DriveWithJoy;
 import org.usfirst.frc.team3574.commands.driveTrain.ResetDriveEnc;
-import org.usfirst.frc.team3574.commands.driveTrain.TurnToDegreeTwoPointOh;
-import org.usfirst.frc.team3574.commands.groups.autopidtestone;
+import org.usfirst.frc.team3574.commands.driveTrain.TurnToDegree2;
 import org.usfirst.frc.team3574.commands.slide.ResetEncIfAtLowestPoint;
 import org.usfirst.frc.team3574.commands.slide.ResetSlideEnc;
-import org.usfirst.frc.team3574.commands.util.RumbleASide;
-import org.usfirst.frc.team3574.enums.ClawPosition;
 import org.usfirst.frc.team3574.subsystems.Arm;
 import org.usfirst.frc.team3574.subsystems.Claw;
 import org.usfirst.frc.team3574.subsystems.DriveTrain;
@@ -51,7 +40,6 @@ import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
@@ -140,6 +128,8 @@ public class Robot extends TimedRobot {
 		autoChooserForLosers.addObject("Do Nothing", new DoNothing());
 		autoChooserForLosers.addDefault("Drive Across Line", new DriveForwardAutonomous());
 		autoChooserForLosers.addObject("Cube in switch from middle", new AutonomousSelectorForSwitch()); 
+		autoChooserForLosers.addObject("Start Left Side", new AutonomousSelectorForSide("Left")); 
+		autoChooserForLosers.addObject("Start Right Side", new AutonomousSelectorForSide("Right")); 
 
 		SmartDashboard.putData("Scheduler", Scheduler.getInstance());
 
@@ -154,11 +144,11 @@ public class Robot extends TimedRobot {
 		L.ogSD(new DriveByPIDDistance(12));
 		L.ogSD(new ResetDriveEnc());
 		L.ogSD("Forward 12'", new DriveByInches(140, .5));
-		L.ogSD("TurnToDegreeTwoPointOh 0", new TurnToDegreeTwoPointOh(00.0, 0.3));
-		L.ogSD("TurnToDegreeTwoPointOh 90", new TurnToDegreeTwoPointOh(90.0, 0.3));
-		L.ogSD("TurnToDegreeTwoPointOh 180", new TurnToDegreeTwoPointOh(180, 0.3));
-		L.ogSD("TurnToDegreeTwoPointOh -90", new TurnToDegreeTwoPointOh(-90.0, 0.3));
-		L.ogSD("TurnToDegreeTwoPointOh -180", new TurnToDegreeTwoPointOh(-180, 0.3));
+		L.ogSD("TurnToDegreeTwoPointOh 0", new TurnToDegree2(00.0, 0.3));
+		L.ogSD("TurnToDegreeTwoPointOh 90", new TurnToDegree2(90.0, 0.3));
+		L.ogSD("TurnToDegreeTwoPointOh 180", new TurnToDegree2(180, 0.3));
+		L.ogSD("TurnToDegreeTwoPointOh -90", new TurnToDegree2(-90.0, 0.3));
+		L.ogSD("TurnToDegreeTwoPointOh -180", new TurnToDegree2(-180, 0.3));
 		L.ogSD(new SetArmPosition(Arm.AUTO_SWITCH_DELIVERY, new ArmSpeedSettingsWithCube()));
 		
 		new ResetSlideEnc().start();
@@ -196,7 +186,6 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		new CalibrateArmEncStartingPosition().start();
 		m_autonomousCommand = autoChooserForLosers.getSelected();
 		
 		setPeriod(0.015);
@@ -210,6 +199,8 @@ public class Robot extends TimedRobot {
 
 
 		// schedule the autonomous command (example)
+		
+		new CalibrateArmEncStartingPosition().start();
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.start();
 		}
@@ -254,9 +245,14 @@ public class Robot extends TimedRobot {
 		LiveWindow.run();
 	}
 
+	ResetEncIfAtLowestPoint resetCommand = new ResetEncIfAtLowestPoint();
+	
 	@Override
 	public void robotPeriodic() {
-		new ResetEncIfAtLowestPoint().start();
+		if (!resetCommand.isRunning()) {
+			resetCommand.start();
+		}
+		
 		this.log();
 	}
 

@@ -17,8 +17,8 @@ public class StartTimer extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.utilitySubsystem.timeIsButAnIllusion.reset();
-    	Robot.utilitySubsystem.timeIsButAnIllusion.start();
+    	Robot.utilitySubsystem.timerIsButAnIllusion.reset();
+    	Robot.utilitySubsystem.timerIsButAnIllusion.start();
     	L.ogInit(this);
     }
 

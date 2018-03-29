@@ -4,7 +4,7 @@ import org.usfirst.frc.team3574.commands.arm.CalibrateArmEncStartingPosition;
 import org.usfirst.frc.team3574.commands.arm.SetArmPosition;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveByInches;
 import org.usfirst.frc.team3574.commands.driveTrain.TurnToDegree;
-import org.usfirst.frc.team3574.commands.driveTrain.TurnToDegreeTwoPointOh;
+import org.usfirst.frc.team3574.commands.driveTrain.TurnToDegree2;
 import org.usfirst.frc.team3574.commands.groups.DropCubeInSwitch;
 import org.usfirst.frc.team3574.commands.util.LogTimer;
 import org.usfirst.frc.team3574.commands.util.StartTimer;
@@ -25,24 +25,21 @@ public class AutoPutCubeInSwitchStraighten extends CommandGroup {
 	private double _turnSpeed = 0.5;
 	private double _inchesToSwitchSide = 88;//101.54801;
 	private double _degreeToTurnTo = 32.125;
-//	private double numberForHittingTheSwitch = 20;
 	/**
 	 * 
 	 * @param leftOrRight send 1 for left, -1 for right
 	 */
     public AutoPutCubeInSwitchStraighten(double leftOrRight) {
     	addParallel(new StartTimer());
-    	addSequential(new CalibrateArmEncStartingPosition());
-    	addSequential(new LogTimer());
     	addSequential(new DriveByInches(_inchesAwayFromAllianceWall, _movementSpeed, ShifterPosition.LOW_GEAR));
     	addSequential(new LogTimer());
 //    	addSequential(new TurnToDegree(_degreeToTurnTo * leftOrRight, _movementSpeed));
-    	addSequential(new TurnToDegreeTwoPointOh(_degreeToTurnTo * leftOrRight, _turnSpeed));
+    	addSequential(new TurnToDegree2(_degreeToTurnTo * leftOrRight, _turnSpeed));
     	addSequential(new LogTimer());
     	addSequential(new DriveByInches(_inchesToSwitchSide, _movementSpeed), 5);
     	addSequential(new LogTimer());
 //    	addSequential(new TurnToDegree(_degreeToTurnTo * -leftOrRight, _movementSpeed));
-    	addSequential(new TurnToDegreeTwoPointOh(_degreeToTurnTo * -leftOrRight, _turnSpeed), 2);
+    	addSequential(new TurnToDegree2(_degreeToTurnTo * -leftOrRight, _turnSpeed), 2);
     	addSequential(new LogTimer());
     	addSequential(new DriveByInches(_inchesAwayFromAllianceWall, _movementSpeed), 3);
     	addSequential(new LogTimer());

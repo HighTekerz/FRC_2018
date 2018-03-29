@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3574.commands.arm;
 
+import org.usfirst.frc.team3574.enums.BrakePosition;
 import org.usfirst.frc.team3574.robot.Robot;
 import org.usfirst.frc.team3574.utilities.L;
 
@@ -17,11 +18,13 @@ public class CalibrateArmEncStartingPosition extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.arm.setSpeed(0.0);
     	L.ogInit(this);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	Robot.arm.setBrakePosition(BrakePosition.CLOSED);
     	Robot.arm.calibrateArmEncoderFromStarting();
     }
 

@@ -25,7 +25,7 @@ public class L {
 		System.out.println(className + " IsFinished");
 	}
 	public static void ogInterrupt(Object className) {
-		System.out.println(className + " inturupt");
+		System.out.println(className + " interrupt");
 	}
 	public static void ogEnd(Object className) {
 		System.out.println(className + " end");

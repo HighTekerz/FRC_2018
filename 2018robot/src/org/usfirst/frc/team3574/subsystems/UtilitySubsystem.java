@@ -9,9 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class UtilitySubsystem extends Subsystem {
 	
-	public Timer timeIsButAnIllusion = new Timer();
-	
-	
+	public Timer timerIsButAnIllusion = new Timer();
 	
 	public static int armPositionPlacementForDropoff;
 

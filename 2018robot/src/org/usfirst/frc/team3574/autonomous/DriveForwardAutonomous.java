@@ -19,7 +19,6 @@ public class DriveForwardAutonomous extends CommandGroup {
 	 */
     public DriveForwardAutonomous() {
     	System.out.println("Drive Forwards Auto");
-    	addSequential(new CalibrateArmEncStartingPosition());
     	addSequential(new DriveByInches(130, .4, ShifterPosition.HIGH_GEAR)); /* 120in from alliance wall to auto line
     												 - 40in long robot
     												 + 10in to make sure we get over the line */

@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class DriveByInches extends Command {
+public class DriveByInchesNoStop extends Command {
 	
 	private double _ticksToTravel;
 	private double _speed;
@@ -30,7 +30,7 @@ public class DriveByInches extends Command {
 	
 	double startLoc;
 	
-    public DriveByInches(double inchesToTravel, double speed, ShifterPosition ShifterPosition) {
+    public DriveByInchesNoStop(double inchesToTravel, double speed, ShifterPosition ShifterPosition) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	
@@ -52,7 +52,7 @@ public class DriveByInches extends Command {
     	requires(Robot.driveTrain);
     }
 
-    public DriveByInches(double inchesToTravel, double speed) {
+    public DriveByInchesNoStop(double inchesToTravel, double speed) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	
@@ -106,7 +106,7 @@ public class DriveByInches extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-//    	L.og("distance travelled: " + (Robot.driveTrain.getEncoderLeft() - startLoc) / 217.2995489 + " ---- Time: " + timeSinceInitialized());
+    	L.og("distance travelled: " + (Robot.driveTrain.getEncoderLeft() - startLoc) / 217.2995489 + " ---- Time: " + timeSinceInitialized());
     	
     	Robot.driveTrain.driveStraightByArcade(_speed, 0, targetAngleToKeep);
     	
@@ -136,7 +136,7 @@ public class DriveByInches extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.driveTrain.driveByArcade(0, 0);
+//    	Robot.driveTrain.driveByArcade(0, 0);
     }
 
     // Called when another command which requires one or more of the same

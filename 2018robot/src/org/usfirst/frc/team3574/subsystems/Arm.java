@@ -39,12 +39,10 @@ public class Arm extends Subsystem {
 	public static final int STARTING_POSITION = 88;
 	public static final int CARRY_ANGLE = 80;
 	public static final int SCALE_DELIVERY = 90; //degrees
+	public static final int AUTO_SCALE_DELIVERY = 80; //degrees
 	public static final int SWITCH_DELIVERY = 21; //degrees
 	public static final int AUTO_SWITCH_DELIVERY = 45; //degrees
 	public static final int CUBE_PICKUP = 0; //degrees
-
-	public double zeroEncoder;
-
 
 	public final int timeoutMs = 50;
 	public boolean armDoneMoving = false;
@@ -92,9 +90,6 @@ public class Arm extends Subsystem {
 		//			absolutePosition *= -1;
 		//		/* set the quadrature (relative) sensor to match absolute */
 		//		ArmMotor.setSelectedSensorPosition(absolutePosition, kPIDLoopIdx, kTimeoutMs);
-
-		zeroEncoder = getAngleOfArm();
-
 	}
 
 	public double getEncPos() {
@@ -103,9 +98,6 @@ public class Arm extends Subsystem {
 	public double getAngleOfArm() {
 		return ((ARM_MOTOR_ZERO_POINT - getEncPos()) / TICKS_PER_DEGREE);
 	}
-	//	public void resetZeroEnc() {
-	//		zeroEncoder = getEncPos();
-	//	}
 
 	public void initDefaultCommand() {
 		setDefaultCommand(new ManualArm());
@@ -144,10 +136,6 @@ public class Arm extends Subsystem {
 	}
 
 	public void calibrateArmEncoderFromStarting() {
-		ARM_MOTOR_ZERO_POINT = getEncPos() + (STARTING_POSITION * TICKS_PER_DEGREE);
-	}
-
-	public void calibrateArmEncoderFromStartingYadda() {
 		ARM_MOTOR_ZERO_POINT = getEncPos() + ((STARTING_POSITION - 1) * TICKS_PER_DEGREE);
 	}
 
@@ -185,11 +173,8 @@ public class Arm extends Subsystem {
 
 	}
 
-
-
 	public void log() {
 		SmartDashboard.putNumber("Arm Encoder", getEncPos());
-		SmartDashboard.putBoolean("Arm zero switch", zeroSwitch.get());
 		SmartDashboard.putNumber("Arm Zero Point (Not Really 0)", ARM_MOTOR_ZERO_POINT);
 		L.ogSD("Arm Limit", ArmMotor.getSensorCollection().isRevLimitSwitchClosed());
 		L.ogSD("Motor 5 voltage", ArmMotor.getMotorOutputVoltage());

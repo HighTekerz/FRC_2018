@@ -29,7 +29,7 @@ public class MoveSlideBasedOnTarget extends Command {
 			if(UtilitySubsystem.armPositionPlacementForDropoff < 2) {
 				UtilitySubsystem.armPositionPlacementForDropoff++;
 			}
-			_command = new SetSlidePosition(Slide.SLIDE_SWITCH_DELIVERY +((UtilitySubsystem.armPositionPlacementForDropoff - 1) * Slide.SLIDE_HIGHER_INCREMENT));
+			_command = new SetSlidePosition(Slide.SLIDE_SWITCH_DELIVERY +((UtilitySubsystem.armPositionPlacementForDropoff - 1) * Slide.SLIDE_HIGHER_INCREMENT_SWITCH));
 		}
 		else {
 			if(UtilitySubsystem.armPositionPlacementForDropoff < 5) {
