@@ -42,7 +42,7 @@ public class SetArmPosition extends Command {
 		requires(Robot.arm);
 		_targetPositionInDegrees = degreesTarget;
 		_ISpeedSetting = ISpeedSetting;
-		_timeout = 20;
+		_timeout = .75;
 	}
 
 	public SetArmPosition(double degreesTarget, IArmSpeedSettings ISpeedSetting, double timeout) {

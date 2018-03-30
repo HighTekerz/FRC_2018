@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class AutonomousSelectorForSide extends Command {
+public class AutonomousSelectorForSideSecond extends Command {
 
 	Command _command;
 	String ourSwitchSide;
@@ -23,7 +23,7 @@ public class AutonomousSelectorForSide extends Command {
 	double right = -1;
 	String _startSide;
 
-	public AutonomousSelectorForSide(String startSide) {
+	public AutonomousSelectorForSideSecond(String startSide) {
 		_startSide = startSide;
 	}
 
@@ -40,7 +40,7 @@ public class AutonomousSelectorForSide extends Command {
 		if (_startSide.contains("Right")){
 			if(ourScaleSide.contains("Right")) {
 				L.og("Scale on our side (right) Auto");
-				_command = new AutonomousSideScale45Degree(44);
+				_command = new AutonomousSideScale45Degree(90);
 			}
 			else if(ourSwitchSide.contains("Right")){
 				L.og("Switch on our side (right) Auto");
@@ -53,7 +53,7 @@ public class AutonomousSelectorForSide extends Command {
 		else if (_startSide.contains("Left")) {
 			if(ourScaleSide.contains("Left")) {
 				L.og("Scale on our side (left) Auto");
-				_command = new AutonomousSideScale45Degree(-44);
+				_command = new AutonomousSideScale45Degree(-90);
 			}
 			else if(ourSwitchSide.contains("Left")){
 				L.og("Switch on our side (left) Auto");

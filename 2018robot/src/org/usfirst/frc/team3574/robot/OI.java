@@ -10,6 +10,7 @@
 package org.usfirst.frc.team3574.robot;
 
 
+import org.usfirst.frc.team3574.commands.arm.Arm10DegreesForward;
 import org.usfirst.frc.team3574.commands.arm.CalibrateArmEncStartingPosition;
 import org.usfirst.frc.team3574.commands.arm.SetWristPosition;
 import org.usfirst.frc.team3574.commands.claw.SetClawPosition;
@@ -17,9 +18,9 @@ import org.usfirst.frc.team3574.commands.driveTrain.ShiftGear;
 import org.usfirst.frc.team3574.commands.driveTrain.TurnToDegree;
 import org.usfirst.frc.team3574.commands.groups.DropCubeInScale;
 import org.usfirst.frc.team3574.commands.groups.MoveToStartingPosition;
+import org.usfirst.frc.team3574.commands.groups.DropForExchange;
 import org.usfirst.frc.team3574.commands.groups.pickup.CalibratePickup;
 import org.usfirst.frc.team3574.commands.groups.pickup.GoToPositionPickup;
-import org.usfirst.frc.team3574.commands.groups.pickup.OppositePickup;
 import org.usfirst.frc.team3574.commands.groups.pickup.BlindPickup;
 import org.usfirst.frc.team3574.commands.slide.SetSlidePosition;
 import org.usfirst.frc.team3574.commands.util.RumbleASide;
@@ -74,8 +75,8 @@ public class OI {
 		Button pickupNoCal = new TriggerButton(driverXbox360Controller, RIGHT_TRIGGER);
 		pickupNoCal.whenPressed(new GoToPositionPickup());
 
-		Button oppositePickup = new JoystickButton(driverXbox360Controller, RIGHT_BUMPER);
-		oppositePickup.whenPressed(new OppositePickup());
+		Button dropForExchange = new JoystickButton(driverXbox360Controller, RIGHT_BUMPER);
+		dropForExchange.whenPressed(new DropForExchange());
 		
 		Button pickupBlind = new JoystickButton(driverXbox360Controller, LEFT_BUMPER);
 		pickupBlind.whenPressed(new BlindPickup());
@@ -123,6 +124,11 @@ public class OI {
 
 		Button closeClaw = new POVRight(coPilotxbox360Controller, pov);
 		closeClaw.whenPressed(new SetClawPosition(ClawPosition.GRIP));
+		
+		Button armForward10Degrees = new JoystickButton(coPilotxbox360Controller, A_BUTTON);
+		armForward10Degrees.whenPressed(new Arm10DegreesForward());
+		
+		
 		
 		/**
 		 * <<SMARTDASHBOARD>>

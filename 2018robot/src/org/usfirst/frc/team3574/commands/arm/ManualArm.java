@@ -41,13 +41,16 @@ public class ManualArm extends Command {
 			} 
 			else {
 				Robot.arm.setBrakePosition(BrakePosition.CLOSED);
-				Robot.arm.setSpeed(armSpeedSettingsWoutCube.brakeSpeed);
+//				Robot.arm.setSpeed(armSpeedSettingsWoutCube.brakeSpeed);
+				Robot.arm.setSpeed(0.0);
 			}
 
 		} 
 		else {
 			Robot.arm.setBrakePosition(BrakePosition.CLOSED);
-			Robot.arm.setSpeed(armSpeedSettingsWoutCube.brakeSpeed);
+//			Robot.arm.setSpeed(armSpeedSettingsWoutCube.brakeSpeed);
+			Robot.arm.setSpeed(0.0);
+			
 		}
 
 		//		if((Robot.arm.getEncPos() / Robot.arm.TICKS_PER_DEGREE) < Robot.arm.STARTING_POSITION &&
@@ -78,10 +81,12 @@ public class ManualArm extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
+    	L.ogEnd(this);
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted() {
+    	L.ogInterrupt(this);
 	}
 }

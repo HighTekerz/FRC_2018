@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class AutonomousSideScale extends CommandGroup {
+public class AutonomousSideScale90Degree extends CommandGroup {
 
 	private double movementSpeed = 0.65;
 
@@ -27,14 +27,14 @@ public class AutonomousSideScale extends CommandGroup {
 	 *
 	 *@param degreeToTurnTo should be 90 if the robot is on the left side of the field, -90 if on the right
 	 **/
-	public AutonomousSideScale(double degreeToTurnTo) {
-		addSequential(new DriveByInchesNoStop(10, .75, ShifterPosition.LOW_GEAR));
-		addSequential(new DriveByInchesNoStop(219, 1, ShifterPosition.LOW_GEAR));
-		addSequential(new DriveByInches(10, .75, ShifterPosition.LOW_GEAR));
-		addSequential(new TurnToDegree2(degreeToTurnTo, 0.37));
-		addSequential(new SetSlidePosition(Slide.SLIDE_SCALE_HIGH));
-		addSequential(new DriveByInches(26, movementSpeed));
-    	addSequential(new SetArmPosition(Arm.AUTO_SCALE_DELIVERY, new ArmSpeedSettingsWithCube()));
-    	addSequential(new AutoDropCubeInScale());
+	public AutonomousSideScale90Degree(double degreeToTurnTo) {
+//		addSequential(new DriveByInchesNoStop(10, .75, ShifterPosition.LOW_GEAR));
+//		addSequential(new DriveByInchesNoStop(257, 1, ShifterPosition.LOW_GEAR));
+//		addSequential(new DriveByInches(10, .75, ShifterPosition.LOW_GEAR));
+//		addSequential(new TurnToDegree2(degreeToTurnTo, 0.37));
+//		addSequential(new SetSlidePosition(Slide.SLIDE_SCALE_HIGH));
+//		addSequential(new DriveByInches(22, movementSpeed));
+    	addSequential(new SetArmPosition(Arm.AUTO_SECOND_SCALE_DELIVERY, new ArmSpeedSettingsWithCube()));
+//    	addSequential(new AutoDropCubeInScale());
 	}
 }

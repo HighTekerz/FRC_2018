@@ -12,8 +12,10 @@ import org.opencv.core.Point;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team3574.autonomous.AutonomousSelectorForSide;
+import org.usfirst.frc.team3574.autonomous.AutonomousSelectorForSideSecond;
 import org.usfirst.frc.team3574.autonomous.AutonomousSelectorForSwitch;
 import org.usfirst.frc.team3574.autonomous.DriveForwardAutonomous;
+import org.usfirst.frc.team3574.commands.arm.Arm10DegreesForward;
 import org.usfirst.frc.team3574.commands.arm.CalibrateArmEnc;
 import org.usfirst.frc.team3574.commands.arm.CalibrateArmEncStartingPosition;
 import org.usfirst.frc.team3574.commands.arm.SetArmPosition;
@@ -127,9 +129,11 @@ public class Robot extends TimedRobot {
 		OperatorInput = new OI();
 		autoChooserForLosers.addObject("Do Nothing", new DoNothing());
 		autoChooserForLosers.addDefault("Drive Across Line", new DriveForwardAutonomous());
-		autoChooserForLosers.addObject("Cube in switch from middle", new AutonomousSelectorForSwitch()); 
-		autoChooserForLosers.addObject("Start Left Side", new AutonomousSelectorForSide("Left")); 
-		autoChooserForLosers.addObject("Start Right Side", new AutonomousSelectorForSide("Right")); 
+		autoChooserForLosers.addObject("Center Auto", new AutonomousSelectorForSwitch()); 
+		autoChooserForLosers.addObject("Left Scale Auto 1", new AutonomousSelectorForSide("Left")); 
+		autoChooserForLosers.addObject("Right Scale Auto 1", new AutonomousSelectorForSide("Right")); 
+//		autoChooserForLosers.addObject("Left Scale Auto 2", new AutonomousSelectorForSideSecond("Left")); 
+//		autoChooserForLosers.addObject("Right Scale Auto 2", new AutonomousSelectorForSideSecond("Right")); 
 
 		SmartDashboard.putData("Scheduler", Scheduler.getInstance());
 
@@ -143,13 +147,8 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putData(new CalibrateArmEncStartingPosition());
 		L.ogSD(new DriveByPIDDistance(12));
 		L.ogSD(new ResetDriveEnc());
-		L.ogSD("Forward 12'", new DriveByInches(140, .5));
-		L.ogSD("TurnToDegreeTwoPointOh 0", new TurnToDegree2(00.0, 0.3));
-		L.ogSD("TurnToDegreeTwoPointOh 90", new TurnToDegree2(90.0, 0.3));
-		L.ogSD("TurnToDegreeTwoPointOh 180", new TurnToDegree2(180, 0.3));
-		L.ogSD("TurnToDegreeTwoPointOh -90", new TurnToDegree2(-90.0, 0.3));
-		L.ogSD("TurnToDegreeTwoPointOh -180", new TurnToDegree2(-180, 0.3));
 		L.ogSD(new SetArmPosition(Arm.AUTO_SWITCH_DELIVERY, new ArmSpeedSettingsWithCube()));
+
 		
 		new ResetSlideEnc().start();
 

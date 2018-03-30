@@ -59,6 +59,7 @@ public class DownUntilClicked extends Command {
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted() {
+    	L.ogInterrupt(this);
 		Robot.arm.setBrakePosition(BrakePosition.CLOSED);
 		Robot.arm.setSpeed(_iSpeedSetting.brakeSpeed);
 	}

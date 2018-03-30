@@ -23,7 +23,7 @@ public class ManualSlide extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		if(Robot.slide.getBottomStopSwitchIsPressed() && Math.abs(Robot.OperatorInput.CoPilotLeftStickY()) < deadzone ) {
+		if(Robot.slide.getBottomStopSwitchIsPressed()) {
 			//    		L.og("should be doing more");
 			if(Math.abs(Robot.OperatorInput.CoPilotLeftStickY()) < deadzone) {
 				//    			L.og("Stop the motor");

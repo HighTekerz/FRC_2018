@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3574.commands.groups.pickup;
+package org.usfirst.frc.team3574.commands.groups;
 
 import org.usfirst.frc.team3574.commands.arm.DownUntilClicked;
 import org.usfirst.frc.team3574.commands.arm.SetArmPosition;
@@ -16,9 +16,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class OppositePickup extends CommandGroup {
+public class DropForExchange extends CommandGroup {
 
-    public OppositePickup() {
+    public DropForExchange() {
     	addParallel(new DriveWithJoy());
     	addSequential(new SetWristPosition(WristPosition.ANGLED));
     	addSequential(new DownUntilClicked(new ArmSpeedSettingsWithCube(), 1, true));

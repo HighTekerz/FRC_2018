@@ -40,6 +40,7 @@ public class Arm extends Subsystem {
 	public static final int CARRY_ANGLE = 80;
 	public static final int SCALE_DELIVERY = 90; //degrees
 	public static final int AUTO_SCALE_DELIVERY = 80; //degrees
+	public static final int AUTO_SECOND_SCALE_DELIVERY = 40; //degrees
 	public static final int SWITCH_DELIVERY = 21; //degrees
 	public static final int AUTO_SWITCH_DELIVERY = 45; //degrees
 	public static final int CUBE_PICKUP = 0; //degrees

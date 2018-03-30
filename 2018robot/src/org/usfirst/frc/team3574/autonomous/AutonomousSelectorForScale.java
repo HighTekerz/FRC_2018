@@ -32,7 +32,7 @@ public class AutonomousSelectorForScale extends Command {
 		// Testing if command functions correctly
 		if (ourSwitchSide.contains("Left")) {
 			if (_startingOnLeft) {
-				_command = new AutonomousSideScale(90);
+				_command = new AutonomousSideScale45Degree(90);
 			}
 			else {
 				_command = new AutoPutCubeInScaleAcross(90);
@@ -43,7 +43,7 @@ public class AutonomousSelectorForScale extends Command {
 				_command = new AutoPutCubeInScaleAcross(-90);
 			}
 			else {
-				_command = new AutonomousSideScale(-90);
+				_command = new AutonomousSideScale45Degree(-90);
 			}
 		}
 		_command.start();

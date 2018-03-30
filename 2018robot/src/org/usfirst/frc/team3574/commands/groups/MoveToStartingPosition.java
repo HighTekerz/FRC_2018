@@ -20,6 +20,6 @@ public class MoveToStartingPosition extends CommandGroup {
     public MoveToStartingPosition() {
     	addSequential(new SetWristPosition(WristPosition.STRAIGHT));
     	addSequential(new SetClawPosition(ClawPosition.GRIP));
-    	addSequential(new SetArmPosition(Arm.STARTING_POSITION, new ArmSpeedSettingsWithCube()), 0.75);
+    	addSequential(new SetArmPosition(Arm.STARTING_POSITION, new ArmSpeedSettingsWithCube()));
     }
 }
