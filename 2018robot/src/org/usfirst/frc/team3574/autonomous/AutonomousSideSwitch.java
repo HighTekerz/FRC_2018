@@ -17,9 +17,14 @@ public class AutonomousSideSwitch extends CommandGroup {
 	double movementSpeed = 0.65;
 	double distanceToMiddleOfSwitch = 128;
 	
-    public AutonomousSideSwitch(double degreeToTurnTo) {
+	/**
+	 * A command to put a cube in the switch from a side.
+	 * 
+	 *@param leftOrRight should be 1 if the robot is on the left side of the field, -1 if on the right
+	 */
+    public AutonomousSideSwitch(double leftOrRight) {
     	addSequential(new DriveByInches(distanceToMiddleOfSwitch, movementSpeed));
-    	addSequential(new TurnToDegree2(degreeToTurnTo, .37));
+    	addSequential(new TurnToDegree2(90 * leftOrRight, .37));
     	addSequential(new DriveByInches(15.5, movementSpeed), 2);
     	addSequential(new SetArmPosition(Arm.AUTO_SWITCH_DELIVERY, new ArmSpeedSettingsWithCube()));
     	addSequential(new DropCubeInSwitch());

@@ -11,8 +11,9 @@ import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
+import org.usfirst.frc.team3574.autonomous.AutonomousSelectorForScale;
 import org.usfirst.frc.team3574.autonomous.AutonomousSelectorForSide;
-import org.usfirst.frc.team3574.autonomous.AutonomousSelectorForSideSecond;
+import org.usfirst.frc.team3574.autonomous.AutonomousSelectorForSide90Degree;
 import org.usfirst.frc.team3574.autonomous.AutonomousSelectorForSwitch;
 import org.usfirst.frc.team3574.autonomous.DriveForwardAutonomous;
 import org.usfirst.frc.team3574.commands.arm.Arm10DegreesForward;
@@ -21,7 +22,6 @@ import org.usfirst.frc.team3574.commands.arm.CalibrateArmEncStartingPosition;
 import org.usfirst.frc.team3574.commands.arm.SetArmPosition;
 import org.usfirst.frc.team3574.commands.driveTrain.DoNothing;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveByInches;
-import org.usfirst.frc.team3574.commands.driveTrain.DriveByPIDDistance;
 import org.usfirst.frc.team3574.commands.driveTrain.ResetDriveEnc;
 import org.usfirst.frc.team3574.commands.driveTrain.TurnToDegree2;
 import org.usfirst.frc.team3574.commands.slide.ResetEncIfAtLowestPoint;
@@ -132,8 +132,10 @@ public class Robot extends TimedRobot {
 		autoChooserForLosers.addObject("Center Auto", new AutonomousSelectorForSwitch()); 
 		autoChooserForLosers.addObject("Left Scale Auto 1", new AutonomousSelectorForSide("Left")); 
 		autoChooserForLosers.addObject("Right Scale Auto 1", new AutonomousSelectorForSide("Right")); 
-//		autoChooserForLosers.addObject("Left Scale Auto 2", new AutonomousSelectorForSideSecond("Left")); 
-//		autoChooserForLosers.addObject("Right Scale Auto 2", new AutonomousSelectorForSideSecond("Right")); 
+		autoChooserForLosers.addObject("Left Scale Auto 2", new AutonomousSelectorForSide90Degree("Left")); 
+		autoChooserForLosers.addObject("Right Scale Auto 2", new AutonomousSelectorForSide90Degree("Right"));
+		autoChooserForLosers.addObject("Right Scale Auto Across", new AutonomousSelectorForScale(false)); 
+		autoChooserForLosers.addObject("Left Scale Auto Across", new AutonomousSelectorForScale(true)); 
 
 		SmartDashboard.putData("Scheduler", Scheduler.getInstance());
 
@@ -145,7 +147,6 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putData(new ResetSlideEnc());
 		SmartDashboard.putData(new CalibrateArmEnc());
 		SmartDashboard.putData(new CalibrateArmEncStartingPosition());
-		L.ogSD(new DriveByPIDDistance(12));
 		L.ogSD(new ResetDriveEnc());
 		L.ogSD(new SetArmPosition(Arm.AUTO_SWITCH_DELIVERY, new ArmSpeedSettingsWithCube()));
 
@@ -272,10 +273,10 @@ public class Robot extends TimedRobot {
 		
 		lastTime = currentTime;
 
-		Robot.driveTrain.log();
-		Robot.sensorTest.log();
-		Robot.slide.log();
-		Robot.arm.log();
-		Robot.utilitySubsystem.log();
+//		Robot.driveTrain.log();
+//		Robot.sensorTest.log();
+//		Robot.slide.log();
+//		Robot.arm.log();
+//		Robot.utilitySubsystem.log();
 	}
 }

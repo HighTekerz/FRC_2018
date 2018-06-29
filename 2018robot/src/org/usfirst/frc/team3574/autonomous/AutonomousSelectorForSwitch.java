@@ -18,8 +18,6 @@ public class AutonomousSelectorForSwitch extends Command {
 	double right = -1;
 	
     public AutonomousSelectorForSwitch() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time

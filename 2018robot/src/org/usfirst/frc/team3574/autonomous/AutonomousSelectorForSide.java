@@ -22,7 +22,11 @@ public class AutonomousSelectorForSide extends Command {
 	double left = 1.10;
 	double right = -1;
 	String _startSide;
-
+/**
+ * Command to determine the side "our side" of the switch and scale are, then in order, check the scale then switch. It selects the command that will place the cube in the first one it sees as ours. if none, then drives forward. this command is built for the robot to drive forward a distance, then turn 45 degrees and drive into the scale.
+ * 
+ * @param startSide Which side of the field we put the robot. "Left" or "Right"
+ */
 	public AutonomousSelectorForSide(String startSide) {
 		_startSide = startSide;
 	}
@@ -40,11 +44,11 @@ public class AutonomousSelectorForSide extends Command {
 		if (_startSide.contains("Right")){
 			if(ourScaleSide.contains("Right")) {
 				L.og("Scale on our side (right) Auto");
-				_command = new AutonomousSideScale45Degree(44);
+				_command = new AutonomousSideScale45Degree(1);
 			}
 			else if(ourSwitchSide.contains("Right")){
 				L.og("Switch on our side (right) Auto");
-				_command = new AutonomousSideSwitch(90);
+				_command = new AutonomousSideSwitch(1);
 			}    		
 			else {
 				_command = new DriveForwardAutonomous();
@@ -53,17 +57,16 @@ public class AutonomousSelectorForSide extends Command {
 		else if (_startSide.contains("Left")) {
 			if(ourScaleSide.contains("Left")) {
 				L.og("Scale on our side (left) Auto");
-				_command = new AutonomousSideScale45Degree(-44);
+				_command = new AutonomousSideScale45Degree(-1);
 			}
 			else if(ourSwitchSide.contains("Left")){
 				L.og("Switch on our side (left) Auto");
-				_command = new AutonomousSideSwitch(-90);
+				_command = new AutonomousSideSwitch(-1);
 			}
 			else {
 				_command = new DriveForwardAutonomous();
 			}
 		}
-
 		_command.start();
 		_isFinished = true;
 	}

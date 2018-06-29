@@ -44,8 +44,8 @@ public class DriveByInches extends Command {
     		_speed = speed;
     	}
     	inchesToTravel = Math.abs(inchesToTravel);
+    	
 //    	217.2995489 is our ticks per inch
-	
     	_ticksToTravel = inchesToTravel * 217.2995489;
     	_shifterPosition = ShifterPosition;
     	_isShifting = true;

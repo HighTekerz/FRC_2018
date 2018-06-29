@@ -8,8 +8,6 @@ import javax.swing.plaf.basic.BasicInternalFrameTitlePane.SystemMenuBar;
 import org.omg.CORBA.SetOverrideType;
 import org.usfirst.frc.team3574.commands.driveTrain.DriveWithJoy;
 import org.usfirst.frc.team3574.enums.ShifterPosition;
-import org.usfirst.frc.team3574.motionProfile.MotionProfileRight;
-import org.usfirst.frc.team3574.robot.Constants;
 import org.usfirst.frc.team3574.robot.Robot;
 import org.usfirst.frc.team3574.robot.RobotMap;
 import org.usfirst.frc.team3574.utilities.L;
@@ -52,8 +50,6 @@ public class DriveTrain extends Subsystem {
 	DigitalInput leftFrontCubeSensor = new DigitalInput(RobotMap.FloorCubeSensorLeft);
 	DigitalInput rightFrontCubeSensor = new DigitalInput(RobotMap.FloorCubeSensorRight);
 
-	MotionProfileRight mPRIGHT = new MotionProfileRight(motorRight1);
-	MotionProfileRight mPLeft = new MotionProfileRight(motorLeft1);
 	StringBuilder _sb = new StringBuilder();
 
 	public double backupDistancePickupStart = -0.75;
@@ -392,7 +388,7 @@ public class DriveTrain extends Subsystem {
 	public boolean areBothFrontSensorsTripped() {
 		return (!leftFrontCubeSensor.get() && !rightFrontCubeSensor.get());
 	}
-
+	
 	/**
 	 * Command to shift gears on the drivetrain
 	 * 
@@ -410,72 +406,7 @@ public class DriveTrain extends Subsystem {
 			break;
 		}
 	}
-
-
-
-	public void prepareForMotionMagic() {
-
-		/* first choose the sensor */
-		motorLeft1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, kPIDLoopIdx,  kTimeoutMs);
-		motorLeft1.setSensorPhase(false);
-		motorLeft1.setInverted(false);
-
-		/* Set relevant frame periods to be at least as fast as periodic rate */
-		motorLeft1.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10,  kTimeoutMs);
-		motorLeft1.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10,  kTimeoutMs);
-
-		/* set the peak and nominal outputs */
-		motorLeft1.configNominalOutputForward(0,  kTimeoutMs);
-		motorLeft1.configNominalOutputReverse(0,  kTimeoutMs);
-		motorLeft1.configPeakOutputForward(1,  kTimeoutMs);
-		motorLeft1.configPeakOutputReverse(-1,  kTimeoutMs);
-
-		/* set closed loop gains in slot0 - see documentation */
-		motorLeft1.selectProfileSlot( kSlotIdx,  kPIDLoopIdx);
-		motorLeft1.config_kF(0, 0.0,  kTimeoutMs);
-		motorLeft1.config_kP(0, 0.8,  kTimeoutMs);
-		motorLeft1.config_kI(0, 0.00001,  kTimeoutMs);
-		motorLeft1.config_kD(0, 0.0,  kTimeoutMs);
-		/* set acceleration and vcruise velocity - see documentation */
-		motorLeft1.configMotionCruiseVelocity(15000,  kTimeoutMs);
-		motorLeft1.configMotionAcceleration(6000,  kTimeoutMs);
-		/* zero the sensor */
-		motorLeft1.setSelectedSensorPosition(0,  kPIDLoopIdx,  kTimeoutMs);
-
-		motorRight1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,  kPIDLoopIdx,  kTimeoutMs);
-		motorRight1.setSensorPhase(false);
-		motorRight1.setInverted(false);
-
-		/* Set relevant frame periods to be at least as fast as periodic rate */
-		motorRight1.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10,  kTimeoutMs);
-		motorRight1.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10,  kTimeoutMs);
-
-		/* set the peak and nominal outputs */
-		motorRight1.configNominalOutputForward(0,  kTimeoutMs);
-		motorRight1.configNominalOutputReverse(0,  kTimeoutMs);
-		motorRight1.configPeakOutputForward(1,  kTimeoutMs);
-		motorRight1.configPeakOutputReverse(-1,  kTimeoutMs);
-
-		/* set closed loop gains in slot0 - see documentation */
-		motorRight1.selectProfileSlot( kSlotIdx,  kPIDLoopIdx);
-		motorRight1.config_kF(0, 0.0,  kTimeoutMs);
-		motorRight1.config_kP(0, 0.8,  kTimeoutMs);
-		motorRight1.config_kI(0, 0.00001,  kTimeoutMs);
-		motorRight1.config_kD(0, 0.0,  kTimeoutMs);
-		/* set acceleration and vcruise velocity - see documentation */
-		motorRight1.configMotionCruiseVelocity(15000,  kTimeoutMs);
-		motorRight1.configMotionAcceleration(6000,  kTimeoutMs);
-		/* zero the sensor */
-		motorRight1.setSelectedSensorPosition(0,  kPIDLoopIdx,  kTimeoutMs);
-
-		motorLeft2.follow(motorLeft1);
-		motorRight2.follow(motorRight1);
-
-		SmartDashboard.putNumber("setPoint", 1);
-
-	}
-
-
+	
 	public void driveByPIDLoop(double valueToLockOn) {
 		/* calculate the percent motor output */
 		double motorOutput = motorLeft1.getMotorOutputPercent();
@@ -537,79 +468,6 @@ public class DriveTrain extends Subsystem {
 		}
 		/* clear line cache */
 		sb.setLength(0);
-	}
-
-	public void MPInit() {
-		mPLeft.startMotionProfile();
-		mPRIGHT.startMotionProfile();
-
-	}
-
-	public void MPExec() {
-		SetValueMotionProfile setOutputLeft = mPLeft.getSetValue();
-		SetValueMotionProfile setOutputRight = mPRIGHT.getSetValue();
-		motorLeft1.set(ControlMode.MotionProfile, setOutputLeft.value);
-		motorRight1.set(ControlMode.MotionProfile, setOutputRight.value);
-	}
-
-	public void MPEnd() {
-		mPLeft.reset();
-		mPRIGHT.reset();
-	}
-
-	
-	public void thisIsAPIDSetupLoopIThink() {
-		configureDistancePID(motorLeft1);
-		
-		configureDistancePID(motorRight1);
-		
-	
-	}
-	
-	private void configureDistancePID(TalonSRX _talon) {
-
-
-		_talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, Constants.kPIDLoopIdx,
-				Constants.kTimeoutMs);
-
-		/* choose to ensure sensor is positive when output is positive */
-//		_talon.setSensorPhase(Constants.kSensorPhase);
-
-		/* choose based on what direction you want forward/positive to be.
-		 * This does not affect sensor phase. */ 
-		_talon.setInverted(Constants.kMotorInvert);
-
-		/* set the peak and nominal outputs, 12V means full */
-		_talon.configNominalOutputForward(0, Constants.kTimeoutMs);
-		_talon.configNominalOutputReverse(0, Constants.kTimeoutMs);
-		_talon.configPeakOutputForward(1, Constants.kTimeoutMs);
-		_talon.configPeakOutputReverse(-1, Constants.kTimeoutMs);
-		/*
-		 * set the allowable closed-loop error, Closed-Loop output will be
-		 * neutral within this range. See Table in Section 17.2.1 for native
-		 * units per rotation.
-		 */
-		_talon.configAllowableClosedloopError(0, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
-
-		/* set closed loop gains in slot0, typically kF stays zero. */
-		_talon.config_kF(Constants.kPIDLoopIdx, 0.0, Constants.kTimeoutMs);
-		_talon.config_kP(Constants.kPIDLoopIdx, 5.0, Constants.kTimeoutMs);
-		_talon.config_kI(Constants.kPIDLoopIdx, 0.0, Constants.kTimeoutMs);
-		_talon.config_kD(Constants.kPIDLoopIdx, 0.0, Constants.kTimeoutMs);
-		
-//		/*
-//		 * lets grab the 360 degree position of the MagEncoder's absolute
-//		 * position, and intitally set the relative sensor to match.
-//		 */
-//		int absolutePosition = _talon.getSensorCollection().getPulseWidthPosition();
-//		/* mask out overflows, keep bottom 12 bits */
-//		absolutePosition &= 0xFFF;
-//		if (Constants.kSensorPhase)
-//			absolutePosition *= -1;
-//		if (Constants.kMotorInvert)
-//			absolutePosition *= -1;
-//		/* set the quadrature (relative) sensor to match absolute */
-//		_talon.setSelectedSensorPosition(absolutePosition, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
 	}
 
 	public void log() {

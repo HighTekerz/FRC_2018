@@ -91,7 +91,7 @@ public class OI {
 		* <<CO-PILOT CONTROLLER>>
 		*/
 		
-		//TODO: Fix angles in these commands		
+		//TODO: Fix angles in these commands
 //		Button prepareForSwitch = new JoystickButton(coPilotxbox360Controller, LEFT_BUMPER);
 //		prepareForSwitch.whenPressed(new SetSlidePosition(60));//PrepareForSwitchDelivery());
 

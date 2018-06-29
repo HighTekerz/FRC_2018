@@ -9,8 +9,8 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class ManualSlide extends Command {
-
-	private double deadzone = 0.05;
+	
+	private double deadzone = 0.125;
 
 	public ManualSlide() {
 		requires(Robot.slide);
@@ -23,16 +23,15 @@ public class ManualSlide extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		if(Robot.slide.getBottomStopSwitchIsPressed()) {
-			//    		L.og("should be doing more");
+		if(Robot.slide.getBottomStopSwitchIsPressed() && Math.abs(Robot.OperatorInput.CoPilotLeftStickY()) < deadzone) {
+			L.og("should be doing more");
 			if(Math.abs(Robot.OperatorInput.CoPilotLeftStickY()) < deadzone) {
-				//    			L.og("Stop the motor");
+				L.og("Stop the motor");
 				Robot.slide.setSlideSpeedPercent(0.0);
 
 			}
 
 		} else {
-
 			if (Math.abs(Robot.OperatorInput.CoPilotLeftStickY()) <= deadzone) {
 				if(Robot.slide.getBottomStopSwitchIsPressed()) {    				
 					L.og("ManualSlide running 0.0 current");
@@ -43,12 +42,13 @@ public class ManualSlide extends Command {
 					Robot.slide.setSlideSpeedPercent(Robot.slide.brakeSpeed);
 				}
 			} else {
-
 				Robot.slide.setSlideSpeedPercent(Robot.driveTrain.scalingSpeed(Robot.OperatorInput.CoPilotLeftStickY(), 0.25) + Robot.slide.brakeSpeed);
+				L.og(Robot.driveTrain.scalingSpeed(Robot.OperatorInput.CoPilotLeftStickY(), 0.25) + Robot.slide.brakeSpeed);
+//				L.og("ManualSlide running value");
+				
 			}
 
 		}
-
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

@@ -13,6 +13,9 @@ public class DoNothing extends Command {
 	double _timeout;
 	boolean isTimeout;
 	
+	/**
+	 * tell the drivetrain to do nothing
+	 */
     public DoNothing() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);

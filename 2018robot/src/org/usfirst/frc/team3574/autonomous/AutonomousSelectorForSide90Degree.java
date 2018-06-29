@@ -1,9 +1,5 @@
 package org.usfirst.frc.team3574.autonomous;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.usfirst.frc.team3574.commands.driveTrain.DoNothing;
 import org.usfirst.frc.team3574.robot.FieldFunctions;
 import org.usfirst.frc.team3574.robot.FieldFunctions.FieldElementToCheck;
 import org.usfirst.frc.team3574.utilities.L;
@@ -13,7 +9,7 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class AutonomousSelectorForSideSecond extends Command {
+public class AutonomousSelectorForSide90Degree extends Command {
 
 	Command _command;
 	String ourSwitchSide;
@@ -23,7 +19,12 @@ public class AutonomousSelectorForSideSecond extends Command {
 	double right = -1;
 	String _startSide;
 
-	public AutonomousSelectorForSideSecond(String startSide) {
+	/**
+	 * Command to determine the side "our side" of the switch and scale are, then in order, check the scale then switch. It selects the command that will place the cube in the first one it sees as ours. if none, then drives forward. this command is built for the robot to turn 90 degrees and drive into the scale.
+	 * 
+	 * @param startSide Which side of the field we put the robot. "Left" or "Right"
+	 */
+	public AutonomousSelectorForSide90Degree(String startSide) {
 		_startSide = startSide;
 	}
 
@@ -40,11 +41,11 @@ public class AutonomousSelectorForSideSecond extends Command {
 		if (_startSide.contains("Right")){
 			if(ourScaleSide.contains("Right")) {
 				L.og("Scale on our side (right) Auto");
-				_command = new AutonomousSideScale45Degree(90);
+				_command = new AutonomousSideScale90Degree(1);
 			}
 			else if(ourSwitchSide.contains("Right")){
 				L.og("Switch on our side (right) Auto");
-				_command = new AutonomousSideSwitch(90);
+				_command = new AutonomousSideSwitch(1);
 			}    		
 			else {
 				_command = new DriveForwardAutonomous();
@@ -53,11 +54,11 @@ public class AutonomousSelectorForSideSecond extends Command {
 		else if (_startSide.contains("Left")) {
 			if(ourScaleSide.contains("Left")) {
 				L.og("Scale on our side (left) Auto");
-				_command = new AutonomousSideScale45Degree(-90);
+				_command = new AutonomousSideScale90Degree(-1);
 			}
 			else if(ourSwitchSide.contains("Left")){
 				L.og("Switch on our side (left) Auto");
-				_command = new AutonomousSideSwitch(-90);
+				_command = new AutonomousSideSwitch(-1);
 			}
 			else {
 				_command = new DriveForwardAutonomous();

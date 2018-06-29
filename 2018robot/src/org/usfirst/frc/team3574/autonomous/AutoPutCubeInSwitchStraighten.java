@@ -26,6 +26,7 @@ public class AutoPutCubeInSwitchStraighten extends CommandGroup {
 	private double _inchesToSwitchSide = 88;//101.54801;
 	private double _degreeToTurnTo = 32.125;
 	/**
+	 * A command to place a cube in the switch. requires AutonomousSelector for accuracy.
 	 * 
 	 * @param leftOrRight send 1 for left, -1 for right
 	 */
