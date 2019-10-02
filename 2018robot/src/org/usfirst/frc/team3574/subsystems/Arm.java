@@ -37,12 +37,12 @@ public class Arm extends Subsystem {
 	public static final double TICKS_PER_DEGREE = TICKS_PER_REVOLUTION  / 360;
 
 	public static final int STARTING_POSITION = 88;
-	public static final int CARRY_ANGLE = 80;
+	public static final int CARRY_ANGLE = 150;
 	public static final int SCALE_DELIVERY = 90; //degrees
-	public static final int AUTO_SCALE_DELIVERY = 80; //degrees
-	public static final int AUTO_SECOND_SCALE_DELIVERY = 40; //degrees
+	public static final int AUTO_SCALE_DELIVERY = 125; //degrees
+	public static final int AUTO_SECOND_SCALE_DELIVERY = 125; //degrees // was 40, changing to 111 at GG
 	public static final int SWITCH_DELIVERY = 21; //degrees
-	public static final int AUTO_SWITCH_DELIVERY = 45; //degrees
+	public static final int AUTO_SWITCH_DELIVERY = 111; //degrees
 	public static final int CUBE_PICKUP = 0; //degrees
 
 	public final int timeoutMs = 50;
@@ -70,6 +70,8 @@ public class Arm extends Subsystem {
 		ArmMotor.configNominalOutputReverse(0, kTimeoutMs);
 		ArmMotor.configPeakOutputForward(1, kTimeoutMs);
 		ArmMotor.configPeakOutputReverse(-1, kTimeoutMs);
+//		ArmMotor.configForwardSoftLimitEnable(true, 10);
+//		ArmMotor.configReverseSoftLimitEnable(true, 10);
 		//		ArmMotor.configAllowableClosedloopError(0, kPIDLoopIdx, kTimeoutMs);
 		//
 		//
@@ -94,7 +96,7 @@ public class Arm extends Subsystem {
 	}
 
 	public double getEncPos() {
-		return -ArmMotor.getSensorCollection().getPulseWidthPosition();
+		return -(ArmMotor.getSensorCollection().getPulseWidthPosition() %  4096);
 	}
 	public double getAngleOfArm() {
 		return ((ARM_MOTOR_ZERO_POINT - getEncPos()) / TICKS_PER_DEGREE);

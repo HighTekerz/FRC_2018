@@ -24,6 +24,6 @@ public class DropForExchange extends CommandGroup {
     	addSequential(new DownUntilClicked(new ArmSpeedSettingsWithCube(), 1, true));
     	addSequential(new SetClawPosition(ClawPosition.RELEASE));
     	addSequential(new SetWristPosition(WristPosition.STRAIGHT));
-    	addSequential(new SetArmPosition(Arm.CARRY_ANGLE, new ArmSpeedSettingsWithoutCube()), 3);
+    	addSequential(new SetArmPosition(Arm.CARRY_ANGLE, new ArmSpeedSettingsWithoutCube()), .3);
     }
 }

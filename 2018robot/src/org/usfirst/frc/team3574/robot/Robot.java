@@ -127,13 +127,13 @@ public class Robot extends TimedRobot {
 	
 		
 		OperatorInput = new OI();
-		autoChooserForLosers.addObject("Do Nothing", new DoNothing());
-		autoChooserForLosers.addDefault("Drive Across Line", new DriveForwardAutonomous());
+		autoChooserForLosers.addDefault("Do Nothing", new DoNothing());
+		autoChooserForLosers.addObject("Drive Across Line", new DriveForwardAutonomous());
 		autoChooserForLosers.addObject("Center Auto", new AutonomousSelectorForSwitch()); 
-		autoChooserForLosers.addObject("Left Scale Auto 1", new AutonomousSelectorForSide("Left")); 
-		autoChooserForLosers.addObject("Right Scale Auto 1", new AutonomousSelectorForSide("Right")); 
-		autoChooserForLosers.addObject("Left Scale Auto 2", new AutonomousSelectorForSide90Degree("Left")); 
-		autoChooserForLosers.addObject("Right Scale Auto 2", new AutonomousSelectorForSide90Degree("Right"));
+		autoChooserForLosers.addObject("Left Scale Auto", new AutonomousSelectorForSide("Left")); 
+		autoChooserForLosers.addObject("Right Scale Auto", new AutonomousSelectorForSide("Right")); 
+		autoChooserForLosers.addObject("Left Scale Auto 90 Degree", new AutonomousSelectorForSide90Degree("Left")); 
+		autoChooserForLosers.addObject("Right Scale Auto 90 Degree", new AutonomousSelectorForSide90Degree("Right"));
 		autoChooserForLosers.addObject("Right Scale Auto Across", new AutonomousSelectorForScale(false)); 
 		autoChooserForLosers.addObject("Left Scale Auto Across", new AutonomousSelectorForScale(true)); 
 
@@ -252,7 +252,6 @@ public class Robot extends TimedRobot {
 		if (!resetCommand.isRunning()) {
 			resetCommand.start();
 		}
-		
 		this.log();
 	}
 
@@ -273,10 +272,10 @@ public class Robot extends TimedRobot {
 		
 		lastTime = currentTime;
 
-//		Robot.driveTrain.log();
-//		Robot.sensorTest.log();
-//		Robot.slide.log();
-//		Robot.arm.log();
-//		Robot.utilitySubsystem.log();
+		Robot.driveTrain.log();
+		Robot.sensorTest.log();
+		Robot.slide.log();
+		Robot.arm.log();
+		Robot.utilitySubsystem.log();
 	}
 }

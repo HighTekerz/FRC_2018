@@ -491,8 +491,8 @@ public class DriveTrain extends Subsystem {
 		
 //		SmartDashboard.putNumber("Yaw Rate", getYawRate());
 
-//		SmartDashboard.putNumber("Encoder Right", this.getEncoderRight());
-//		SmartDashboard.putNumber("Encoder Left", this.getEncoderLeft());
+		SmartDashboard.putNumber("Drive Encoder Right", this.getEncoderRight());
+		SmartDashboard.putNumber("Drive Encoder Left", this.getEncoderLeft());
 		
 //		L.ogSD("Left Drive Error", this.motorLeft1.getClosedLoopError(kPIDLoopIdx));
 //		L.ogSD("Right Drive Error", this.motorRight1.getClosedLoopError(kPIDLoopIdx));

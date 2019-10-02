@@ -1,6 +1,4 @@
 /*----------------------------------------------------------------------------*/
-
-
 /* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
@@ -46,94 +44,89 @@ public class OI {
 	XboxController driverXbox360Controller = new XboxController(0);
 	XboxController coPilotxbox360Controller = new XboxController(1);
 
-	static final int A_BUTTON = 1;
-	static final int B_BUTTON = 2;
-	static final int X_BUTTON = 3;
-	static final int Y_BUTTON = 4;
-	static final int LEFT_BUMPER = 5;
-	static final int RIGHT_BUMPER = 6;
-	static final int BACK = 7;
-	static final int START = 8;
-	static final int RIGHT_THUMBSTICK_BUTTON = 9;
-	static final int LEFT_THUMBSTICK_BUTTON = 10;
-
-
-	static final int LEFT_STICK_X = 0;
-	static final int LEFT_STICK_Y = 1;
-	static final int LEFT_TRIGGER = 2;
-	static final int RIGHT_TRIGGER = 3;
+	static final int A_BUTTON = 1,
+			B_BUTTON = 2,
+			X_BUTTON = 3,
+			Y_BUTTON = 4,
+			LEFT_BUMPER = 5,
+			RIGHT_BUMPER = 6,
+			BACK = 7,
+			START = 8,
+			RIGHT_THUMBSTICK_BUTTON = 9,
+			LEFT_THUMBSTICK_BUTTON = 10,
+			LEFT_TRIGGER = 2,	
+			RIGHT_TRIGGER = 3;
 	int pov = 0;
 
 	public OI() {
 		/**
 		 * <<DRIVER CONTROLLER>>
+		 * 
+		 * Controls drivetrain and pickup
 		 */
-		
-		Button calibratePickup = new TriggerButton(driverXbox360Controller, LEFT_TRIGGER);
+
+		Button calibratePickup = new 
+				TriggerButton(driverXbox360Controller, LEFT_TRIGGER);
 		calibratePickup.whenPressed(new CalibratePickup());
 
-		Button pickupNoCal = new TriggerButton(driverXbox360Controller, RIGHT_TRIGGER);
-		pickupNoCal.whenPressed(new GoToPositionPickup());
+//		Button dropForExchange = new 
+//				JoystickButton(driverXbox360Controller, RIGHT_BUMPER);
+//		dropForExchange.whenPressed(new DropForExchange());
 
-		Button dropForExchange = new JoystickButton(driverXbox360Controller, RIGHT_BUMPER);
-		dropForExchange.whenPressed(new DropForExchange());
-		
-		Button pickupBlind = new JoystickButton(driverXbox360Controller, LEFT_BUMPER);
-		pickupBlind.whenPressed(new BlindPickup());
-
-		Button shiftHigh = new POVUp(driverXbox360Controller, pov);
+		Button shiftHigh = new 
+				POVUp(driverXbox360Controller, pov);
 		shiftHigh.whenPressed(new ShiftGear(ShifterPosition.HIGH_GEAR));
 
-		Button shiftLow = new POVDown(driverXbox360Controller, pov);
+		Button shiftLow = new 
+				POVDown(driverXbox360Controller, pov);
 		shiftLow.whenPressed(new ShiftGear(ShifterPosition.LOW_GEAR));
+		
+		Button closeThenStraighten2 = new 
+				JoystickButton(driverXbox360Controller, X_BUTTON);
+		closeThenStraighten2.whenPressed(new SetClawPosition(ClawPosition.GRIP));
+		closeThenStraighten2.whenReleased(new SetWristPosition(WristPosition.STRAIGHT));
+		
+		
+		
+		
+//		 
+
+
+		//		JoystickButton pickUp = new JoystickButton(driverXbox360Controller, RIGHT_BUMPER);
+
 
 		/**
-		* <<CO-PILOT CONTROLLER>>
-		*/
-		
-		//TODO: Fix angles in these commands
-//		Button prepareForSwitch = new JoystickButton(coPilotxbox360Controller, LEFT_BUMPER);
-//		prepareForSwitch.whenPressed(new SetSlidePosition(60));//PrepareForSwitchDelivery());
+		 *<<CO-PILOT CONTROLLER>>
+		 *
+		 *Controls all arm and slide functions except pickup
+		 */
 
-//		Button dropOffInSwitch = new TriggerButton(coPilotxbox360Controller, LEFT_TRIGGER);
-//		dropOffInSwitch.whenPressed(new DropCubeInSwitch());
-
-		Button prepareForScale = new JoystickButton(coPilotxbox360Controller, RIGHT_BUMPER);
-		prepareForScale.whenPressed(new SetSlidePosition((12 * 8)));
-
-		Button dropOffInScale = new TriggerButton(coPilotxbox360Controller, RIGHT_TRIGGER);
-		dropOffInScale.whenPressed(new DropCubeInScale());
-
-		Button calToStartingPosition = new JoystickButton(coPilotxbox360Controller, BACK);
-		calToStartingPosition.whenPressed(new CalibrateArmEncStartingPosition());
-
-//		Button startButton = new JoystickButton(coPilotxbox360Controller, START);
-//		startButton.whenPressed(new StartButton());
-		
-		Button startingPosition = new JoystickButton(coPilotxbox360Controller, Y_BUTTON);
-		startingPosition.whenPressed(new MoveToStartingPosition());
-
-		Button angleWrist = new POVDown(coPilotxbox360Controller, pov);
+		Button angleWrist = new 
+				POVDown(coPilotxbox360Controller, pov);
 		angleWrist.whenPressed(new SetWristPosition(WristPosition.ANGLED));
 
-		Button straightenWrist = new POVUp(coPilotxbox360Controller, pov);
+		Button straightenWrist = new 
+				POVUp(coPilotxbox360Controller, pov);
 		straightenWrist.whenPressed(new SetWristPosition(WristPosition.STRAIGHT));
 
-		Button openClaw = new POVLeft(coPilotxbox360Controller, pov);
+		Button openClaw = new 
+				POVLeft(coPilotxbox360Controller, pov);
 		openClaw.whenPressed(new SetClawPosition(ClawPosition.RELEASE));
 
-		Button closeClaw = new POVRight(coPilotxbox360Controller, pov);
+		Button closeClaw = new
+				POVRight(coPilotxbox360Controller, pov);
 		closeClaw.whenPressed(new SetClawPosition(ClawPosition.GRIP));
-		
-		Button armForward10Degrees = new JoystickButton(coPilotxbox360Controller, A_BUTTON);
-		armForward10Degrees.whenPressed(new Arm10DegreesForward());
-		
-		
-		
+
+		Button closeThenStraighten = new 
+				JoystickButton(coPilotxbox360Controller, X_BUTTON);
+		closeThenStraighten.whenPressed(new SetClawPosition(ClawPosition.GRIP));
+		closeThenStraighten.whenReleased(new SetWristPosition(WristPosition.STRAIGHT));
+
+
 		/**
 		 * <<SMARTDASHBOARD>>
 		 */
-		
+
 		SmartDashboard.putData(new TurnToDegree(45, .5));
 	}
 

@@ -21,11 +21,11 @@ public class SetArmPosition extends Command {
 
 	IArmSpeedSettings _ISpeedSetting;
 
-	private double _tickTarget;
-	private double _targetPositionInDegrees;
-	public double error;
-	private double allowableError = 2 * Arm.TICKS_PER_DEGREE;
-	private double slowPoint = 7 * Arm.TICKS_PER_DEGREE;
+	private double _tickTarget,
+		_targetPositionInDegrees,
+		error,
+		allowableError = 2 * Arm.TICKS_PER_DEGREE,
+		slowPoint = 7 * Arm.TICKS_PER_DEGREE;
 
 	private double _timeout;
 
@@ -62,6 +62,8 @@ public class SetArmPosition extends Command {
 		Robot.arm.setSpeed(_ISpeedSetting.brakeSpeed);
 		Robot.arm.setBrakePosition(BrakePosition.OPEN);
 		_tickTarget = Arm.ARM_MOTOR_ZERO_POINT - (_targetPositionInDegrees * Arm.TICKS_PER_DEGREE);
+		
+		L.og(_tickTarget);
 		isFinished = false;
 	}
 
@@ -90,7 +92,6 @@ public class SetArmPosition extends Command {
 			}
 		}
 	}
-
 
 	double xSpeed;
 	boolean DriveUp;
@@ -121,18 +122,18 @@ public class SetArmPosition extends Command {
 				if(log)System.out.println("Running Max Speed DOWN");
 				xSpeed = _ISpeedSetting.maxSpeedDown;
 			}
-
 		}
-		
 		L.og("Setting arm speed to: " + xSpeed);
 		Robot.arm.setSpeed(xSpeed);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		if (this.timeSinceInitialized() >= _timeout) {
+		if (timeSinceInitialized() >= _timeout) { 
+			System.out.println("SetArm Timeout!");
 			return true;
 		}
+		System.out.println("Time Since Init: " + timeSinceInitialized());
 		return isFinished;
 	}
 
@@ -141,6 +142,7 @@ public class SetArmPosition extends Command {
 		System.out.println("SetArm Hit Target");
 		Robot.arm.setBrakePosition(BrakePosition.CLOSED);
 		Robot.arm.setSpeed(motorStop);
+		Robot.arm.initDefaultCommand();
 	}
 
 	// Called when another command which requires one or more of the same
@@ -149,5 +151,6 @@ public class SetArmPosition extends Command {
 		L.ogInterrupt(this);
 		Robot.arm.setBrakePosition(BrakePosition.CLOSED);
 		Robot.arm.setSpeed(motorStop);
+		Robot.arm.initDefaultCommand();
 	}
 }

@@ -33,7 +33,7 @@ public class Slide extends Subsystem {
 	public double downslowedSpeed = -.01;
 
 	public static double SLIDE_ZERO_POINT;
-	
+
 	public static int SLIDE_BOTTOM = 0;
 	public static int SLIDE_HIGHER_INCREMENT_SWITCH = 4;
 	public static int SLIDE_HIGHER_INCREMENT_SCALE = 6;
@@ -42,114 +42,114 @@ public class Slide extends Subsystem {
 	public static int SLIDE_SCALE_LOW = 6;
 	public static int SLIDE_SCALE_HIGH = 24;
 	public static int SLIDE_START = 0;
-	
+
 	public static final double TicksPerRevolution = 4096;
 	public static final double InchesPerRevolution = 5.875;
 	public static final double TicksPerInch = (TicksPerRevolution / InchesPerRevolution); //697
 
 	private static final int SPEED_TO_TOP = 87;
 	private static final int TICKS_TO_TOP = 16732;
-	
-//	private static final double P = 0.05;//((SPEED_TO_TOP * TICKS_PER_REV) / TICKS_TO_TOP) * 2; //5.3192087
-//	private static final double I = 0.000000001;
-//	private static final double D = 0.0;
-//	private static final double F = 1.0;
-//	
-//	/**
-//	 * Which PID slot to pull gains from. Starting 2018, you can choose from
-//	 * 0,1,2 or 3. Only the first two (0,1) are visible in web-based
-//	 * configuration.
-//	 */
-//	public static final int kSlotIdx = 0;
-//
-//	public static final int kPIDLoopIdx = 0;
-//
-//	public static final int kTimeoutMs = 10;
-//
-//	/* choose so that Talon does not report sensor out of phase */
-//	public static boolean kSensorPhase = true;
-//
-//	/* choose based on what direction you want to be positive,
-//		this does not affect motor invert. */
-//	public static boolean kMotorInvert = false;	
 
-	
+	//	private static final double P = 0.05;//((SPEED_TO_TOP * TICKS_PER_REV) / TICKS_TO_TOP) * 2; //5.3192087
+	//	private static final double I = 0.000000001;
+	//	private static final double D = 0.0;
+	//	private static final double F = 1.0;
+	//	
+	//	/**
+	//	 * Which PID slot to pull gains from. Starting 2018, you can choose from
+	//	 * 0,1,2 or 3. Only the first two (0,1) are visible in web-based
+	//	 * configuration.
+	//	 */
+	//	public static final int kSlotIdx = 0;
+	//
+	//	public static final int kPIDLoopIdx = 0;
+	//
+	//	public static final int kTimeoutMs = 10;
+	//
+	//	/* choose so that Talon does not report sensor out of phase */
+	//	public static boolean kSensorPhase = true;
+	//
+	//	/* choose based on what direction you want to be positive,
+	//		this does not affect motor invert. */
+	//	public static boolean kMotorInvert = false;	
+
+
 
 	public Slide() {
 		slideSim.set(ControlMode.Current, 0.0);
-		
-		
-		
-		
-//		slideSim.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, kPIDLoopIdx, kTimeoutMs);
-//		slideSim.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 1, 10);
-//		
-//		slideSim.setSensorPhase(kSensorPhase);
-//
-//		slideSim.setInverted(kMotorInvert);
-//
-//		/* set the peak and nominal outputs, 12V means full */
-//		slideSim.configNominalOutputForward(0.0, kTimeoutMs);
-//		slideSim.configNominalOutputReverse(-0.0, kTimeoutMs);
-//		slideSim.configPeakOutputForward(0.75, kTimeoutMs);
-//		slideSim.configPeakOutputReverse(-0.75, kTimeoutMs);
-//		/*
-//		 * set the allowable closed-loop error, Closed-Loop output will be
-//		 * neutral within this range. See Table in Section 17.2.1 for native
-//		 * units per rotation.
-//		 */
-//		slideSim.configAllowableClosedloopError(kSlotIdx, (int)(Math.round(1 * TicksPerInch)), kTimeoutMs);
-//		slideSim.configMaxIntegralAccumulator(kSlotIdx, 100, kTimeoutMs);
-//		slideSim.config
-		
-//		/* set closed loop gains in slot0, typically kF stays zero. */
-//		slideSim.config_kP(kPIDLoopIdx, P, kTimeoutMs);
-//		slideSim.config_kI(kPIDLoopIdx, I, kTimeoutMs);
-//		slideSim.config_kD(kPIDLoopIdx, D, kTimeoutMs);
-//		slideSim.config_kF(kPIDLoopIdx, F, kTimeoutMs);
-//	
-//		/*
-//		 * lets grab the 360 degree position of the MagEncoder's absolute
-//		 * position, and initially set the relative sensor to match.
-//		 */
-//		
-		
+
+
+
+
+		//		slideSim.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, kPIDLoopIdx, kTimeoutMs);
+		//		slideSim.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 1, 10);
+		//		
+		//		slideSim.setSensorPhase(kSensorPhase);
+		//
+		//		slideSim.setInverted(kMotorInvert);
+		//
+		//		/* set the peak and nominal outputs, 12V means full */
+		//		slideSim.configNominalOutputForward(0.0, kTimeoutMs);
+		//		slideSim.configNominalOutputReverse(-0.0, kTimeoutMs);
+		//		slideSim.configPeakOutputForward(0.75, kTimeoutMs);
+		//		slideSim.configPeakOutputReverse(-0.75, kTimeoutMs);
+		//		/*
+		//		 * set the allowable closed-loop error, Closed-Loop output will be
+		//		 * neutral within this range. See Table in Section 17.2.1 for native
+		//		 * units per rotation.
+		//		 */
+		//		slideSim.configAllowableClosedloopError(kSlotIdx, (int)(Math.round(1 * TicksPerInch)), kTimeoutMs);
+		//		slideSim.configMaxIntegralAccumulator(kSlotIdx, 100, kTimeoutMs);
+		//		slideSim.config
+
+		//		/* set closed loop gains in slot0, typically kF stays zero. */
+		//		slideSim.config_kP(kPIDLoopIdx, P, kTimeoutMs);
+		//		slideSim.config_kI(kPIDLoopIdx, I, kTimeoutMs);
+		//		slideSim.config_kD(kPIDLoopIdx, D, kTimeoutMs);
+		//		slideSim.config_kF(kPIDLoopIdx, F, kTimeoutMs);
+		//	
+		//		/*
+		//		 * lets grab the 360 degree position of the MagEncoder's absolute
+		//		 * position, and initially set the relative sensor to match.
+		//		 */
+		//		
+
 	}
-	
-//	public void updateEncTW() {
-//		int absolutePosition = slideSim.getSensorCollection().getPulseWidthPosition();
-		/* mask out overflows, keep bottom 12 bits */
-//		absolutePosition &= 0xFFF;
-//		if (kSensorPhase)
-//			absolutePosition *= -1;
-//		if (kMotorInvert)
-//			absolutePosition *= -1;
-		/* set the quadrature (relative) sensor to match absolute */
-//		int absolutePosition = 50;
-//		ErrorCode plsWork = slideSim.setSelectedSensorPosition(absolutePosition, kPIDLoopIdx, kTimeoutMs);
-//	}
-	
-//	int set;
-//	public void setSlidePosition(int setPoint) {
-//		set = setPoint;
-//		slideSim.set(ControlMode.Position, set);
-//	}
+
+	//	public void updateEncTW() {
+	//		int absolutePosition = slideSim.getSensorCollection().getPulseWidthPosition();
+	/* mask out overflows, keep bottom 12 bits */
+	//		absolutePosition &= 0xFFF;
+	//		if (kSensorPhase)
+	//			absolutePosition *= -1;
+	//		if (kMotorInvert)
+	//			absolutePosition *= -1;
+	/* set the quadrature (relative) sensor to match absolute */
+	//		int absolutePosition = 50;
+	//		ErrorCode plsWork = slideSim.setSelectedSensorPosition(absolutePosition, kPIDLoopIdx, kTimeoutMs);
+	//	}
+
+	//	int set;
+	//	public void setSlidePosition(int setPoint) {
+	//		set = setPoint;
+	//		slideSim.set(ControlMode.Position, set);
+	//	}
 
 	public void setSlideSpeedPercent(double speed) {
 		slideSim.set(ControlMode.PercentOutput, speed * 1);
 	}
-	
+
 	public void setCurrent(double current) {
 		slideSim.set(ControlMode.Current, current);
 	}
-	
+
 	@Override
 	protected void initDefaultCommand() {
 		setDefaultCommand(new ManualSlide());
 	}
 
 	public boolean getTopStopSwitchIsPressed() {
-		return slideSim.getSensorCollection().isRevLimitSwitchClosed();
+		return !slideSim.getSensorCollection().isRevLimitSwitchClosed();
 	}
 
 	public boolean getBottomStopSwitchIsPressed() {
@@ -157,9 +157,9 @@ public class Slide extends Subsystem {
 	}
 
 	public int getEncPos() {
-		return slideSim.getSensorCollection().getPulseWidthPosition();
+		return -slideSim.getSensorCollection().getPulseWidthPosition();
 	}
-	
+
 	public void resetEnc() {
 		SLIDE_ZERO_POINT = Robot.slide.getEncPos();
 	}
@@ -168,23 +168,23 @@ public class Slide extends Subsystem {
 		SmartDashboard.putNumber("Slide Encoder", getEncPos());
 		SmartDashboard.putBoolean("Top Slide Limit Switch", getTopStopSwitchIsPressed());
 		SmartDashboard.putBoolean("Bottom Slide Limit Switch", getBottomStopSwitchIsPressed());
-		
+
 		SmartDashboard.putNumber("Slide Zero Point (Not Really 0)", SLIDE_ZERO_POINT);
-		
+
 		SmartDashboard.putNumber("Slide Motor Power Percentage", slideSim.getMotorOutputPercent());
-		
-//		SmartDashboard.putNumber("ACTUAL ClosedLoopError", Math.round(1 * TicksPerInch));
-//		SmartDashboard.putNumber("ACTUAL ClosedLoopError INTEGER", (int)(Math.round(1 * TicksPerInch)));
-//		
-//		
-//		SmartDashboard.putNumber("SelectedSlideSensorSite", slideSim.getSelectedSensorPosition(kPIDLoopIdx));
-//		SmartDashboard.putNumber("SelectedSlide Velocity", slideSim.getSelectedSensorVelocity(kPIDLoopIdx));
-//		
-//		SmartDashboard.putNumber("setpoint", set);
-//		SmartDashboard.putNumber("CLE", slideSim.getClosedLoopError(kPIDLoopIdx));
-//		SmartDashboard.putNumber("Target", slideSim.getClosedLoopTarget(kPIDLoopIdx));
-//		SmartDashboard.putNumber(" I ", slideSim.getIntegralAccumulator(kPIDLoopIdx));
-		
-		
+
+		//		SmartDashboard.putNumber("ACTUAL ClosedLoopError", Math.round(1 * TicksPerInch));
+		//		SmartDashboard.putNumber("ACTUAL ClosedLoopError INTEGER", (int)(Math.round(1 * TicksPerInch)));
+		//		
+		//		
+		//		SmartDashboard.putNumber("SelectedSlideSensorSite", slideSim.getSelectedSensorPosition(kPIDLoopIdx));
+		//		SmartDashboard.putNumber("SelectedSlide Velocity", slideSim.getSelectedSensorVelocity(kPIDLoopIdx));
+		//		
+		//		SmartDashboard.putNumber("setpoint", set);
+		//		SmartDashboard.putNumber("CLE", slideSim.getClosedLoopError(kPIDLoopIdx));
+		//		SmartDashboard.putNumber("Target", slideSim.getClosedLoopTarget(kPIDLoopIdx));
+		//		SmartDashboard.putNumber(" I ", slideSim.getIntegralAccumulator(kPIDLoopIdx));
+
+
 	}
 }

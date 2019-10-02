@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ManualArm extends Command {
 
 	private double deadzone = .2;
-	ArmSpeedSettingsWithoutCube armSpeedSettingsWoutCube = new ArmSpeedSettingsWithoutCube();
+	ArmSpeedSettingsWithoutCube armSpeedSettingsWithoutCube = new ArmSpeedSettingsWithoutCube();
 
 	public ManualArm() {
 		requires(Robot.arm);
@@ -28,22 +28,45 @@ public class ManualArm extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() { 
 		if(Math.abs(Robot.OperatorInput.CoPilotRightStickY()) > deadzone) {
-
-			if((Robot.OperatorInput.CoPilotRightStickY() < 0.0 &&
-					Robot.arm.getAngleOfArm() < Robot.arm.CARRY_ANGLE) || Robot.OperatorInput.CoPilotLeftBumper()) {
-				Robot.arm.setBrakePosition(BrakePosition.OPEN);
-				Robot.arm.setSpeed(Robot.driveTrain.scalingSpeed(-Robot.OperatorInput.CoPilotRightStickY(), 0.75) + 0.2);
-			} 
-			else if((Robot.OperatorInput.CoPilotRightStickY() > 0.0 &&
-					Robot.arm.getAngleOfArm() > Robot.arm.SWITCH_DELIVERY) || Robot.OperatorInput.CoPilotLeftBumper()) {
-				Robot.arm.setBrakePosition(BrakePosition.OPEN);
-				Robot.arm.setSpeed(Robot.driveTrain.scalingSpeed(-Robot.OperatorInput.CoPilotRightStickY(), 0.75) + 0.2);
-			} 
-			else {
+			
+			
+			if(Robot.arm.getEncPos() < -1750 && Robot.OperatorInput.CoPilotRightStickY() < 0 ) {
+				
 				Robot.arm.setBrakePosition(BrakePosition.CLOSED);
-//				Robot.arm.setSpeed(armSpeedSettingsWoutCube.brakeSpeed);
-				Robot.arm.setSpeed(0.0);
+				return;
 			}
+			
+			if(Robot.arm.getEncPos() > -550 && Robot.OperatorInput.CoPilotRightStickY() > 0) {
+				
+				Robot.arm.setBrakePosition(BrakePosition.CLOSED);
+				return;
+			}
+			
+//			if(Robot.arm.getEncPos() < -4096 && (Robot.OperatorInput.CoPilotRightStickY() > 0 || Robot.OperatorInput.CoPilotRightStickY() < 0)) {
+//				
+//			}
+//			
+//			if(Robot.arm.getEncPos() < -1500 && Robot.OperatorInput.CoPilotRightStickY() < 0) {
+//				
+//				Robot.arm.setSpeed(Robot.driveTrain.scalingSpeed(-Robot.OperatorInput.CoPilotRightStickY(), 0.90));
+//				return;
+//			}
+//
+//			if((Robot.OperatorInput.CoPilotRightStickY() < 0.0 &&
+//					Robot.arm.getAngleOfArm() < Robot.arm.CARRY_ANGLE) || Robot.OperatorInput.CoPilotLeftBumper()) {
+			Robot.arm.setBrakePosition(BrakePosition.OPEN);
+			Robot.arm.setSpeed(Robot.driveTrain.scalingSpeed(-Robot.OperatorInput.CoPilotRightStickY(), 0.75) + 0.2);
+//			} 
+//			else if((Robot.OperatorInput.CoPilotRightStickY() > 0.0 &&
+//					Robot.arm.getAngleOfArm() > Robot.arm.SWITCH_DELIVERY) || Robot.OperatorInput.CoPilotLeftBumper()) {
+//				Robot.arm.setBrakePosition(BrakePosition.OPEN);
+//				Robot.arm.setSpeed(Robot.driveTrain.scalingSpeed(-Robot.OperatorInput.CoPilotRightStickY(), 0.75) + 0.2);
+//			} 
+//			else {
+//				Robot.arm.setBrakePosition(BrakePosition.CLOSED);
+////				Robot.arm.setSpeed(armSpeedSettingsWoutCube.brakeSpeed);
+//				Robot.arm.setSpeed(0.0);
+//			}
 
 		} 
 		else {
